@@ -40,3 +40,12 @@ Atualmente o portal agrega conteúdo dos seguintes sites:
 ---
 
 ## 📁 Estrutura do projeto
+## ✨ Novidades da versão 1.1
+
+- 🎨 Interface sofisticada estilo MSN Notícias
+- 📊 Cards em tamanhos variados (destaque para notícia principal)
+- 💱 Cotações de Dólar e Euro em tempo real
+- 📱 Layout totalmente responsivo
+- 🎯 Sidebar com estatísticas e principais fontes
+- 🔍 Filtro por categorias expandido
+- 🎭 Logo personalizado em SVG
