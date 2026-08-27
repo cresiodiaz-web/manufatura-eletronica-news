@@ -3,29 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Manufatura Eletrônica</title>
+    <title>Manufatura Eletrônica News</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>⚙️ Manufatura Eletrônica News</h1>
-        <p>Notícias agregadas do setor</p>
-        <div id="filters">
-            <button class="filter-btn active" data-category="all">Todas</button>
-            <button class="filter-btn" data-category="Geral">Geral</button>
-            <button class="filter-btn" data-category="Embarcados">Embarcados</button>
-            <button class="filter-btn" data-category="Indústria">Indústria</button>
-            <button class="filter-btn" data-category="Projetos">Projetos</button>
-            <button class="filter-btn" data-category="Semicondutores">Semicondutores</button>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="50" height="50" rx="12" fill="url(#gradient)"/>
+                    <path d="M15 25L22 18L28 25L35 32" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <circle cx="25" cy="25" r="3" fill="white"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="50" y2="50">
+                            <stop offset="0%" stop-color="#1e3c72"/>
+                            <stop offset="100%" stop-color="#4a90d9"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <div class="logo-text">
+                    <h1>Manufatura Eletrônica News</h1>
+                    <span>Seu portal de notícias do setor</span>
+                </div>
+            </div>
+            <div class="header-date" id="current-date"></div>
         </div>
     </header>
 
-    <main id="news-container">
-        <div class="loading">Carregando notícias...</div>
-    </main>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <div class="filters" id="filters">
+                <button class="filter-btn active" data-category="all">🏠 Todas</button>
+                <button class="filter-btn" data-category="Geral">🔬 Geral</button>
+                <button class="filter-btn" data-category="Embarcados">💻 Embarcados</button>
+                <button class="filter-btn" data-category="Indústria">🏭 Indústria</button>
+                <button class="filter-btn" data-category="Projetos">📐 Projetos</button>
+                <button class="filter-btn" data-category="Semicondutores">🔲 Semicondutores</button>
+                <button class="filter-btn" data-category="Aeronáutica">✈️ Aeronáutica</button>
+                <button class="filter-btn" data-category="Bens de Consumo">📦 Bens de Consumo</button>
+            </div>
+        </div>
+    </nav>
 
-    <footer>
-        <p>Desenvolvido com RSS e JavaScript puro</p>
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- News Grid -->
+        <main class="news-grid" id="news-container">
+            <div class="loading">Carregando notícias...</div>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Exchange Rates -->
+            <div class="widget exchange-widget">
+                <h3>💱 Cotações do Dia</h3>
+                <div class="exchange-rates" id="exchange-rates">
+                    <div class="exchange-item">
+                        <span class="currency-flag">🇺🇸</span>
+                        <div class="currency-info">
+                            <span class="currency-name">Dólar Comercial</span>
+                            <span class="currency-value" id="usd-value">Carregando...</span>
+                        </div>
+                    </div>
+                    <div class="exchange-item">
+                        <span class="currency-flag">🇪🇺</span>
+                        <div class="currency-info">
+                            <span class="currency-name">Euro Comercial</span>
+                            <span class="currency-value" id="eur-value">Carregando...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exchange-update" id="exchange-update"></div>
+            </div>
+
+            <!-- About Widget -->
+            <div class="widget about-widget">
+                <h3>📡 Sobre o Portal</h3>
+                <p>Agregador de notícias sobre manufatura eletrônica, aeronáutica e bens de consumo.</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-news">0</span>
+                        <span class="stat-label">Notícias</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-sources">0</span>
+                        <span class="stat-label">Fontes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Sources -->
+            <div class="widget sources-widget">
+                <h3>🏆 Principais Fontes</h3>
+                <ul class="sources-list" id="sources-list">
+                    <li>Carregando fontes...</li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Manufatura Eletrônica News - Todos os direitos reservados</p>
+        <p>Desenvolvido com ❤️ e JavaScript puro</p>
     </footer>
 
     <script src="script.js"></script>
