@@ -94,41 +94,77 @@ const feeds = [
         category: 'Aeronáutica'
     },
 
-    // ===== BENS DE CONSUMO =====
+    // ===== BENS DE CONSUMO ELETRÔNICOS =====
     {
-        source: 'Consumer Goods Technology',
-        url: 'https://consumergoods.com/rss.xml',
-        color: '#e74c3c',
+        source: 'TechCrunch',
+        url: 'https://techcrunch.com/feed/',
+        color: '#00d26a',
         category: 'Bens de Consumo'
     },
     {
-        source: 'Manufacturing.net',
-        url: 'https://www.manufacturing.net/rss',
-        color: '#f39c12',
+        source: 'The Verge',
+        url: 'https://www.theverge.com/rss/index.xml',
+        color: '#fa4b2a',
         category: 'Bens de Consumo'
     },
     {
-        source: 'IndustryWeek',
-        url: 'https://www.industryweek.com/rss',
-        color: '#c0392b',
+        source: 'CNET',
+        url: 'https://www.cnet.com/rss/news/',
+        color: '#e50914',
         category: 'Bens de Consumo'
     },
     {
-        source: 'Packaging World',
-        url: 'https://www.packworld.com/rss',
-        color: '#d35400',
+        source: 'Gizmodo',
+        url: 'https://gizmodo.com/rss',
+        color: '#00b0f0',
         category: 'Bens de Consumo'
     },
     {
-        source: 'Food Manufacturing',
-        url: 'https://www.foodmanufacturing.com/rss',
-        color: '#27ae60',
+        source: 'Engadget',
+        url: 'https://www.engadget.com/rss.xml',
+        color: '#7b0099',
         category: 'Bens de Consumo'
     },
     {
-        source: 'Appliance Design',
-        url: 'https://www.appliancedesign.com/rss',
-        color: '#8e44ad',
+        source: 'Tom\'s Hardware',
+        url: 'https://www.tomshardware.com/feeds/all',
+        color: '#c7254e',
+        category: 'Bens de Consumo'
+    },
+    {
+        source: 'Android Central',
+        url: 'https://www.androidcentral.com/feed',
+        color: '#00c853',
+        category: 'Bens de Consumo'
+    },
+    {
+        source: '9to5Mac',
+        url: 'https://9to5mac.com/feed/',
+        color: '#555555',
+        category: 'Bens de Consumo'
+    },
+    {
+        source: 'GSM Arena',
+        url: 'https://www.gsmarena.com/rss-news-reviews.php3',
+        color: '#d32f2f',
+        category: 'Bens de Consumo'
+    },
+    {
+        source: 'IoT World Today',
+        url: 'https://www.iotworldtoday.com/rss',
+        color: '#00838f',
+        category: 'Bens de Consumo'
+    },
+    {
+        source: 'Wearable Technology',
+        url: 'https://www.wearable-technologies.com/feed/',
+        color: '#6a1b9a',
+        category: 'Bens de Consumo'
+    },
+    {
+        source: 'TechRadar',
+        url: 'https://www.techradar.com/rss',
+        color: '#ff6600',
         category: 'Bens de Consumo'
     }
 ];
@@ -146,7 +182,6 @@ function updateDate() {
 // ===== COTAÇÕES =====
 async function fetchExchangeRates() {
     try {
-        // Usando API gratuita AwesomeAPI
         const [usdResponse, eurResponse] = await Promise.all([
             fetch('https://economia.awesomeapi.com.br/last/USD-BRL'),
             fetch('https://economia.awesomeapi.com.br/last/EUR-BRL')
@@ -300,3 +335,9 @@ loadAllFeeds();
 
 // Atualiza cotações a cada 5 minutos
 setInterval(fetchExchangeRates, 300000);
+
+// Atualiza notícias a cada 30 minutos
+setInterval(() => {
+    console.log('Atualizando notícias...');
+    loadAllFeeds();
+}, 1800000);
