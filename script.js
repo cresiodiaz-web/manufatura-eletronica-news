@@ -130,8 +130,8 @@ const produtosDigikey = [
 // ===== ADSENSE HTML =====
 const adsenseHTML = `
     <div class="adsense-container" style="grid-column: span 2;">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-SEU_ID_ADSENSE" crossorigin="anonymous"></script>
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-SEU_ID_ADSENSE" data-ad-slot="SEU_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5355482581560972"crossorigin="anonymous"></script>
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5355482581560972" data-ad-slot="SEU_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 `;
