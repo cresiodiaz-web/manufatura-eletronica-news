@@ -189,6 +189,14 @@
                 <button class="ver-mais-btn" id="ver-mais-destaques" onclick="loadMoreNews('destaques')" style="display:none;">Ver Mais Notícias</button>
             </section>
 
+            <!-- Produtos Recomendados (Mobile - aparece aqui) -->
+            <section class="produtos-mobile-section" id="produtos-mobile">
+                <h2 class="section-title">🛒 Componentes e Wearables</h2>
+                <div class="produtos-grid" id="produtos-grid-mobile">
+                    <div class="loading">Carregando produtos...</div>
+                </div>
+            </section>
+
             <!-- Painel de Informações -->
             <section class="info-panel" id="info-panel">
                 <h2 class="section-title">📊 Painel do Dia</h2>
@@ -256,12 +264,19 @@
                 <h3>🏆 Principais Fontes</h3>
                 <ul class="sources-list" id="sources-list"><li>Carregando fontes...</li></ul>
             </div>
+            <!-- Produtos Recomendados (Desktop - aparece na sidebar) -->
+            <div class="widget produtos-widget">
+                <h3>🛒 Produtos Recomendados</h3>
+                <div class="produtos-grid-sidebar" id="produtos-grid-desktop">
+                    <div class="loading">Carregando produtos...</div>
+                </div>
+            </div>
         </aside>
     </div>
 
     <footer class="footer">
         <p>&copy; 2026 Manufatura Eletrônica News - Todos os direitos reservados</p>
-            </footer>
+          </footer>
 
     <script src="script.js"></script>
 </body>
