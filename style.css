@@ -114,7 +114,7 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 .stock-change.positive { color: #2ecc71; background: rgba(46, 204, 113, 0.2); }
 .stock-change.negative { color: #e74c3c; background: rgba(231, 76, 60, 0.2); }
 
-/* ===== EXCHANGE (compatibilidade) ===== */
+/* ===== EXCHANGE ===== */
 .exchange-inline-item { display: flex; align-items: center; gap: 1rem; padding: 1.2rem; border-radius: 12px; flex: 1; min-width: 180px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
 .exchange-inline-item:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
 .exchange-usd { background: linear-gradient(135deg, rgba(46, 204, 113, 0.15), rgba(39, 174, 96, 0.1)); border: 1px solid rgba(46, 204, 113, 0.3); }
@@ -127,6 +127,10 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 .exchange-trend.positive { color: #2ecc71; background: rgba(46, 204, 113, 0.2); }
 .exchange-trend.negative { color: #e74c3c; background: rgba(231, 76, 60, 0.2); }
 .exchange-update-inline { font-size: 0.8rem; color: rgba(255,255,255,0.6); text-align: right; margin-top: 0.8rem; }
+
+/* ===== VER MAIS ===== */
+.ver-mais-btn { display: block; margin: 1rem auto; padding: 0.8rem 2rem; background: #1e3c72; color: white; border: none; border-radius: 25px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+.ver-mais-btn:hover { background: #2a5298; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
 
 /* ===== CARDS ===== */
 .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; cursor: pointer; }
@@ -144,7 +148,7 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 .card-footer { display: flex; justify-content: space-between; font-size: 0.75rem; color: #888; border-top: 1px solid #eee; padding-top: 0.5rem; margin-top: 0.5rem; }
 
 /* ===== DESTAQUES E CATEGORIAS ===== */
-.destaques-grid, .categoria-grid { display: grid; gap: 1rem; margin-bottom: 2rem; }
+.destaques-grid, .categoria-grid { display: grid; gap: 1rem; margin-bottom: 1rem; }
 .categoria-bloco { margin-bottom: 2rem; }
 .categoria-grid .card:first-child { grid-column: span 2; grid-row: span 2; }
 .categoria-grid .card:first-child .card-image { height: 280px; }
@@ -208,6 +212,8 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     .categoria-grid .card:first-child .card-image { height: 160px; }
     .destaques-grid .card:first-child h2,
     .categoria-grid .card:first-child h2 { font-size: 1rem; }
+    
+    .ver-mais-btn { padding: 0.7rem 1.5rem; font-size: 0.9rem; }
 }
 
 @media (max-width: 480px) {
