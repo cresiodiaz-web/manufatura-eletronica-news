@@ -1,6 +1,6 @@
 // ============================================
 // PORTAL MANUFATURA ELETRÔNICA NEWS
-// Script completo com todos os feeds
+// Script completo com todos os feeds e APIs
 // ============================================
 
 const feeds = [
@@ -151,6 +151,169 @@ function updateTrendElement(elementId, variation) {
     }
 }
 
+// ===== CLIMA (Open-Meteo - sem API key) =====
+async function fetchWeather() {
+    try {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    await fetchWeatherByCoords(position.coords.latitude, position.coords.longitude);
+                },
+                async () => {
+                    await fetchWeatherByCoords(-23.5505, -46.6333);
+                }
+            );
+        } else {
+            await fetchWeatherByCoords(-23.5505, -46.6333);
+        }
+    } catch (error) {
+        console.error('Erro ao buscar clima:', error);
+    }
+}
+
+async function fetchWeatherByCoords(lat, lon) {
+    try {
+        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto&forecast_days=5`);
+        const data = await response.json();
+        
+        const temp = Math.round(data.current.temperature_2m);
+        const weatherCode = data.current.weather_code;
+        
+        document.getElementById('header-temp').textContent = `${temp}°C`;
+        document.getElementById('weather-temp').textContent = `${temp}°C`;
+        document.getElementById('weather-desc').textContent = getWeatherDescription(weatherCode);
+        document.getElementById('weather-icon').textContent = getWeatherEmoji(weatherCode);
+        document.getElementById('sidebar-weather-temp').textContent = `${temp}°C`;
+        document.getElementById('sidebar-weather-icon').textContent = getWeatherEmoji(weatherCode);
+        
+        try {
+            const geoResponse = await fetch(`https://geocoding-api.open-meteo.com/v1/search?latitude=${lat}&longitude=${lon}&count=1&language=pt&format=json`);
+            const geoData = await geoResponse.json();
+            if (geoData.results && geoData.results.length > 0) {
+                const locationName = geoData.results[0].name;
+                document.getElementById('weather-location').textContent = `📍 ${locationName}`;
+                document.getElementById('header-location').textContent = locationName;
+                document.getElementById('sidebar-weather-location').textContent = `📍 ${locationName}`;
+            }
+        } catch (e) {
+            document.getElementById('weather-location').textContent = `📍 ${lat.toFixed(2)}, ${lon.toFixed(2)}`;
+        }
+        
+        const forecastContainer = document.getElementById('weather-forecast');
+        forecastContainer.innerHTML = '';
+        const dias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+        
+        for (let i = 0; i < data.daily.time.length; i++) {
+            const date = new Date(data.daily.time[i]);
+            const dayName = dias[date.getDay()];
+            const icon = getWeatherEmoji(data.daily.weather_code[i]);
+            const tempMax = Math.round(data.daily.temperature_2m_max[i]);
+            const tempMin = Math.round(data.daily.temperature_2m_min[i]);
+            
+            forecastContainer.innerHTML += `
+                <div class="forecast-item">
+                    <span class="forecast-day">${dayName}</span>
+                    <span class="forecast-icon">${icon}</span>
+                    <span class="forecast-temp">${tempMax}° / ${tempMin}°</span>
+                </div>
+            `;
+        }
+    } catch (error) {
+        console.error('Erro ao buscar clima:', error);
+        document.getElementById('weather-temp').textContent = '--°C';
+        document.getElementById('weather-desc').textContent = 'Indisponível';
+    }
+}
+
+function getWeatherDescription(code) {
+    const descriptions = {
+        0: 'Céu limpo', 1: 'Parcialmente nublado', 2: 'Parcialmente nublado',
+        3: 'Nublado', 45: 'Nevoeiro', 48: 'Nevoeiro com geada',
+        51: 'Garoa leve', 53: 'Garoa', 55: 'Garoa intensa',
+        61: 'Chuva fraca', 63: 'Chuva', 65: 'Chuva forte',
+        71: 'Neve fraca', 73: 'Neve', 75: 'Neve forte',
+        80: 'Pancadas de chuva', 81: 'Pancadas fortes', 82: 'Pancadas violentas',
+        95: 'Trovoada', 96: 'Trovoada com granizo', 99: 'Trovoada forte'
+    };
+    return descriptions[code] || 'Tempo variável';
+}
+
+function getWeatherEmoji(code) {
+    if (code === 0) return '☀️';
+    if (code <= 2) return '🌤️';
+    if (code === 3) return '☁️';
+    if (code <= 48) return '🌫️';
+    if (code <= 55) return '🌧️';
+    if (code <= 65) return '🌧️';
+    if (code <= 75) return '🌨️';
+    if (code <= 82) return '⛈️';
+    if (code <= 99) return '⛈️';
+    return '🌡️';
+}
+
+// ===== AÇÕES (Yahoo Finance) =====
+async function fetchStocks() {
+    try {
+        const symbols = ['PETR4.SA', 'VALE3.SA', 'ITUB4.SA', 'BBDC4.SA', 'ABEV3.SA', 'MGLU3.SA'];
+        const stocksList = document.getElementById('stocks-list');
+        stocksList.innerHTML = '<div class="forecast-loading">Carregando ações...</div>';
+        
+        const stockNames = {
+            'PETR4.SA': 'Petrobras',
+            'VALE3.SA': 'Vale',
+            'ITUB4.SA': 'Itaú Unibanco',
+            'BBDC4.SA': 'Bradesco',
+            'ABEV3.SA': 'Ambev',
+            'MGLU3.SA': 'Magazine Luiza'
+        };
+        
+        let stocksHtml = '';
+        
+        for (const symbol of symbols) {
+            try {
+                const response = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1d`);
+                const data = await response.json();
+                
+                if (data.chart && data.chart.result) {
+                    const result = data.chart.result[0];
+                    const meta = result.meta;
+                    const price = meta.regularMarketPrice;
+                    const previousClose = meta.previousClose;
+                    const change = price - previousClose;
+                    const changePercent = (change / previousClose) * 100;
+                    
+                    const changeClass = change >= 0 ? 'positive' : 'negative';
+                    const changeSign = change >= 0 ? '+' : '';
+                    
+                    stocksHtml += `
+                        <div class="stock-item">
+                            <div>
+                                <span class="stock-symbol">${symbol}</span>
+                                <span class="stock-name">${stockNames[symbol] || symbol}</span>
+                            </div>
+                            <div style="text-align: right;">
+                                <span class="stock-price">R$ ${price.toFixed(2)}</span>
+                                <span class="stock-change ${changeClass}">${changeSign}${changePercent.toFixed(2)}%</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                console.error(`Erro ao buscar ${symbol}:`, e);
+            }
+        }
+        
+        if (stocksHtml) {
+            stocksList.innerHTML = stocksHtml;
+        } else {
+            stocksList.innerHTML = '<div class="forecast-loading">Não foi possível carregar ações.</div>';
+        }
+    } catch (error) {
+        console.error('Erro ao buscar ações:', error);
+        document.getElementById('stocks-list').innerHTML = '<div class="forecast-loading">Erro ao carregar ações.</div>';
+    }
+}
+
 // ===== MENU HAMBÚRGUER =====
 document.getElementById('hamburger-btn').addEventListener('click', () => {
     document.getElementById('sidebar-mobile').classList.add('active');
@@ -276,13 +439,11 @@ function renderAllSections() {
         filteredNews = allNews.filter(item => item.region === activeRegion);
     }
 
-    // Destaques com prioridade para Automotiva e Aeronáutica
     const prioritarias = filteredNews.filter(n => n.category === 'Automotiva' || n.category === 'Aeronáutica');
     const outras = filteredNews.filter(n => n.category !== 'Automotiva' && n.category !== 'Aeronáutica');
     const destaques = [...prioritarias, ...outras].slice(0, 10);
     renderDestaques(destaques);
 
-    // Categorias
     const categorias = ['Aeronáutica', 'Automotiva', 'Semicondutores', 'Indústria', 'Embarcados', 'Projetos', 'Bens de Consumo', 'Geral'];
     const container = document.getElementById('categorias-container');
     container.innerHTML = '';
@@ -383,7 +544,12 @@ function debounce(func, wait) {
 document.addEventListener('DOMContentLoaded', () => {
     updateDate();
     fetchExchangeRates();
+    fetchWeather();
+    fetchStocks();
     loadAllFeeds();
+    
     setInterval(fetchExchangeRates, 300000);
+    setInterval(fetchWeather, 600000);
+    setInterval(fetchStocks, 300000);
     setInterval(loadAllFeeds, 1800000);
 });
