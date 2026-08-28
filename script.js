@@ -92,7 +92,23 @@ const feeds = [
     { source: 'Android Central', url: 'https://www.androidcentral.com/feed', color: '#00c853', category: 'Bens de Consumo', region: 'internacional' },
     { source: '9to5Mac', url: 'https://9to5mac.com/feed/', color: '#555555', category: 'Bens de Consumo', region: 'internacional' },
     { source: 'GSM Arena', url: 'https://www.gsmarena.com/rss-news-reviews.php3', color: '#d32f2f', category: 'Bens de Consumo', region: 'internacional' },
-    { source: 'TechRadar', url: 'https://www.techradar.com/rss', color: '#ff6600', category: 'Bens de Consumo', region: 'internacional' }
+    { source: 'TechRadar', url: 'https://www.techradar.com/rss', color: '#ff6600', category: 'Bens de Consumo', region: 'internacional' },
+
+    // ===== UNIVERSIDADES BRASILEIRAS =====
+{ source: 'USP Poli', url: 'https://www.poli.usp.br/feed/', color: '#1e3c72', category: 'Geral', region: 'nacional' },
+{ source: 'UNICAMP FEM', url: 'https://www.fem.unicamp.br/index.php/feed/', color: '#00695c', category: 'Geral', region: 'nacional' },
+{ source: 'ITA', url: 'https://www.ita.br/rss', color: '#1a237e', category: 'Aeronáutica', region: 'nacional' },
+{ source: 'UFMG Engenharia', url: 'https://www.eng.ufmg.br/feed/', color: '#2e7d32', category: 'Geral', region: 'nacional' },
+{ source: 'UFRJ COPPE', url: 'https://www.coppe.ufrj.br/rss', color: '#c62828', category: 'Geral', region: 'nacional' },
+
+// ===== UNIVERSIDADES INTERNACIONAIS =====
+{ source: 'MIT MechE', url: 'https://meche.mit.edu/rss.xml', color: '#d32f2f', category: 'Geral', region: 'internacional' },
+{ source: 'Stanford Engineering', url: 'https://engineering.stanford.edu/rss.xml', color: '#1565c0', category: 'Geral', region: 'internacional' },
+{ source: 'UC Berkeley Engineering', url: 'https://engineering.berkeley.edu/rss.xml', color: '#f57c00', category: 'Geral', region: 'internacional' },
+{ source: 'Purdue Engineering', url: 'https://engineering.purdue.edu/rss.xml', color: '#4527a0', category: 'Geral', region: 'internacional' },
+{ source: 'ETH Zurich MechE', url: 'https://mavt.ethz.ch/rss.xml', color: '#00695c', category: 'Geral', region: 'internacional' },
+{ source: 'Cambridge Engineering', url: 'https://www.eng.cam.ac.uk/rss.xml', color: '#00838f', category: 'Geral', region: 'internacional' },
+{ source: 'Carnegie Mellon Eng', url: 'https://engineering.cmu.edu/rss.xml', color: '#c62828', category: 'Geral', region: 'internacional' }
 ];
 
 let allNews = [];
