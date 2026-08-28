@@ -186,13 +186,13 @@
                 <div class="news-grid destaques-grid" id="destaques-grid">
                     <div class="loading">Carregando destaques...</div>
                 </div>
+                <button class="ver-mais-btn" id="ver-mais-destaques" onclick="loadMoreNews('destaques')" style="display:none;">Ver Mais Notícias</button>
             </section>
 
             <!-- Painel de Informações -->
             <section class="info-panel" id="info-panel">
                 <h2 class="section-title">📊 Painel do Dia</h2>
                 <div class="info-panel-container">
-                    <!-- Card 1: Cotações -->
                     <div class="info-card info-cotacoes">
                         <h3>💱 Cotações</h3>
                         <div class="exchange-inline-item exchange-usd">
@@ -214,7 +214,6 @@
                         <div class="exchange-update-inline" id="exchange-update-inline"></div>
                     </div>
 
-                    <!-- Card 2: Clima -->
                     <div class="info-card info-clima">
                         <h3>🌤️ Clima</h3>
                         <div class="weather-current">
@@ -230,7 +229,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 3: Ações -->
                     <div class="info-card info-acoes">
                         <h3>📈 Ações do Dia</h3>
                         <div class="stocks-list" id="stocks-list">
@@ -263,7 +261,7 @@
 
     <footer class="footer">
         <p>&copy; 2026 Manufatura Eletrônica News - Todos os direitos reservados</p>
-            </footer>
+          </footer>
 
     <script src="script.js"></script>
 </body>
