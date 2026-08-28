@@ -1,6 +1,6 @@
 // ============================================
 // PORTAL MANUFATURA ELETRÔNICA NEWS
-// Script completo com todos os feeds e APIs
+// Script completo com feeds, APIs e produtos
 // ============================================
 
 const feeds = [
@@ -99,6 +99,82 @@ let visiblePorCategoria = 6;
 const INCREMENTO_DESTAQUES = 10;
 const INCREMENTO_CATEGORIA = 6;
 
+// ===== PRODUTOS DE AFILIADOS (exemplo com Amazon Associates) =====
+const produtosAfiliados = [
+    {
+        nome: 'Arduino Uno R3',
+        preco: 'R$ 89,90',
+        fonte: 'Amazon',
+        imagem: 'https://m.media-amazon.com/images/I/61zWlVvzSGL._AC_SL1000_.jpg',
+        link: 'https://www.amazon.com.br/dp/B008GRTSV6?tag=SEU_TAG_AQUI'
+    },
+    {
+        nome: 'ESP32 Dev Board',
+        preco: 'R$ 45,00',
+        fonte: 'Amazon',
+        imagem: 'https://m.media-amazon.com/images/I/61fYdUXh1XL._AC_SL1000_.jpg',
+        link: 'https://www.amazon.com.br/dp/B07Q576VWZ?tag=SEU_TAG_AQUI'
+    },
+    {
+        nome: 'Smartwatch Xiaomi',
+        preco: 'R$ 299,00',
+        fonte: 'Amazon',
+        imagem: 'https://m.media-amazon.com/images/I/61vNjGrgOML._AC_SL1500_.jpg',
+        link: 'https://www.amazon.com.br/dp/B09B3HMZFY?tag=SEU_TAG_AQUI'
+    },
+    {
+        nome: 'Kit Sensores Arduino',
+        preco: 'R$ 129,90',
+        fonte: 'Amazon',
+        imagem: 'https://m.media-amazon.com/images/I/71Xt5MJ5TUL._AC_SL1500_.jpg',
+        link: 'https://www.amazon.com.br/dp/B01M30ZW0G?tag=SEU_TAG_AQUI'
+    },
+    {
+        nome: 'Raspberry Pi 4',
+        preco: 'R$ 599,00',
+        fonte: 'Amazon',
+        imagem: 'https://m.media-amazon.com/images/I/71TpQH4yVUL._AC_SL1500_.jpg',
+        link: 'https://www.amazon.com.br/dp/B07TD42S27?tag=SEU_TAG_AQUI'
+    },
+    {
+        nome: 'Multímetro Digital',
+        preco: 'R$ 79,90',
+        fonte: 'Amazon',
+        imagem: 'https://m.media-amazon.com/images/I/71bJ3QqQJ7L._AC_SL1500_.jpg',
+        link: 'https://www.amazon.com.br/dp/B07W8J4F5H?tag=SEU_TAG_AQUI'
+    }
+];
+
+function carregarProdutosDesktop() {
+    const container = document.getElementById('produtos-grid-desktop');
+    container.innerHTML = produtosAfiliados.map(produto => `
+        <div class="produto-card-sidebar" onclick="window.open('${produto.link}', '_blank')">
+            <div class="produto-imagem-sidebar" style="background-image: url('${produto.imagem}')"></div>
+            <div class="produto-info-sidebar">
+                <div class="produto-nome-sidebar">${produto.nome}</div>
+                <div class="produto-preco-sidebar">${produto.preco}</div>
+                <div class="produto-fonte-sidebar">${produto.fonte}</div>
+            </div>
+            <a class="produto-link-sidebar" href="${produto.link}" target="_blank">Ver →</a>
+        </div>
+    `).join('');
+}
+
+function carregarProdutosMobile() {
+    const container = document.getElementById('produtos-grid-mobile');
+    container.innerHTML = produtosAfiliados.map(produto => `
+        <div class="produto-card" onclick="window.open('${produto.link}', '_blank')">
+            <div class="produto-imagem" style="background-image: url('${produto.imagem}')"></div>
+            <div class="produto-info">
+                <div class="produto-nome">${produto.nome}</div>
+                <div class="produto-preco">${produto.preco}</div>
+                <div class="produto-fonte">${produto.fonte}</div>
+            </div>
+            <a class="produto-link" href="${produto.link}" target="_blank">Ver na Loja</a>
+        </div>
+    `).join('');
+}
+
 // ===== FUNÇÕES DE DATA =====
 function updateDate() {
     const date = new Date();
@@ -109,7 +185,6 @@ function updateDate() {
 // ===== COTAÇÕES (URL CORRIGIDA) =====
 async function fetchExchangeRates() {
     try {
-        // URL corrigida: /json/last/USD-BRL,EUR-BRL
         const response = await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL');
         
         if (!response.ok) {
@@ -145,8 +220,6 @@ async function fetchExchangeRates() {
         document.getElementById('eur-value-mobile').textContent = 'R$ --';
         document.getElementById('usd-value-inline').textContent = 'R$ --';
         document.getElementById('eur-value-inline').textContent = 'R$ --';
-        document.getElementById('exchange-update-mobile').textContent = 'Indisponível';
-        document.getElementById('exchange-update-inline').textContent = 'Indisponível';
     }
 }
 
@@ -162,7 +235,7 @@ function updateTrendElement(elementId, variation) {
     }
 }
 
-// ===== CLIMA (Open-Meteo) =====
+// ===== CLIMA =====
 async function fetchWeather() {
     try {
         if (navigator.geolocation) {
@@ -262,7 +335,7 @@ function getWeatherEmoji(code) {
     return '🌡️';
 }
 
-// ===== AÇÕES (Brapi API) =====
+// ===== AÇÕES =====
 async function fetchStocks() {
     try {
         const stocksList = document.getElementById('stocks-list');
@@ -386,7 +459,7 @@ document.querySelectorAll('.filter-btn, .filter-btn-mobile').forEach(btn => {
     });
 });
 
-// ===== PRIORIZAR BRASILEIROS (4:2) =====
+// ===== PRIORIZAR BRASILEIROS =====
 function priorizarBrasileiros(noticias) {
     const brasileiras = noticias.filter(n => n.region === 'nacional');
     const internacionais = noticias.filter(n => n.region === 'internacional');
@@ -406,7 +479,7 @@ function priorizarBrasileiros(noticias) {
     return resultado;
 }
 
-// ===== GET DESTAQUES PRIORIZADOS =====
+// ===== GET DESTAQUES =====
 function getDestaquesPriorizados() {
     let filteredNews = allNews;
     if (activeRegion !== 'all') {
@@ -598,7 +671,7 @@ function updateSourcesList() {
     const list = document.getElementById('sources-list');
     const activeSources = feeds.filter(f => allNews.some(n => n.source === f.source));
     if (activeSources.length === 0) { list.innerHTML = '<li>Nenhuma fonte ativa</li>'; return; }
-    list.innerHTML = activeSources.slice(0, 15).map(f => `
+    list.innerHTML = activeSources.slice(0, 12).map(f => `
         <li><span class="source-dot" style="background:${f.color}"></span>${f.source}<span style="margin-left:auto;font-size:0.8rem;">${f.region === 'nacional' ? '🇧🇷' : '🌍'}</span></li>
     `).join('');
 }
@@ -620,6 +693,8 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchWeather();
     fetchStocks();
     loadAllFeeds();
+    carregarProdutosDesktop();
+    carregarProdutosMobile();
     
     setInterval(fetchExchangeRates, 300000);
     setInterval(fetchWeather, 600000);
