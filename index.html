@@ -189,7 +189,7 @@
                 <button class="ver-mais-btn" id="ver-mais-destaques" onclick="loadMoreNews('destaques')" style="display:none;">Ver Mais Notícias</button>
             </section>
 
-            <!-- Produtos Recomendados (Mobile - aparece aqui) -->
+            <!-- Produtos Recomendados (Mobile) -->
             <section class="produtos-mobile-section" id="produtos-mobile">
                 <h2 class="section-title">🛒 Componentes e Wearables</h2>
                 <div class="produtos-grid" id="produtos-grid-mobile">
@@ -252,6 +252,15 @@
 
         <!-- Sidebar Desktop -->
         <aside class="sidebar-desktop">
+            <!-- Anúncios no TOPO da sidebar -->
+            <div class="widget produtos-widget">
+                <h3>🛒 Anúncios</h3>
+                <div class="produtos-grid-sidebar" id="produtos-grid-desktop">
+                    <div class="loading">Carregando anúncios...</div>
+                </div>
+                <div class="anuncio-badge" id="anuncio-badge-desktop"></div>
+            </div>
+            
             <div class="widget about-widget">
                 <h3>📡 Sobre o Portal</h3>
                 <p>Agregador de notícias sobre manufatura eletrônica, aeronáutica, automotiva e bens de consumo.</p>
@@ -260,23 +269,17 @@
                     <div class="stat-item"><span class="stat-number" id="total-sources">0</span><span class="stat-label">Fontes</span></div>
                 </div>
             </div>
+            
             <div class="widget sources-widget">
                 <h3>🏆 Principais Fontes</h3>
                 <ul class="sources-list" id="sources-list"><li>Carregando fontes...</li></ul>
-            </div>
-            <!-- Produtos Recomendados (Desktop - aparece na sidebar) -->
-            <div class="widget produtos-widget">
-                <h3>🛒 Produtos Recomendados</h3>
-                <div class="produtos-grid-sidebar" id="produtos-grid-desktop">
-                    <div class="loading">Carregando produtos...</div>
-                </div>
             </div>
         </aside>
     </div>
 
     <footer class="footer">
         <p>&copy; 2026 Manufatura Eletrônica News - Todos os direitos reservados</p>
-          </footer>
+            </footer>
 
     <script src="script.js"></script>
 </body>
