@@ -8,8 +8,39 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
+    <!-- Header Mobile -->
+    <header class="header-mobile">
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <div class="logo-mobile">
+            <svg class="logo-icon-small" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="50" height="50" rx="12" fill="url(#gradient-mobile)"/>
+                <path d="M15 25L22 18L28 25L35 32" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <circle cx="25" cy="25" r="3" fill="white"/>
+                <defs>
+                    <linearGradient id="gradient-mobile" x1="0" y1="0" x2="50" y2="50">
+                        <stop offset="0%" stop-color="#1e3c72"/>
+                        <stop offset="100%" stop-color="#4a90d9"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <span class="logo-title-mobile">Manufatura News</span>
+        </div>
+        
+        <button class="search-btn" id="search-btn" aria-label="Buscar">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="11" cy="11" r="7" stroke="white" stroke-width="2"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="white" stroke-width="2"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Header Desktop -->
+    <header class="header-desktop">
         <div class="header-container">
             <div class="logo">
                 <svg class="logo-icon" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,10 +63,10 @@
         </div>
     </header>
 
-    <!-- Navigation Bar -->
-    <nav class="nav-bar">
+    <!-- Navigation Desktop -->
+    <nav class="nav-bar-desktop">
         <div class="nav-container">
-            <div class="filters" id="filters">
+            <div class="filters" id="filters-desktop">
                 <button class="filter-btn active" data-category="all">🏠 Todas</button>
                 <button class="filter-btn" data-category="Geral">🔬 Geral</button>
                 <button class="filter-btn" data-category="Embarcados">💻 Embarcados</button>
@@ -48,6 +79,84 @@
         </div>
     </nav>
 
+    <!-- Sidebar Mobile (Menu Hambúrguer) -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <aside class="sidebar-mobile" id="sidebar-mobile">
+        <div class="sidebar-header">
+            <h3>Menu</h3>
+            <button class="close-sidebar" id="close-sidebar">✕</button>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>📰 Categorias</h4>
+            <div class="filters-mobile" id="filters-mobile">
+                <button class="filter-btn-mobile active" data-category="all">Todas</button>
+                <button class="filter-btn-mobile" data-category="Geral">Geral</button>
+                <button class="filter-btn-mobile" data-category="Embarcados">Embarcados</button>
+                <button class="filter-btn-mobile" data-category="Indústria">Indústria</button>
+                <button class="filter-btn-mobile" data-category="Projetos">Projetos</button>
+                <button class="filter-btn-mobile" data-category="Semicondutores">Semicondutores</button>
+                <button class="filter-btn-mobile" data-category="Aeronáutica">Aeronáutica</button>
+                <button class="filter-btn-mobile" data-category="Bens de Consumo">Bens de Consumo</button>
+            </div>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>💱 Cotações do Dia</h4>
+            <div class="exchange-rates-mobile" id="exchange-rates-mobile">
+                <div class="exchange-item-mobile">
+                    <span>🇺🇸</span>
+                    <div>
+                        <span class="currency-name">Dólar</span>
+                        <span class="currency-value" id="usd-value-mobile">Carregando...</span>
+                    </div>
+                </div>
+                <div class="exchange-item-mobile">
+                    <span>🇪🇺</span>
+                    <div>
+                        <span class="currency-name">Euro</span>
+                        <span class="currency-value" id="eur-value-mobile">Carregando...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="exchange-update-mobile" id="exchange-update-mobile"></div>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>🌐 Idioma</h4>
+            <div class="language-selector">
+                <button class="language-btn active" data-lang="pt">🇧🇷 Português</button>
+                <button class="language-btn" data-lang="en">🇺🇸 English</button>
+                <button class="language-btn" data-lang="es">🇪🇸 Español</button>
+            </div>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>📊 Estatísticas</h4>
+            <div class="stats-mobile">
+                <div class="stat-item-mobile">
+                    <span class="stat-number" id="total-news-mobile">0</span>
+                    <span class="stat-label">Notícias</span>
+                </div>
+                <div class="stat-item-mobile">
+                    <span class="stat-number" id="total-sources-mobile">0</span>
+                    <span class="stat-label">Fontes</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="search-overlay">
+        <div class="search-container">
+            <div class="search-header">
+                <input type="text" id="search-input" placeholder="Buscar notícias...">
+                <button class="close-search" id="close-search">✕</button>
+            </div>
+            <div class="search-results" id="search-results"></div>
+        </div>
+    </div>
+
     <!-- Main Layout -->
     <div class="main-layout">
         <!-- News Grid -->
@@ -55,9 +164,8 @@
             <div class="loading">Carregando notícias...</div>
         </main>
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <!-- Exchange Rates -->
+        <!-- Sidebar Desktop -->
+        <aside class="sidebar-desktop">
             <div class="widget exchange-widget">
                 <h3>💱 Cotações do Dia</h3>
                 <div class="exchange-rates" id="exchange-rates">
@@ -79,7 +187,6 @@
                 <div class="exchange-update" id="exchange-update"></div>
             </div>
 
-            <!-- About Widget -->
             <div class="widget about-widget">
                 <h3>📡 Sobre o Portal</h3>
                 <p>Agregador de notícias sobre manufatura eletrônica, aeronáutica e bens de consumo.</p>
@@ -95,7 +202,6 @@
                 </div>
             </div>
 
-            <!-- Top Sources -->
             <div class="widget sources-widget">
                 <h3>🏆 Principais Fontes</h3>
                 <ul class="sources-list" id="sources-list">
