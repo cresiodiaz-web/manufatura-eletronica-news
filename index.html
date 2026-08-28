@@ -189,14 +189,6 @@
                 <button class="ver-mais-btn" id="ver-mais-destaques" onclick="loadMoreNews('destaques')" style="display:none;">Ver Mais Notícias</button>
             </section>
 
-            <!-- Produtos Recomendados (Mobile) -->
-            <section class="produtos-mobile-section" id="produtos-mobile">
-                <h2 class="section-title">🛒 Componentes e Wearables</h2>
-                <div class="produtos-grid" id="produtos-grid-mobile">
-                    <div class="loading">Carregando produtos...</div>
-                </div>
-            </section>
-
             <!-- Painel de Informações -->
             <section class="info-panel" id="info-panel">
                 <h2 class="section-title">📊 Painel do Dia</h2>
@@ -245,14 +237,58 @@
 
         <!-- Sidebar Desktop -->
         <aside class="sidebar-desktop">
-            <div class="widget produtos-widget">
-                <h3>🛒 Anúncios</h3>
-                <div class="produtos-grid-sidebar" id="produtos-grid-desktop">
-                    <div class="loading">Carregando anúncios...</div>
+            <!-- Card Recomendados -->
+            <div class="widget recomendados-widget">
+                <h3>⭐ Recomendados</h3>
+                <div class="recomendados-list" id="recomendados-list">
+                    <div class="loading-mini">Carregando recomendados...</div>
                 </div>
-                <div class="anuncio-badge" id="anuncio-badge-desktop"></div>
             </div>
-            
+
+            <!-- Card Enquete -->
+            <div class="widget enquete-widget">
+                <h3>📊 Enquete</h3>
+                <div id="enquete-container">
+                    <p class="enquete-pergunta" id="enquete-pergunta">Qual seu nível de experiência com manufatura eletrônica?</p>
+                    <div class="enquete-opcoes" id="enquete-opcoes">
+                        <label class="enquete-opcao">
+                            <input type="radio" name="enquete" value="muita">
+                            <span>Muita experiência</span>
+                        </label>
+                        <label class="enquete-opcao">
+                            <input type="radio" name="enquete" value="media">
+                            <span>Média experiência</span>
+                        </label>
+                        <label class="enquete-opcao">
+                            <input type="radio" name="enquete" value="nenhuma">
+                            <span>Nenhuma experiência</span>
+                        </label>
+                    </div>
+                    <div class="enquete-botoes">
+                        <button class="enquete-btn votar" id="btn-votar" onclick="votar()">Votar</button>
+                        <button class="enquete-btn resultados" id="btn-resultados" onclick="verResultados()">Ver Resultados</button>
+                    </div>
+                    <div class="enquete-resultados" id="enquete-resultados" style="display:none;">
+                        <div class="resultado-item">
+                            <span class="resultado-label">Muita experiência</span>
+                            <div class="barra-fundo"><div class="barra-preenchida" id="barra-muita" style="width:0%;"></div></div>
+                            <span class="resultado-pct" id="pct-muita">0%</span>
+                        </div>
+                        <div class="resultado-item">
+                            <span class="resultado-label">Média experiência</span>
+                            <div class="barra-fundo"><div class="barra-preenchida" id="barra-media" style="width:0%;"></div></div>
+                            <span class="resultado-pct" id="pct-media">0%</span>
+                        </div>
+                        <div class="resultado-item">
+                            <span class="resultado-label">Nenhuma experiência</span>
+                            <div class="barra-fundo"><div class="barra-preenchida" id="barra-nenhuma" style="width:0%;"></div></div>
+                            <span class="resultado-pct" id="pct-nenhuma">0%</span>
+                        </div>
+                        <p class="total-votos" id="total-votos">Total de votos: 0</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="widget about-widget">
                 <h3>📡 Sobre o Portal</h3>
                 <p>Agregador de notícias sobre manufatura eletrônica, aeronáutica, automotiva e bens de consumo.</p>
@@ -261,7 +297,7 @@
                     <div class="stat-item"><span class="stat-number" id="total-sources">0</span><span class="stat-label">Fontes</span></div>
                 </div>
             </div>
-            
+
             <div class="widget sources-widget">
                 <h3>🏆 Principais Fontes</h3>
                 <ul class="sources-list" id="sources-list"><li>Carregando fontes...</li></ul>
@@ -271,7 +307,7 @@
 
     <!-- Botões Flutuantes -->
     <div class="floating-buttons">
-        <button class="floating-btn" id="btn-topo" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">
+        <button class="floating-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <button class="floating-btn" id="btn-atualizar" onclick="atualizarNoticias()" title="Atualizar notícias">
@@ -281,7 +317,7 @@
 
     <footer class="footer">
         <p>&copy; 2026 Manufatura Eletrônica News - Todos os direitos reservados</p>
-            </footer>
+           </footer>
 
     <script src="script.js"></script>
 </body>
