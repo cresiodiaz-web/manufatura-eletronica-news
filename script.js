@@ -1,6 +1,6 @@
 // ============================================
 // PORTAL MANUFATURA ELETRÔNICA NEWS
-// Script completo com feeds, APIs e produtos
+// Script completo com feeds, APIs, rotação de anúncios
 // ============================================
 
 const feeds = [
@@ -99,80 +99,152 @@ let visiblePorCategoria = 6;
 const INCREMENTO_DESTAQUES = 10;
 const INCREMENTO_CATEGORIA = 6;
 
-// ===== PRODUTOS DE AFILIADOS (exemplo com Amazon Associates) =====
-const produtosAfiliados = [
-    {
-        nome: 'Arduino Uno R3',
-        preco: 'R$ 89,90',
-        fonte: 'Amazon',
-        imagem: 'https://m.media-amazon.com/images/I/61zWlVvzSGL._AC_SL1000_.jpg',
-        link: 'https://www.amazon.com.br/dp/B008GRTSV6?tag=SEU_TAG_AQUI'
-    },
-    {
-        nome: 'ESP32 Dev Board',
-        preco: 'R$ 45,00',
-        fonte: 'Amazon',
-        imagem: 'https://m.media-amazon.com/images/I/61fYdUXh1XL._AC_SL1000_.jpg',
-        link: 'https://www.amazon.com.br/dp/B07Q576VWZ?tag=SEU_TAG_AQUI'
-    },
-    {
-        nome: 'Smartwatch Xiaomi',
-        preco: 'R$ 299,00',
-        fonte: 'Amazon',
-        imagem: 'https://m.media-amazon.com/images/I/61vNjGrgOML._AC_SL1500_.jpg',
-        link: 'https://www.amazon.com.br/dp/B09B3HMZFY?tag=SEU_TAG_AQUI'
-    },
-    {
-        nome: 'Kit Sensores Arduino',
-        preco: 'R$ 129,90',
-        fonte: 'Amazon',
-        imagem: 'https://m.media-amazon.com/images/I/71Xt5MJ5TUL._AC_SL1500_.jpg',
-        link: 'https://www.amazon.com.br/dp/B01M30ZW0G?tag=SEU_TAG_AQUI'
-    },
-    {
-        nome: 'Raspberry Pi 4',
-        preco: 'R$ 599,00',
-        fonte: 'Amazon',
-        imagem: 'https://m.media-amazon.com/images/I/71TpQH4yVUL._AC_SL1500_.jpg',
-        link: 'https://www.amazon.com.br/dp/B07TD42S27?tag=SEU_TAG_AQUI'
-    },
-    {
-        nome: 'Multímetro Digital',
-        preco: 'R$ 79,90',
-        fonte: 'Amazon',
-        imagem: 'https://m.media-amazon.com/images/I/71bJ3QqQJ7L._AC_SL1500_.jpg',
-        link: 'https://www.amazon.com.br/dp/B07W8J4F5H?tag=SEU_TAG_AQUI'
-    }
+// ===== CONFIGURAÇÃO DE ANÚNCIOS =====
+const anunciosConfig = {
+    intervaloRotacao: 30000,
+    ordem: ['amazon', 'adsense', 'mouser', 'digikey'],
+    indiceAtual: 0
+};
+
+// ===== PRODUTOS AMAZON =====
+const produtosAmazon = [
+    { nome: 'Arduino Uno R3', preco: 'R$ 89,90', fonte: 'Amazon', imagem: 'https://m.media-amazon.com/images/I/61zWlVvzSGL._AC_SL1000_.jpg', link: 'https://www.amazon.com.br/dp/B008GRTSV6?tag=SEU_TAG_AMAZON' },
+    { nome: 'ESP32 Dev Board', preco: 'R$ 45,00', fonte: 'Amazon', imagem: 'https://m.media-amazon.com/images/I/61fYdUXh1XL._AC_SL1000_.jpg', link: 'https://www.amazon.com.br/dp/B07Q576VWZ?tag=SEU_TAG_AMAZON' },
+    { nome: 'Smartwatch Xiaomi', preco: 'R$ 299,00', fonte: 'Amazon', imagem: 'https://m.media-amazon.com/images/I/61vNjGrgOML._AC_SL1500_.jpg', link: 'https://www.amazon.com.br/dp/B09B3HMZFY?tag=SEU_TAG_AMAZON' }
 ];
 
-function carregarProdutosDesktop() {
-    const container = document.getElementById('produtos-grid-desktop');
-    container.innerHTML = produtosAfiliados.map(produto => `
-        <div class="produto-card-sidebar" onclick="window.open('${produto.link}', '_blank')">
-            <div class="produto-imagem-sidebar" style="background-image: url('${produto.imagem}')"></div>
-            <div class="produto-info-sidebar">
-                <div class="produto-nome-sidebar">${produto.nome}</div>
-                <div class="produto-preco-sidebar">${produto.preco}</div>
-                <div class="produto-fonte-sidebar">${produto.fonte}</div>
-            </div>
-            <a class="produto-link-sidebar" href="${produto.link}" target="_blank">Ver →</a>
-        </div>
-    `).join('');
+// ===== PRODUTOS MOUSER =====
+const produtosMouser = [
+    { nome: 'Microcontrolador STM32', preco: 'US$ 12,50', fonte: 'Mouser', imagem: 'https://www.mouser.com/images/stmicroelectronics/lrg/STM32F103C8T6_SPL.jpg', link: 'https://br.mouser.com/ProductDetail/STMicroelectronics/STM32F103C8T6?affiliate=SEU_ID_MOUSER' },
+    { nome: 'Sensor de Temperatura', preco: 'US$ 3,80', fonte: 'Mouser', imagem: 'https://www.mouser.com/images/texasinstruments/lrg/DS18B20_SPL.jpg', link: 'https://br.mouser.com/ProductDetail/Texas-Instruments/DS18B20?affiliate=SEU_ID_MOUSER' },
+    { nome: 'Conector USB-C', preco: 'US$ 1,20', fonte: 'Mouser', imagem: 'https://www.mouser.com/images/teconnectivity/lrg/USB-C-SPL.jpg', link: 'https://br.mouser.com/ProductDetail/TE-Connectivity/USB-C?affiliate=SEU_ID_MOUSER' }
+];
+
+// ===== PRODUTOS DIGI-KEY =====
+const produtosDigikey = [
+    { nome: 'Raspberry Pi 4', preco: 'US$ 55,00', fonte: 'Digi-Key', imagem: 'https://www.digikey.com/-/media/Images/Product%20Highlights/R/Raspberry%20Pi/Raspberry-Pi-4.jpg', link: 'https://www.digikey.com.br/pt/products/detail/raspberry-pi/SC0194(9)/13691224?affiliate=SEU_ID_DIGIKEY' },
+    { nome: 'LED High Power', preco: 'US$ 2,50', fonte: 'Digi-Key', imagem: 'https://www.digikey.com/-/media/Images/Product%20Highlights/C/Cree%20LED/XLamp-XP-G3.jpg', link: 'https://www.digikey.com.br/pt/products/detail/cree-led/XPGBWT-L1-0000-00FE5/5799727?affiliate=SEU_ID_DIGIKEY' },
+    { nome: 'Regulador de Tensão', preco: 'US$ 0,80', fonte: 'Digi-Key', imagem: 'https://www.digikey.com/-/media/Images/Product%20Highlights/T/Texas%20Instruments/LM7805.jpg', link: 'https://www.digikey.com.br/pt/products/detail/texas-instruments/LM7805CT-NOPB/2127184?affiliate=SEU_ID_DIGIKEY' }
+];
+
+// ===== ADSENSE HTML =====
+const adsenseHTML = `
+    <div class="adsense-container" style="grid-column: span 2;">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-SEU_ID_ADSENSE" crossorigin="anonymous"></script>
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-SEU_ID_ADSENSE" data-ad-slot="SEU_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+`;
+
+// ===== ROTAÇÃO DE ANÚNCIOS =====
+function rotacionarAnuncios() {
+    const tipoAtual = anunciosConfig.ordem[anunciosConfig.indiceAtual];
+    renderizarAnuncioDesktop(tipoAtual);
+    renderizarAnuncioMobile(tipoAtual);
+    anunciosConfig.indiceAtual = (anunciosConfig.indiceAtual + 1) % anunciosConfig.ordem.length;
 }
 
-function carregarProdutosMobile() {
+function renderizarAnuncioDesktop(tipo) {
+    const container = document.getElementById('produtos-grid-desktop');
+    const badge = document.getElementById('anuncio-badge-desktop');
+    
+    switch(tipo) {
+        case 'amazon':
+            container.innerHTML = produtosAmazon.map(p => `
+                <div class="produto-card-sidebar" onclick="window.open('${p.link}', '_blank')">
+                    <div class="produto-imagem-sidebar" style="background-image: url('${p.imagem}')"></div>
+                    <div class="produto-info-sidebar">
+                        <div class="produto-nome-sidebar">${p.nome}</div>
+                        <div class="produto-preco-sidebar">${p.preco}</div>
+                        <div class="produto-fonte-sidebar">${p.fonte}</div>
+                    </div>
+                    <a class="produto-link-sidebar" href="${p.link}" target="_blank">Ver →</a>
+                </div>
+            `).join('');
+            badge.textContent = '🔵 Amazon Associates';
+            break;
+        case 'adsense':
+            container.innerHTML = adsenseHTML;
+            badge.textContent = '🟢 Google AdSense';
+            break;
+        case 'mouser':
+            container.innerHTML = produtosMouser.map(p => `
+                <div class="produto-card-sidebar" onclick="window.open('${p.link}', '_blank')">
+                    <div class="produto-imagem-sidebar" style="background-image: url('${p.imagem}')"></div>
+                    <div class="produto-info-sidebar">
+                        <div class="produto-nome-sidebar">${p.nome}</div>
+                        <div class="produto-preco-sidebar">${p.preco}</div>
+                        <div class="produto-fonte-sidebar">${p.fonte}</div>
+                    </div>
+                    <a class="produto-link-sidebar" href="${p.link}" target="_blank">Ver →</a>
+                </div>
+            `).join('');
+            badge.textContent = '🟠 Mouser Electronics';
+            break;
+        case 'digikey':
+            container.innerHTML = produtosDigikey.map(p => `
+                <div class="produto-card-sidebar" onclick="window.open('${p.link}', '_blank')">
+                    <div class="produto-imagem-sidebar" style="background-image: url('${p.imagem}')"></div>
+                    <div class="produto-info-sidebar">
+                        <div class="produto-nome-sidebar">${p.nome}</div>
+                        <div class="produto-preco-sidebar">${p.preco}</div>
+                        <div class="produto-fonte-sidebar">${p.fonte}</div>
+                    </div>
+                    <a class="produto-link-sidebar" href="${p.link}" target="_blank">Ver →</a>
+                </div>
+            `).join('');
+            badge.textContent = '🔴 Digi-Key';
+            break;
+    }
+}
+
+function renderizarAnuncioMobile(tipo) {
     const container = document.getElementById('produtos-grid-mobile');
-    container.innerHTML = produtosAfiliados.map(produto => `
-        <div class="produto-card" onclick="window.open('${produto.link}', '_blank')">
-            <div class="produto-imagem" style="background-image: url('${produto.imagem}')"></div>
-            <div class="produto-info">
-                <div class="produto-nome">${produto.nome}</div>
-                <div class="produto-preco">${produto.preco}</div>
-                <div class="produto-fonte">${produto.fonte}</div>
-            </div>
-            <a class="produto-link" href="${produto.link}" target="_blank">Ver na Loja</a>
-        </div>
-    `).join('');
+    
+    switch(tipo) {
+        case 'amazon':
+            container.innerHTML = produtosAmazon.map(p => `
+                <div class="produto-card" onclick="window.open('${p.link}', '_blank')">
+                    <div class="produto-imagem" style="background-image: url('${p.imagem}')"></div>
+                    <div class="produto-info">
+                        <div class="produto-nome">${p.nome}</div>
+                        <div class="produto-preco">${p.preco}</div>
+                        <div class="produto-fonte">${p.fonte}</div>
+                    </div>
+                    <a class="produto-link" href="${p.link}" target="_blank">Ver na Loja</a>
+                </div>
+            `).join('');
+            break;
+        case 'adsense':
+            container.innerHTML = adsenseHTML;
+            break;
+        case 'mouser':
+            container.innerHTML = produtosMouser.map(p => `
+                <div class="produto-card" onclick="window.open('${p.link}', '_blank')">
+                    <div class="produto-imagem" style="background-image: url('${p.imagem}')"></div>
+                    <div class="produto-info">
+                        <div class="produto-nome">${p.nome}</div>
+                        <div class="produto-preco">${p.preco}</div>
+                        <div class="produto-fonte">${p.fonte}</div>
+                    </div>
+                    <a class="produto-link" href="${p.link}" target="_blank">Ver na Loja</a>
+                </div>
+            `).join('');
+            break;
+        case 'digikey':
+            container.innerHTML = produtosDigikey.map(p => `
+                <div class="produto-card" onclick="window.open('${p.link}', '_blank')">
+                    <div class="produto-imagem" style="background-image: url('${p.imagem}')"></div>
+                    <div class="produto-info">
+                        <div class="produto-nome">${p.nome}</div>
+                        <div class="produto-preco">${p.preco}</div>
+                        <div class="produto-fonte">${p.fonte}</div>
+                    </div>
+                    <a class="produto-link" href="${p.link}" target="_blank">Ver na Loja</a>
+                </div>
+            `).join('');
+            break;
+    }
 }
 
 // ===== FUNÇÕES DE DATA =====
@@ -182,44 +254,35 @@ function updateDate() {
     document.getElementById('current-date').textContent = date.toLocaleDateString('pt-BR', options);
 }
 
-// ===== COTAÇÕES (URL CORRIGIDA) =====
+// ===== COTAÇÕES =====
 async function fetchExchangeRates() {
     try {
         const response = await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL');
-        
-        if (!response.ok) {
-            throw new Error('Erro na API');
-        }
-        
+        if (!response.ok) throw new Error('Erro na API');
         const data = await response.json();
         
         if (data.USDBRL && data.EURBRL) {
-            const usd = data.USDBRL;
-            const eur = data.EURBRL;
-            
-            const usdFormatted = `R$ ${parseFloat(usd.bid).toFixed(2)}`;
-            const eurFormatted = `R$ ${parseFloat(eur.bid).toFixed(2)}`;
+            const usdFormatted = `R$ ${parseFloat(data.USDBRL.bid).toFixed(2)}`;
+            const eurFormatted = `R$ ${parseFloat(data.EURBRL.bid).toFixed(2)}`;
             
             document.getElementById('usd-value-mobile').textContent = usdFormatted;
             document.getElementById('eur-value-mobile').textContent = eurFormatted;
             document.getElementById('usd-value-inline').textContent = usdFormatted;
             document.getElementById('eur-value-inline').textContent = eurFormatted;
             
-            const usdVariation = parseFloat(usd.pctChange);
-            const eurVariation = parseFloat(eur.pctChange);
-            updateTrendElement('usd-trend-inline', usdVariation);
-            updateTrendElement('eur-trend-inline', eurVariation);
+            updateTrendElement('usd-trend-inline', parseFloat(data.USDBRL.pctChange));
+            updateTrendElement('eur-trend-inline', parseFloat(data.EURBRL.pctChange));
             
             const updateTime = new Date().toLocaleTimeString('pt-BR');
             document.getElementById('exchange-update-mobile').textContent = `Atualizado às ${updateTime}`;
             document.getElementById('exchange-update-inline').textContent = `Atualizado às ${updateTime}`;
         }
     } catch (error) {
-        console.error('Erro ao buscar cotações:', error);
-        document.getElementById('usd-value-mobile').textContent = 'R$ --';
-        document.getElementById('eur-value-mobile').textContent = 'R$ --';
-        document.getElementById('usd-value-inline').textContent = 'R$ --';
-        document.getElementById('eur-value-inline').textContent = 'R$ --';
+        console.error('Erro cotações:', error);
+        ['usd-value-mobile','eur-value-mobile','usd-value-inline','eur-value-inline'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = 'R$ --';
+        });
     }
 }
 
@@ -240,86 +303,62 @@ async function fetchWeather() {
     try {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                async (position) => {
-                    await fetchWeatherByCoords(position.coords.latitude, position.coords.longitude);
-                },
-                async () => {
-                    await fetchWeatherByCoords(-23.5505, -46.6333);
-                }
+                async (pos) => { await fetchWeatherByCoords(pos.coords.latitude, pos.coords.longitude); },
+                async () => { await fetchWeatherByCoords(-23.5505, -46.6333); }
             );
         } else {
             await fetchWeatherByCoords(-23.5505, -46.6333);
         }
-    } catch (error) {
-        console.error('Erro ao buscar clima:', error);
-    }
+    } catch (e) { console.error('Erro clima:', e); }
 }
 
 async function fetchWeatherByCoords(lat, lon) {
     try {
         const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto&forecast_days=5`);
         const data = await response.json();
-        
         const temp = Math.round(data.current.temperature_2m);
-        const weatherCode = data.current.weather_code;
+        const code = data.current.weather_code;
         
         document.getElementById('header-temp').textContent = `${temp}°C`;
         document.getElementById('weather-temp').textContent = `${temp}°C`;
-        document.getElementById('weather-desc').textContent = getWeatherDescription(weatherCode);
-        document.getElementById('weather-icon').textContent = getWeatherEmoji(weatherCode);
+        document.getElementById('weather-desc').textContent = getWeatherDescription(code);
+        document.getElementById('weather-icon').textContent = getWeatherEmoji(code);
         document.getElementById('sidebar-weather-temp').textContent = `${temp}°C`;
-        document.getElementById('sidebar-weather-icon').textContent = getWeatherEmoji(weatherCode);
+        document.getElementById('sidebar-weather-icon').textContent = getWeatherEmoji(code);
         
         try {
-            const geoResponse = await fetch(`https://geocoding-api.open-meteo.com/v1/search?latitude=${lat}&longitude=${lon}&count=1&language=pt&format=json`);
-            const geoData = await geoResponse.json();
-            if (geoData.results && geoData.results.length > 0) {
-                const locationName = geoData.results[0].name;
-                document.getElementById('weather-location').textContent = `📍 ${locationName}`;
-                document.getElementById('header-location').textContent = locationName;
-                document.getElementById('sidebar-weather-location').textContent = `📍 ${locationName}`;
+            const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?latitude=${lat}&longitude=${lon}&count=1&language=pt&format=json`);
+            const geoData = await geoRes.json();
+            if (geoData.results?.[0]) {
+                const loc = geoData.results[0].name;
+                document.getElementById('weather-location').textContent = `📍 ${loc}`;
+                document.getElementById('header-location').textContent = loc;
+                document.getElementById('sidebar-weather-location').textContent = `📍 ${loc}`;
             }
-        } catch (e) {
-            document.getElementById('weather-location').textContent = `📍 ${lat.toFixed(2)}, ${lon.toFixed(2)}`;
-        }
+        } catch(e) {}
         
         const forecastContainer = document.getElementById('weather-forecast');
         forecastContainer.innerHTML = '';
-        const dias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-        
+        const dias = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
         for (let i = 0; i < data.daily.time.length; i++) {
-            const date = new Date(data.daily.time[i]);
-            const dayName = dias[date.getDay()];
-            const icon = getWeatherEmoji(data.daily.weather_code[i]);
-            const tempMax = Math.round(data.daily.temperature_2m_max[i]);
-            const tempMin = Math.round(data.daily.temperature_2m_min[i]);
-            
+            const d = new Date(data.daily.time[i]);
             forecastContainer.innerHTML += `
                 <div class="forecast-item">
-                    <span class="forecast-day">${dayName}</span>
-                    <span class="forecast-icon">${icon}</span>
-                    <span class="forecast-temp">${tempMax}° / ${tempMin}°</span>
+                    <span class="forecast-day">${dias[d.getDay()]}</span>
+                    <span class="forecast-icon">${getWeatherEmoji(data.daily.weather_code[i])}</span>
+                    <span class="forecast-temp">${Math.round(data.daily.temperature_2m_max[i])}° / ${Math.round(data.daily.temperature_2m_min[i])}°</span>
                 </div>
             `;
         }
-    } catch (error) {
-        console.error('Erro ao buscar clima:', error);
+    } catch(e) {
         document.getElementById('weather-temp').textContent = '--°C';
         document.getElementById('weather-desc').textContent = 'Indisponível';
     }
 }
 
 function getWeatherDescription(code) {
-    const descriptions = {
-        0: 'Céu limpo', 1: 'Parcialmente nublado', 2: 'Parcialmente nublado',
-        3: 'Nublado', 45: 'Nevoeiro', 48: 'Nevoeiro com geada',
-        51: 'Garoa leve', 53: 'Garoa', 55: 'Garoa intensa',
-        61: 'Chuva fraca', 63: 'Chuva', 65: 'Chuva forte',
-        71: 'Neve fraca', 73: 'Neve', 75: 'Neve forte',
-        80: 'Pancadas de chuva', 81: 'Pancadas fortes', 82: 'Pancadas violentas',
-        95: 'Trovoada', 96: 'Trovoada com granizo', 99: 'Trovoada forte'
-    };
-    return descriptions[code] || 'Tempo variável';
+    const d = {0:'Céu limpo',1:'Parcialmente nublado',2:'Parcialmente nublado',3:'Nublado',45:'Nevoeiro',48:'Nevoeiro',51:'Garoa',53:'Garoa',55:'Garoa',61:'Chuva fraca',63:'Chuva',65:'Chuva forte',80:'Pancadas',81:'Pancadas fortes',82:'Pancadas violentas',95:'Trovoada'};
+    return d[code] || 'Variável';
 }
 
 function getWeatherEmoji(code) {
@@ -329,60 +368,43 @@ function getWeatherEmoji(code) {
     if (code <= 48) return '🌫️';
     if (code <= 55) return '🌧️';
     if (code <= 65) return '🌧️';
-    if (code <= 75) return '🌨️';
     if (code <= 82) return '⛈️';
-    if (code <= 99) return '⛈️';
     return '🌡️';
 }
 
-// ===== AÇÕES =====
+// ===== AÇÕES (Brapi com fallback) =====
 async function fetchStocks() {
+    const stocksList = document.getElementById('stocks-list');
+    stocksList.innerHTML = '<div class="forecast-loading">Carregando ações...</div>';
+    
     try {
-        const stocksList = document.getElementById('stocks-list');
-        stocksList.innerHTML = '<div class="forecast-loading">Carregando ações...</div>';
-        
         const response = await fetch('https://brapi.dev/api/quote/PETR4,VALE3,ITUB4,BBDC4,ABEV3,MGLU3');
-        
-        if (!response.ok) {
-            throw new Error('Erro na API Brapi');
-        }
-        
+        if (!response.ok) throw new Error('Erro Brapi');
         const data = await response.json();
         
-        if (data.results && data.results.length > 0) {
-            let stocksHtml = '';
-            
-            data.results.forEach(stock => {
-                const price = stock.regularMarketPrice;
-                const change = stock.regularMarketChange;
-                const changePercent = stock.regularMarketChangePercent;
-                const symbol = stock.symbol;
-                const name = stock.longName || stock.shortName || symbol;
-                
-                const changeClass = change >= 0 ? 'positive' : 'negative';
-                const changeSign = change >= 0 ? '+' : '';
-                
-                stocksHtml += `
+        if (data.results?.length) {
+            stocksList.innerHTML = data.results.map(s => {
+                const change = s.regularMarketChange || 0;
+                const cls = change >= 0 ? 'positive' : 'negative';
+                const sign = change >= 0 ? '+' : '';
+                return `
                     <div class="stock-item">
                         <div>
-                            <span class="stock-symbol">${symbol}</span>
-                            <span class="stock-name">${name}</span>
+                            <span class="stock-symbol">${s.symbol}</span>
+                            <span class="stock-name">${s.longName || s.shortName || s.symbol}</span>
                         </div>
-                        <div style="text-align: right;">
-                            <span class="stock-price">R$ ${price.toFixed(2)}</span>
-                            <span class="stock-change ${changeClass}">${changeSign}${changePercent.toFixed(2)}%</span>
+                        <div style="text-align:right;">
+                            <span class="stock-price">R$ ${(s.regularMarketPrice || 0).toFixed(2)}</span>
+                            <span class="stock-change ${cls}">${sign}${(s.regularMarketChangePercent || 0).toFixed(2)}%</span>
                         </div>
                     </div>
                 `;
-            });
-            
-            stocksList.innerHTML = stocksHtml;
+            }).join('');
         } else {
             throw new Error('Sem dados');
         }
-    } catch (error) {
-        console.error('Erro ao buscar ações:', error);
-        document.getElementById('stocks-list').innerHTML = '<div class="forecast-loading">Ações indisponíveis no momento.</div>';
+    } catch(e) {
+        stocksList.innerHTML = '<div class="forecast-loading">Ações indisponíveis. Tente novamente.</div>';
     }
 }
 
@@ -411,40 +433,30 @@ document.getElementById('close-search').addEventListener('click', () => {
     document.getElementById('search-results').innerHTML = '';
 });
 document.getElementById('search-input').addEventListener('input', debounce((e) => {
-    const query = e.target.value.toLowerCase();
-    const resultsContainer = document.getElementById('search-results');
-    if (query.length < 3) { resultsContainer.innerHTML = ''; return; }
-    const results = allNews.filter(news => 
-        news.title.toLowerCase().includes(query) ||
-        news.description.toLowerCase().includes(query) ||
-        news.source.toLowerCase().includes(query)
-    ).slice(0, 20);
-    if (results.length === 0) {
-        resultsContainer.innerHTML = '<p style="color:white;text-align:center;padding:1rem;">Nenhum resultado.</p>';
-        return;
-    }
-    resultsContainer.innerHTML = results.map(news => `
-        <div class="search-result-item" onclick="window.open('${news.link}', '_blank')">
-            <h3 style="margin:0 0 0.5rem 0;color:#1e3c72;">${news.title}</h3>
-            <p style="margin:0;font-size:0.9rem;color:#666;">${news.source} - ${news.category}</p>
+    const q = e.target.value.toLowerCase();
+    const c = document.getElementById('search-results');
+    if (q.length < 3) { c.innerHTML = ''; return; }
+    const results = allNews.filter(n => n.title.toLowerCase().includes(q) || n.description.toLowerCase().includes(q) || n.source.toLowerCase().includes(q)).slice(0, 20);
+    c.innerHTML = results.length ? results.map(n => `
+        <div class="search-result-item" onclick="window.open('${n.link}', '_blank')">
+            <h3 style="margin:0 0 0.5rem;color:#1e3c72;">${n.title}</h3>
+            <p style="margin:0;font-size:0.9rem;color:#666;">${n.source} - ${n.category}</p>
         </div>
-    `).join('');
+    `).join('') : '<p style="color:white;text-align:center;padding:1rem;">Nenhum resultado.</p>';
 }, 300));
 
-// ===== FILTROS DE REGIÃO =====
+// ===== FILTROS =====
 document.querySelectorAll('.region-btn, .region-btn-mobile').forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelectorAll('.region-btn, .region-btn-mobile').forEach(b => b.classList.remove('active'));
-        const region = btn.dataset.region;
-        document.querySelectorAll(`.region-btn[data-region="${region}"], .region-btn-mobile[data-region="${region}"]`).forEach(b => b.classList.add('active'));
-        activeRegion = region;
+        document.querySelectorAll(`.region-btn[data-region="${btn.dataset.region}"], .region-btn-mobile[data-region="${btn.dataset.region}"]`).forEach(b => b.classList.add('active'));
+        activeRegion = btn.dataset.region;
         visibleDestaques = 10;
         visiblePorCategoria = 6;
         renderAllSections();
     });
 });
 
-// ===== NAVEGAÇÃO POR ÂNCORAS =====
 document.querySelectorAll('.filter-btn, .filter-btn-mobile').forEach(btn => {
     btn.addEventListener('click', () => {
         const target = btn.dataset.category;
@@ -461,41 +473,25 @@ document.querySelectorAll('.filter-btn, .filter-btn-mobile').forEach(btn => {
 
 // ===== PRIORIZAR BRASILEIROS =====
 function priorizarBrasileiros(noticias) {
-    const brasileiras = noticias.filter(n => n.region === 'nacional');
-    const internacionais = noticias.filter(n => n.region === 'internacional');
-    
+    const br = noticias.filter(n => n.region === 'nacional');
+    const int = noticias.filter(n => n.region === 'internacional');
     const resultado = [];
     let i = 0, j = 0;
-    
-    while (i < brasileiras.length || j < internacionais.length) {
-        for (let k = 0; k < 4 && i < brasileiras.length; k++, i++) {
-            resultado.push(brasileiras[i]);
-        }
-        for (let k = 0; k < 2 && j < internacionais.length; k++, j++) {
-            resultado.push(internacionais[j]);
-        }
+    while (i < br.length || j < int.length) {
+        for (let k = 0; k < 4 && i < br.length; k++, i++) resultado.push(br[i]);
+        for (let k = 0; k < 2 && j < int.length; k++, j++) resultado.push(int[j]);
     }
-    
     return resultado;
 }
 
-// ===== GET DESTAQUES =====
 function getDestaquesPriorizados() {
-    let filteredNews = allNews;
-    if (activeRegion !== 'all') {
-        filteredNews = allNews.filter(item => item.region === activeRegion);
-    }
-    
-    const prioritarias = filteredNews.filter(n => n.category === 'Automotiva' || n.category === 'Aeronáutica');
-    const outras = filteredNews.filter(n => n.category !== 'Automotiva' && n.category !== 'Aeronáutica');
-    
-    const prioritariasPriorizadas = priorizarBrasileiros(prioritarias);
-    const outrasPriorizadas = priorizarBrasileiros(outras);
-    
-    return [...prioritariasPriorizadas, ...outrasPriorizadas];
+    let filtered = allNews;
+    if (activeRegion !== 'all') filtered = allNews.filter(n => n.region === activeRegion);
+    const prioritarias = filtered.filter(n => n.category === 'Automotiva' || n.category === 'Aeronáutica');
+    const outras = filtered.filter(n => n.category !== 'Automotiva' && n.category !== 'Aeronáutica');
+    return [...priorizarBrasileiros(prioritarias), ...priorizarBrasileiros(outras)];
 }
 
-// ===== LOAD MORE =====
 function loadMoreNews(tipo) {
     if (tipo === 'destaques') {
         visibleDestaques += INCREMENTO_DESTAQUES;
@@ -506,18 +502,13 @@ window.loadMoreNews = loadMoreNews;
 
 // ===== BUSCA DE FEEDS =====
 async function fetchFeed(feed) {
-    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`;
     try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
+        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`);
+        const data = await res.json();
         if (data.status === 'ok') {
             return data.items.map(item => ({
-                source: feed.source,
-                color: feed.color,
-                category: feed.category,
-                region: feed.region,
-                title: item.title,
-                link: item.link,
+                source: feed.source, color: feed.color, category: feed.category, region: feed.region,
+                title: item.title, link: item.link,
                 description: item.description.replace(/<[^>]*>/g, '').substring(0, 150) + '...',
                 image: item.enclosure?.link || item.thumbnail || '',
                 pubDate: new Date(item.pubDate),
@@ -525,77 +516,54 @@ async function fetchFeed(feed) {
             }));
         }
         return [];
-    } catch (error) {
-        console.error(`Erro ao buscar ${feed.source}:`, error);
-        return [];
-    }
+    } catch(e) { console.error(`Erro ${feed.source}:`, e); return []; }
 }
 
 async function loadAllFeeds() {
     if (isLoading) return;
     isLoading = true;
-    document.getElementById('destaques-grid').innerHTML = '<div class="loading">Carregando destaques...</div>';
+    document.getElementById('destaques-grid').innerHTML = '<div class="loading">Carregando...</div>';
     try {
-        const allPromises = feeds.map(feed => fetchFeed(feed));
-        const results = await Promise.all(allPromises);
-        allNews = results.flat();
-        allNews.sort((a, b) => b.pubDate - a.pubDate);
+        const results = await Promise.all(feeds.map(f => fetchFeed(f)));
+        allNews = results.flat().sort((a, b) => b.pubDate - a.pubDate);
         updateStats();
         updateSourcesList();
         renderAllSections();
-    } catch (error) {
-        console.error('Erro ao carregar feeds:', error);
+    } catch(e) {
         document.getElementById('destaques-grid').innerHTML = '<div class="loading">Erro ao carregar.</div>';
-    } finally {
-        isLoading = false;
-    }
+    } finally { isLoading = false; }
 }
 
 // ===== RENDERIZAÇÃO =====
 function renderAllSections() {
-    let filteredNews = allNews;
-    if (activeRegion !== 'all') {
-        filteredNews = allNews.filter(item => item.region === activeRegion);
-    }
+    let filtered = allNews;
+    if (activeRegion !== 'all') filtered = allNews.filter(n => n.region === activeRegion);
 
-    const destaques = getDestaquesPriorizados();
-    renderDestaques(destaques);
+    renderDestaques(getDestaquesPriorizados());
 
-    const categorias = ['Aeronáutica', 'Automotiva', 'Semicondutores', 'Indústria', 'Embarcados', 'Projetos', 'Bens de Consumo', 'Geral'];
+    const categorias = ['Aeronáutica','Automotiva','Semicondutores','Indústria','Embarcados','Projetos','Bens de Consumo','Geral'];
     const container = document.getElementById('categorias-container');
     container.innerHTML = '';
     
     categorias.forEach(cat => {
-        const catNews = filteredNews.filter(n => n.category === cat);
-        const catNewsPriorizado = priorizarBrasileiros(catNews);
-        const catNewsLimited = catNewsPriorizado.slice(0, visiblePorCategoria);
-        
-        if (catNewsLimited.length > 0) {
+        const catNews = priorizarBrasileiros(filtered.filter(n => n.category === cat));
+        const limited = catNews.slice(0, visiblePorCategoria);
+        if (limited.length > 0) {
             const section = document.createElement('section');
             section.className = 'categoria-bloco';
             section.id = `cat-${cat}`;
-            
-            const title = document.createElement('h2');
-            title.className = 'section-title';
-            title.textContent = cat;
-            section.appendChild(title);
-            
+            section.innerHTML = `<h2 class="section-title">${cat}</h2>`;
             const grid = document.createElement('div');
             grid.className = 'categoria-grid';
-            grid.innerHTML = catNewsLimited.map(news => createCardHTML(news)).join('');
+            grid.innerHTML = limited.map(n => createCardHTML(n)).join('');
             section.appendChild(grid);
-            
-            if (catNewsPriorizado.length > visiblePorCategoria) {
-                const btnVerMais = document.createElement('button');
-                btnVerMais.className = 'ver-mais-btn';
-                btnVerMais.textContent = 'Ver Mais Notícias';
-                btnVerMais.onclick = () => {
-                    visiblePorCategoria += INCREMENTO_CATEGORIA;
-                    renderAllSections();
-                };
-                section.appendChild(btnVerMais);
+            if (catNews.length > visiblePorCategoria) {
+                const btn = document.createElement('button');
+                btn.className = 'ver-mais-btn';
+                btn.textContent = 'Ver Mais Notícias';
+                btn.onclick = () => { visiblePorCategoria += INCREMENTO_CATEGORIA; renderAllSections(); };
+                section.appendChild(btn);
             }
-            
             container.appendChild(section);
         }
     });
@@ -603,60 +571,16 @@ function renderAllSections() {
 
 function renderDestaques(destaques) {
     const grid = document.getElementById('destaques-grid');
-    const btnVerMais = document.getElementById('ver-mais-destaques');
-    
-    if (destaques.length === 0) {
-        grid.innerHTML = '<div class="loading">Nenhuma notícia encontrada.</div>';
-        btnVerMais.style.display = 'none';
-        return;
-    }
-    
-    const limited = destaques.slice(0, visibleDestaques);
-    grid.innerHTML = limited.map(news => createCardHTML(news)).join('');
-    
-    if (destaques.length > visibleDestaques) {
-        btnVerMais.style.display = 'block';
-    } else {
-        btnVerMais.style.display = 'none';
-    }
+    const btn = document.getElementById('ver-mais-destaques');
+    if (!destaques.length) { grid.innerHTML = '<div class="loading">Nenhuma notícia.</div>'; btn.style.display = 'none'; return; }
+    grid.innerHTML = destaques.slice(0, visibleDestaques).map(n => createCardHTML(n)).join('');
+    btn.style.display = destaques.length > visibleDestaques ? 'block' : 'none';
 }
 
 function createCardHTML(news) {
-    const regionBadge = news.region === 'nacional' 
-        ? '<span class="card-region region-nacional">🇧🇷 Nacional</span>'
-        : '<span class="card-region region-internacional">🌍 Internacional</span>';
-    let imageHtml = '';
-    if (news.image) {
-        imageHtml = `<div class="card-image" style="background-image: url('${news.image}')"><span class="card-category">${news.category}</span></div>`;
-    } else {
-        const gradients = [
-            'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-            'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-            'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-            'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-            'linear-gradient(135deg, #30cfd0 0%, #330867 100%)'
-        ];
-        const grad = gradients[Math.floor(Math.random() * gradients.length)];
-        imageHtml = `<div class="card-image" style="background-image: ${grad}"><span class="card-category">${news.category}</span></div>`;
-    }
-    return `
-        <article class="card" onclick="window.open('${news.link}', '_blank')">
-            ${imageHtml}
-            <div class="card-content">
-                <div class="card-source-row">
-                    <span class="card-source" style="color:${news.color}">${news.source}</span>
-                    ${regionBadge}
-                </div>
-                <h2>${news.title}</h2>
-                <p>${news.description}</p>
-                <div class="card-footer">
-                    <span>📅 ${news.pubDateFormatted}</span>
-                    <span>🔗 Ler mais</span>
-                </div>
-            </div>
-        </article>
-    `;
+    const badge = news.region === 'nacional' ? '<span class="card-region region-nacional">🇧🇷 Nacional</span>' : '<span class="card-region region-internacional">🌍 Internacional</span>';
+    const img = news.image ? `<div class="card-image" style="background-image:url('${news.image}')"><span class="card-category">${news.category}</span></div>` : `<div class="card-image" style="background-image:linear-gradient(135deg,#667eea,#764ba2)"><span class="card-category">${news.category}</span></div>`;
+    return `<article class="card" onclick="window.open('${news.link}','_blank')">${img}<div class="card-content"><div class="card-source-row"><span class="card-source" style="color:${news.color}">${news.source}</span>${badge}</div><h2>${news.title}</h2><p>${news.description}</p><div class="card-footer"><span>📅 ${news.pubDateFormatted}</span><span>🔗 Ler mais</span></div></div></article>`;
 }
 
 // ===== ESTATÍSTICAS =====
@@ -669,21 +593,14 @@ function updateStats() {
 
 function updateSourcesList() {
     const list = document.getElementById('sources-list');
-    const activeSources = feeds.filter(f => allNews.some(n => n.source === f.source));
-    if (activeSources.length === 0) { list.innerHTML = '<li>Nenhuma fonte ativa</li>'; return; }
-    list.innerHTML = activeSources.slice(0, 12).map(f => `
-        <li><span class="source-dot" style="background:${f.color}"></span>${f.source}<span style="margin-left:auto;font-size:0.8rem;">${f.region === 'nacional' ? '🇧🇷' : '🌍'}</span></li>
-    `).join('');
+    const active = feeds.filter(f => allNews.some(n => n.source === f.source));
+    list.innerHTML = active.length ? active.slice(0, 12).map(f => `<li><span class="source-dot" style="background:${f.color}"></span>${f.source}<span style="margin-left:auto;font-size:0.8rem;">${f.region==='nacional'?'🇧🇷':'🌍'}</span></li>`).join('') : '<li>Nenhuma fonte ativa</li>';
 }
 
 // ===== AUXILIARES =====
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => { clearTimeout(timeout); func(...args); };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
+function debounce(fn, wait) {
+    let t;
+    return function(...args) { clearTimeout(t); t = setTimeout(() => fn(...args), wait); };
 }
 
 // ===== INICIALIZAÇÃO =====
@@ -693,11 +610,11 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchWeather();
     fetchStocks();
     loadAllFeeds();
-    carregarProdutosDesktop();
-    carregarProdutosMobile();
+    rotacionarAnuncios();
     
     setInterval(fetchExchangeRates, 300000);
     setInterval(fetchWeather, 600000);
     setInterval(fetchStocks, 300000);
     setInterval(loadAllFeeds, 1800000);
+    setInterval(rotacionarAnuncios, anunciosConfig.intervaloRotacao);
 });
