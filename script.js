@@ -94,6 +94,10 @@ const feeds = [
 let allNews = [];
 let activeRegion = 'all';
 let isLoading = false;
+let visibleDestaques = 10;
+let visiblePorCategoria = 6;
+const INCREMENTO_DESTAQUES = 10;
+const INCREMENTO_CATEGORIA = 6;
 
 // ===== FUNÇÕES DE DATA =====
 function updateDate() {
@@ -151,7 +155,7 @@ function updateTrendElement(elementId, variation) {
     }
 }
 
-// ===== CLIMA (Open-Meteo - sem API key) =====
+// ===== CLIMA (Open-Meteo) =====
 async function fetchWeather() {
     try {
         if (navigator.geolocation) {
@@ -251,12 +255,65 @@ function getWeatherEmoji(code) {
     return '🌡️';
 }
 
-// ===== AÇÕES (Yahoo Finance) =====
+// ===== AÇÕES (Brapi API - gratuita para cotações brasileiras) =====
 async function fetchStocks() {
+    try {
+        const stocksList = document.getElementById('stocks-list');
+        stocksList.innerHTML = '<div class="forecast-loading">Carregando ações...</div>';
+        
+        // Usando Brapi API (gratuita, sem necessidade de token para uso básico)
+        const response = await fetch('https://brapi.dev/api/quote/PETR4,VALE3,ITUB4,BBDC4,ABEV3,MGLU3');
+        
+        if (!response.ok) {
+            throw new Error('Erro na API Brapi');
+        }
+        
+        const data = await response.json();
+        
+        if (data.results && data.results.length > 0) {
+            let stocksHtml = '';
+            
+            data.results.forEach(stock => {
+                const price = stock.regularMarketPrice;
+                const change = stock.regularMarketChange;
+                const changePercent = stock.regularMarketChangePercent;
+                const symbol = stock.symbol;
+                const name = stock.longName || stock.shortName || symbol;
+                
+                const changeClass = change >= 0 ? 'positive' : 'negative';
+                const changeSign = change >= 0 ? '+' : '';
+                
+                stocksHtml += `
+                    <div class="stock-item">
+                        <div>
+                            <span class="stock-symbol">${symbol}</span>
+                            <span class="stock-name">${name}</span>
+                        </div>
+                        <div style="text-align: right;">
+                            <span class="stock-price">R$ ${price.toFixed(2)}</span>
+                            <span class="stock-change ${changeClass}">${changeSign}${changePercent.toFixed(2)}%</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            stocksList.innerHTML = stocksHtml;
+        } else {
+            throw new Error('Sem dados disponíveis');
+        }
+    } catch (error) {
+        console.error('Erro ao buscar ações:', error);
+        // Fallback: tenta Yahoo Finance
+        await fetchStocksFallback();
+    }
+}
+
+// Fallback usando Yahoo Finance
+async function fetchStocksFallback() {
     try {
         const symbols = ['PETR4.SA', 'VALE3.SA', 'ITUB4.SA', 'BBDC4.SA', 'ABEV3.SA', 'MGLU3.SA'];
         const stocksList = document.getElementById('stocks-list');
-        stocksList.innerHTML = '<div class="forecast-loading">Carregando ações...</div>';
+        stocksList.innerHTML = '<div class="forecast-loading">Carregando ações (fallback)...</div>';
         
         const stockNames = {
             'PETR4.SA': 'Petrobras',
@@ -309,7 +366,7 @@ async function fetchStocks() {
             stocksList.innerHTML = '<div class="forecast-loading">Não foi possível carregar ações.</div>';
         }
     } catch (error) {
-        console.error('Erro ao buscar ações:', error);
+        console.error('Erro no fallback de ações:', error);
         document.getElementById('stocks-list').innerHTML = '<div class="forecast-loading">Erro ao carregar ações.</div>';
     }
 }
@@ -366,6 +423,8 @@ document.querySelectorAll('.region-btn, .region-btn-mobile').forEach(btn => {
         const region = btn.dataset.region;
         document.querySelectorAll(`.region-btn[data-region="${region}"], .region-btn-mobile[data-region="${region}"]`).forEach(b => b.classList.add('active'));
         activeRegion = region;
+        visibleDestaques = 10;
+        visiblePorCategoria = 6;
         renderAllSections();
     });
 });
@@ -384,6 +443,51 @@ document.querySelectorAll('.filter-btn, .filter-btn-mobile').forEach(btn => {
         document.getElementById('sidebar-overlay').classList.remove('active');
     });
 });
+
+// ===== PRIORIZAR BRASILEIROS (4:2) =====
+function priorizarBrasileiros(noticias) {
+    const brasileiras = noticias.filter(n => n.region === 'nacional');
+    const internacionais = noticias.filter(n => n.region === 'internacional');
+    
+    const resultado = [];
+    let i = 0, j = 0;
+    
+    while (i < brasileiras.length || j < internacionais.length) {
+        for (let k = 0; k < 4 && i < brasileiras.length; k++, i++) {
+            resultado.push(brasileiras[i]);
+        }
+        for (let k = 0; k < 2 && j < internacionais.length; k++, j++) {
+            resultado.push(internacionais[j]);
+        }
+    }
+    
+    return resultado;
+}
+
+// ===== GET DESTAQUES PRIORIZADOS =====
+function getDestaquesPriorizados() {
+    let filteredNews = allNews;
+    if (activeRegion !== 'all') {
+        filteredNews = allNews.filter(item => item.region === activeRegion);
+    }
+    
+    const prioritarias = filteredNews.filter(n => n.category === 'Automotiva' || n.category === 'Aeronáutica');
+    const outras = filteredNews.filter(n => n.category !== 'Automotiva' && n.category !== 'Aeronáutica');
+    
+    const prioritariasPriorizadas = priorizarBrasileiros(prioritarias);
+    const outrasPriorizadas = priorizarBrasileiros(outras);
+    
+    return [...prioritariasPriorizadas, ...outrasPriorizadas];
+}
+
+// ===== LOAD MORE =====
+function loadMoreNews(tipo) {
+    if (tipo === 'destaques') {
+        visibleDestaques += INCREMENTO_DESTAQUES;
+        renderDestaques(getDestaquesPriorizados());
+    }
+}
+window.loadMoreNews = loadMoreNews;
 
 // ===== BUSCA DE FEEDS =====
 async function fetchFeed(feed) {
@@ -439,28 +543,44 @@ function renderAllSections() {
         filteredNews = allNews.filter(item => item.region === activeRegion);
     }
 
-    const prioritarias = filteredNews.filter(n => n.category === 'Automotiva' || n.category === 'Aeronáutica');
-    const outras = filteredNews.filter(n => n.category !== 'Automotiva' && n.category !== 'Aeronáutica');
-    const destaques = [...prioritarias, ...outras].slice(0, 10);
+    const destaques = getDestaquesPriorizados();
     renderDestaques(destaques);
 
     const categorias = ['Aeronáutica', 'Automotiva', 'Semicondutores', 'Indústria', 'Embarcados', 'Projetos', 'Bens de Consumo', 'Geral'];
     const container = document.getElementById('categorias-container');
     container.innerHTML = '';
+    
     categorias.forEach(cat => {
-        const catNews = filteredNews.filter(n => n.category === cat).slice(0, 6);
-        if (catNews.length > 0) {
+        const catNews = filteredNews.filter(n => n.category === cat);
+        const catNewsPriorizado = priorizarBrasileiros(catNews);
+        const catNewsLimited = catNewsPriorizado.slice(0, visiblePorCategoria);
+        
+        if (catNewsLimited.length > 0) {
             const section = document.createElement('section');
             section.className = 'categoria-bloco';
             section.id = `cat-${cat}`;
+            
             const title = document.createElement('h2');
             title.className = 'section-title';
             title.textContent = cat;
             section.appendChild(title);
+            
             const grid = document.createElement('div');
             grid.className = 'categoria-grid';
-            grid.innerHTML = catNews.map(news => createCardHTML(news)).join('');
+            grid.innerHTML = catNewsLimited.map(news => createCardHTML(news)).join('');
             section.appendChild(grid);
+            
+            if (catNewsPriorizado.length > visiblePorCategoria) {
+                const btnVerMais = document.createElement('button');
+                btnVerMais.className = 'ver-mais-btn';
+                btnVerMais.textContent = 'Ver Mais Notícias';
+                btnVerMais.onclick = () => {
+                    visiblePorCategoria += INCREMENTO_CATEGORIA;
+                    renderAllSections();
+                };
+                section.appendChild(btnVerMais);
+            }
+            
             container.appendChild(section);
         }
     });
@@ -468,11 +588,22 @@ function renderAllSections() {
 
 function renderDestaques(destaques) {
     const grid = document.getElementById('destaques-grid');
+    const btnVerMais = document.getElementById('ver-mais-destaques');
+    
     if (destaques.length === 0) {
         grid.innerHTML = '<div class="loading">Nenhuma notícia encontrada.</div>';
+        btnVerMais.style.display = 'none';
         return;
     }
-    grid.innerHTML = destaques.map(news => createCardHTML(news)).join('');
+    
+    const limited = destaques.slice(0, visibleDestaques);
+    grid.innerHTML = limited.map(news => createCardHTML(news)).join('');
+    
+    if (destaques.length > visibleDestaques) {
+        btnVerMais.style.display = 'block';
+    } else {
+        btnVerMais.style.display = 'none';
+    }
 }
 
 function createCardHTML(news) {
