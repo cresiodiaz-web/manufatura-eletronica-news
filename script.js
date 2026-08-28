@@ -23,14 +23,18 @@ const feeds = [
     { source: 'Embedded.com', url: 'https://www.embedded.com/feed/', color: '#005596', category: 'Embarcados', region: 'internacional' },
     { source: 'Adafruit Blog', url: 'https://blog.adafruit.com/feed/', color: '#00a651', category: 'Embarcados', region: 'internacional' },
 
-    // ===== INDÚSTRIA - Brasileiras =====
-    { source: 'ABINEE', url: 'https://www.abinee.org.br/feed/', color: '#1e3c72', category: 'Indústria', region: 'nacional' },
-    { source: 'Revista Eletrônica', url: 'https://www.revistaeletronica.com.br/feed/', color: '#c0392b', category: 'Indústria', region: 'nacional' },
-    { source: 'CIMM', url: 'https://www.cimm.com.br/rss/', color: '#2c3e50', category: 'Indústria', region: 'nacional' },
-    // ===== INDÚSTRIA - Internacionais =====
-    { source: 'Electronics Weekly', url: 'https://www.electronicsweekly.com/feed/', color: '#27ae60', category: 'Indústria', region: 'internacional' },
-    { source: 'Electronics For You', url: 'https://www.electronicsforu.com/feed', color: '#d35400', category: 'Indústria', region: 'internacional' },
-    { source: 'SMTnet', url: 'https://www.smtnet.com/rss/news.xml', color: '#8e44ad', category: 'Indústria', region: 'internacional' },
+    // ===== INDÚSTRIA - Órgãos e Associações Brasileiras =====
+{ source: 'ABINEE', url: 'https://www.abinee.org.br/feed/', color: '#1e3c72', category: 'Indústria', region: 'nacional' },
+{ source: 'ABIMAQ', url: 'https://www.abimaq.org.br/rss', color: '#00695c', category: 'Indústria', region: 'nacional' },
+{ source: 'ABDI', url: 'https://www.abdi.com.br/rss', color: '#4527a0', category: 'Indústria', region: 'nacional' },
+{ source: 'BNDES', url: 'https://www.bndes.gov.br/wps/portal/site/home/noticias/rss', color: '#1565c0', category: 'Indústria', region: 'nacional' },
+{ source: 'CNI', url: 'https://noticias.portaldaindustria.com.br/rss/', color: '#c62828', category: 'Indústria', region: 'nacional' },
+{ source: 'Revista Eletrônica', url: 'https://www.revistaeletronica.com.br/feed/', color: '#c0392b', category: 'Indústria', region: 'nacional' },
+{ source: 'CIMM', url: 'https://www.cimm.com.br/rss/', color: '#2c3e50', category: 'Indústria', region: 'nacional' },
+// ===== INDÚSTRIA - Internacionais =====
+{ source: 'Electronics Weekly', url: 'https://www.electronicsweekly.com/feed/', color: '#27ae60', category: 'Indústria', region: 'internacional' },
+{ source: 'Electronics For You', url: 'https://www.electronicsforu.com/feed', color: '#d35400', category: 'Indústria', region: 'internacional' },
+{ source: 'SMTnet', url: 'https://www.smtnet.com/rss/news.xml', color: '#8e44ad', category: 'Indústria', region: 'internacional' },
 
     // ===== PROJETOS - Brasileiras =====
     { source: 'Instituto NCB', url: 'https://www.institutoncb.com.br/feed/', color: '#d32f2f', category: 'Projetos', region: 'nacional' },
