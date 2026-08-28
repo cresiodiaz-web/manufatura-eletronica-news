@@ -66,7 +66,13 @@
                     <span>Seu portal de notícias do setor</span>
                 </div>
             </div>
-            <div class="header-date" id="current-date"></div>
+            <div class="header-right">
+                <div class="header-date" id="current-date"></div>
+                <div class="header-weather" id="header-weather">
+                    <span id="header-temp">--°C</span>
+                    <span id="header-location">Localizando...</span>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -134,6 +140,16 @@
             <div class="exchange-update-mobile" id="exchange-update-mobile"></div>
         </div>
         <div class="sidebar-section">
+            <h4>🌤️ Clima</h4>
+            <div id="sidebar-weather">
+                <div class="weather-current-mobile">
+                    <span id="sidebar-weather-icon">🌡️</span>
+                    <span id="sidebar-weather-temp">--°C</span>
+                </div>
+                <div id="sidebar-weather-location">Localizando...</div>
+            </div>
+        </div>
+        <div class="sidebar-section">
             <h4>📊 Estatísticas</h4>
             <div class="stats-mobile">
                 <div class="stat-item-mobile"><span class="stat-number" id="total-news-mobile">0</span><span class="stat-label">Notícias</span></div>
@@ -172,28 +188,56 @@
                 </div>
             </section>
 
-            <!-- Cotações Inline -->
-            <section class="cotacoes-inline" id="cotacoes-inline">
-                <h2 class="section-title">💱 Cotações do Dia</h2>
-                <div class="exchange-inline-container">
-                    <div class="exchange-inline-item exchange-usd">
-                        <div class="exchange-icon">🇺🇸</div>
-                        <div class="exchange-info">
-                            <span class="currency-name">Dólar Comercial</span>
-                            <span class="currency-value" id="usd-value-inline">Carregando...</span>
+            <!-- Painel de Informações -->
+            <section class="info-panel" id="info-panel">
+                <h2 class="section-title">📊 Painel do Dia</h2>
+                <div class="info-panel-container">
+                    <!-- Card 1: Cotações -->
+                    <div class="info-card info-cotacoes">
+                        <h3>💱 Cotações</h3>
+                        <div class="exchange-inline-item exchange-usd">
+                            <div class="exchange-icon">🇺🇸</div>
+                            <div class="exchange-info">
+                                <span class="currency-name">Dólar Comercial</span>
+                                <span class="currency-value" id="usd-value-inline">Carregando...</span>
+                            </div>
+                            <div class="exchange-trend" id="usd-trend-inline"></div>
                         </div>
-                        <div class="exchange-trend" id="usd-trend-inline"></div>
+                        <div class="exchange-inline-item exchange-eur">
+                            <div class="exchange-icon">🇪🇺</div>
+                            <div class="exchange-info">
+                                <span class="currency-name">Euro Comercial</span>
+                                <span class="currency-value" id="eur-value-inline">Carregando...</span>
+                            </div>
+                            <div class="exchange-trend" id="eur-trend-inline"></div>
+                        </div>
+                        <div class="exchange-update-inline" id="exchange-update-inline"></div>
                     </div>
-                    <div class="exchange-inline-item exchange-eur">
-                        <div class="exchange-icon">🇪🇺</div>
-                        <div class="exchange-info">
-                            <span class="currency-name">Euro Comercial</span>
-                            <span class="currency-value" id="eur-value-inline">Carregando...</span>
+
+                    <!-- Card 2: Clima -->
+                    <div class="info-card info-clima">
+                        <h3>🌤️ Clima</h3>
+                        <div class="weather-current">
+                            <div class="weather-icon" id="weather-icon">🌡️</div>
+                            <div class="weather-temp">
+                                <span class="weather-temp-value" id="weather-temp">--°C</span>
+                                <span class="weather-desc" id="weather-desc">Carregando...</span>
+                            </div>
                         </div>
-                        <div class="exchange-trend" id="eur-trend-inline"></div>
+                        <div class="weather-location" id="weather-location">Localizando...</div>
+                        <div class="weather-forecast" id="weather-forecast">
+                            <div class="forecast-loading">Carregando previsão...</div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Ações -->
+                    <div class="info-card info-acoes">
+                        <h3>📈 Ações do Dia</h3>
+                        <div class="stocks-list" id="stocks-list">
+                            <div class="forecast-loading">Carregando ações...</div>
+                        </div>
                     </div>
                 </div>
-                <div class="exchange-update-inline" id="exchange-update-inline"></div>
             </section>
 
             <!-- Blocos por categoria -->
@@ -219,8 +263,7 @@
 
     <footer class="footer">
         <p>&copy; 2026 Manufatura Eletrônica News - Todos os direitos reservados</p>
-        <p>Desenvolvido com Html, Css e JavaScript puro</p>
-    </footer>
+            </footer>
 
     <script src="script.js"></script>
 </body>
