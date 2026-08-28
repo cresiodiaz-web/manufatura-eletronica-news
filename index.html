@@ -11,25 +11,14 @@
     <!-- Header Mobile -->
     <header class="header-mobile">
         <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </button>
-        
         <div class="logo-mobile">
-            <svg class="logo-icon-small" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="50" height="50" rx="12" fill="#2a5298"/>
-                <path d="M15 25L22 18L28 25L35 32" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <circle cx="25" cy="25" r="3" fill="white"/>
-            </svg>
+            <svg class="logo-icon-small" viewBox="0 0 50 50" fill="none"><rect width="50" height="50" rx="12" fill="#2a5298"/><path d="M15 25L22 18L28 25L35 32" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="25" cy="25" r="3" fill="white"/></svg>
             <span class="logo-title-mobile">Manufatura News</span>
         </div>
-        
         <button class="search-btn" id="search-btn" aria-label="Buscar">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="11" cy="11" r="7" stroke="white" stroke-width="2"/>
-                <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="white" stroke-width="2"/>
-            </svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="white" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="white" stroke-width="2"/></svg>
         </button>
     </header>
 
@@ -37,11 +26,7 @@
     <header class="header-desktop">
         <div class="header-container">
             <div class="logo">
-                <svg class="logo-icon" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="50" height="50" rx="12" fill="#2a5298"/>
-                    <path d="M15 25L22 18L28 25L35 32" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    <circle cx="25" cy="25" r="3" fill="white"/>
-                </svg>
+                <svg class="logo-icon" viewBox="0 0 50 50" fill="none"><rect width="50" height="50" rx="12" fill="#2a5298"/><path d="M15 25L22 18L28 25L35 32" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="25" cy="25" r="3" fill="white"/></svg>
                 <div class="logo-text">
                     <h1>Manufatura Eletrônica News</h1>
                     <span>Seu portal de notícias do setor</span>
@@ -54,23 +39,21 @@
     <!-- Navigation Desktop -->
     <nav class="nav-bar-desktop">
         <div class="nav-container">
-            <!-- Filtro Nacional/Internacional -->
             <div class="region-filter">
                 <button class="region-btn active" data-region="all">🌐 Todas</button>
                 <button class="region-btn" data-region="nacional">🇧🇷 Nacionais</button>
                 <button class="region-btn" data-region="internacional">🌍 Internacionais</button>
             </div>
-            
-            <!-- Filtro por Categoria -->
             <div class="filters" id="filters-desktop">
-                <button class="filter-btn active" data-category="all">🏠 Todas</button>
-                <button class="filter-btn" data-category="Geral">🔬 Geral</button>
-                <button class="filter-btn" data-category="Embarcados">💻 Embarcados</button>
-                <button class="filter-btn" data-category="Indústria">🏭 Indústria</button>
-                <button class="filter-btn" data-category="Projetos">📐 Projetos</button>
-                <button class="filter-btn" data-category="Semicondutores">🔲 Semicondutores</button>
+                <button class="filter-btn" data-category="destaques">⭐ Destaques</button>
                 <button class="filter-btn" data-category="Aeronáutica">✈️ Aeronáutica</button>
+                <button class="filter-btn" data-category="Automotiva">🚗 Automotiva</button>
+                <button class="filter-btn" data-category="Semicondutores">🔲 Semicondutores</button>
+                <button class="filter-btn" data-category="Indústria">🏭 Indústria</button>
+                <button class="filter-btn" data-category="Embarcados">💻 Embarcados</button>
+                <button class="filter-btn" data-category="Projetos">📐 Projetos</button>
                 <button class="filter-btn" data-category="Bens de Consumo">📦 Bens de Consumo</button>
+                <button class="filter-btn" data-category="Geral">🔬 Geral</button>
             </div>
         </div>
     </nav>
@@ -82,7 +65,6 @@
             <h3>Menu</h3>
             <button class="close-sidebar" id="close-sidebar">✕</button>
         </div>
-        
         <div class="sidebar-section">
             <h4>🌐 Origem das Notícias</h4>
             <div class="region-filter-mobile">
@@ -91,62 +73,45 @@
                 <button class="region-btn-mobile" data-region="internacional">🌍 Internacionais</button>
             </div>
         </div>
-        
         <div class="sidebar-section">
-            <h4>📰 Categorias</h4>
-            <div class="filters-mobile" id="filters-mobile">
-                <button class="filter-btn-mobile active" data-category="all">Todas</button>
-                <button class="filter-btn-mobile" data-category="Geral">Geral</button>
-                <button class="filter-btn-mobile" data-category="Embarcados">Embarcados</button>
-                <button class="filter-btn-mobile" data-category="Indústria">Indústria</button>
-                <button class="filter-btn-mobile" data-category="Projetos">Projetos</button>
-                <button class="filter-btn-mobile" data-category="Semicondutores">Semicondutores</button>
-                <button class="filter-btn-mobile" data-category="Aeronáutica">Aeronáutica</button>
-                <button class="filter-btn-mobile" data-category="Bens de Consumo">Bens de Consumo</button>
+            <h4>📰 Temas</h4>
+            <div class="filters-mobile">
+                <button class="filter-btn-mobile" data-category="destaques">⭐ Destaques</button>
+                <button class="filter-btn-mobile" data-category="Aeronáutica">✈️ Aeronáutica</button>
+                <button class="filter-btn-mobile" data-category="Automotiva">🚗 Automotiva</button>
+                <button class="filter-btn-mobile" data-category="Semicondutores">🔲 Semicondutores</button>
+                <button class="filter-btn-mobile" data-category="Indústria">🏭 Indústria</button>
+                <button class="filter-btn-mobile" data-category="Embarcados">💻 Embarcados</button>
+                <button class="filter-btn-mobile" data-category="Projetos">📐 Projetos</button>
+                <button class="filter-btn-mobile" data-category="Bens de Consumo">📦 Bens de Consumo</button>
+                <button class="filter-btn-mobile" data-category="Geral">🔬 Geral</button>
             </div>
         </div>
-        
         <div class="sidebar-section">
             <h4>💱 Cotações do Dia</h4>
-            <div class="exchange-rates-mobile">
-                <div class="exchange-item-mobile">
-                    <span>🇺🇸</span>
-                    <div>
-                        <span class="currency-name">Dólar</span>
-                        <span class="currency-value" id="usd-value-mobile">Carregando...</span>
-                    </div>
-                </div>
-                <div class="exchange-item-mobile">
-                    <span>🇪🇺</span>
-                    <div>
-                        <span class="currency-name">Euro</span>
-                        <span class="currency-value" id="eur-value-mobile">Carregando...</span>
-                    </div>
-                </div>
+            <div class="exchange-item-mobile">
+                <span>🇺🇸</span>
+                <div><span class="currency-name">Dólar</span><span class="currency-value" id="usd-value-mobile">Carregando...</span></div>
+            </div>
+            <div class="exchange-item-mobile">
+                <span>🇪🇺</span>
+                <div><span class="currency-name">Euro</span><span class="currency-value" id="eur-value-mobile">Carregando...</span></div>
             </div>
             <div class="exchange-update-mobile" id="exchange-update-mobile"></div>
         </div>
-        
+        <div class="sidebar-section">
+            <h4>📊 Estatísticas</h4>
+            <div class="stats-mobile">
+                <div class="stat-item-mobile"><span class="stat-number" id="total-news-mobile">0</span><span class="stat-label">Notícias</span></div>
+                <div class="stat-item-mobile"><span class="stat-number" id="total-sources-mobile">0</span><span class="stat-label">Fontes</span></div>
+            </div>
+        </div>
         <div class="sidebar-section">
             <h4>🌐 Idioma</h4>
             <div class="language-selector">
                 <button class="language-btn active" data-lang="pt">🇧🇷 Português</button>
                 <button class="language-btn" data-lang="en">🇺🇸 English</button>
                 <button class="language-btn" data-lang="es">🇪🇸 Español</button>
-            </div>
-        </div>
-        
-        <div class="sidebar-section">
-            <h4>📊 Estatísticas</h4>
-            <div class="stats-mobile">
-                <div class="stat-item-mobile">
-                    <span class="stat-number" id="total-news-mobile">0</span>
-                    <span class="stat-label">Notícias</span>
-                </div>
-                <div class="stat-item-mobile">
-                    <span class="stat-number" id="total-sources-mobile">0</span>
-                    <span class="stat-label">Fontes</span>
-                </div>
             </div>
         </div>
     </aside>
@@ -164,59 +129,52 @@
 
     <!-- Main Layout -->
     <div class="main-layout">
-        <!-- News Grid -->
-        <main class="news-grid" id="news-container">
-            <div class="loading">Carregando notícias...</div>
+        <main class="content">
+            <!-- Destaques (top 10) -->
+            <section class="destaques-section" id="destaques">
+                <h2 class="section-title">⭐ Destaques</h2>
+                <div class="news-grid destaques-grid" id="destaques-grid">
+                    <div class="loading">Carregando destaques...</div>
+                </div>
+            </section>
+
+            <!-- Cotações inline (aparece após destaques) -->
+            <section class="cotacoes-inline" id="cotacoes-inline">
+                <h2 class="section-title">💱 Cotações do Dia</h2>
+                <div class="exchange-inline-container">
+                    <div class="exchange-inline-item">
+                        <span class="currency-flag">🇺🇸</span>
+                        <div><span class="currency-name">Dólar Comercial</span><span class="currency-value" id="usd-value-inline">Carregando...</span></div>
+                    </div>
+                    <div class="exchange-inline-item">
+                        <span class="currency-flag">🇪🇺</span>
+                        <div><span class="currency-name">Euro Comercial</span><span class="currency-value" id="eur-value-inline">Carregando...</span></div>
+                    </div>
+                </div>
+                <div class="exchange-update-inline" id="exchange-update-inline"></div>
+            </section>
+
+            <!-- Blocos por categoria -->
+            <div id="categorias-container"></div>
         </main>
 
-        <!-- Sidebar Desktop -->
+        <!-- Sidebar Desktop (mantida, mas sem cotações para não duplicar) -->
         <aside class="sidebar-desktop">
-            <div class="widget exchange-widget">
-                <h3>💱 Cotações do Dia</h3>
-                <div class="exchange-rates">
-                    <div class="exchange-item">
-                        <span class="currency-flag">🇺🇸</span>
-                        <div class="currency-info">
-                            <span class="currency-name">Dólar Comercial</span>
-                            <span class="currency-value" id="usd-value">Carregando...</span>
-                        </div>
-                    </div>
-                    <div class="exchange-item">
-                        <span class="currency-flag">🇪🇺</span>
-                        <div class="currency-info">
-                            <span class="currency-name">Euro Comercial</span>
-                            <span class="currency-value" id="eur-value">Carregando...</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="exchange-update" id="exchange-update"></div>
-            </div>
-
             <div class="widget about-widget">
                 <h3>📡 Sobre o Portal</h3>
-                <p>Agregador de notícias sobre manufatura eletrônica, aeronáutica e bens de consumo.</p>
+                <p>Agregador de notícias sobre manufatura eletrônica, aeronáutica, automotiva e bens de consumo.</p>
                 <div class="stats">
-                    <div class="stat-item">
-                        <span class="stat-number" id="total-news">0</span>
-                        <span class="stat-label">Notícias</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="total-sources">0</span>
-                        <span class="stat-label">Fontes</span>
-                    </div>
+                    <div class="stat-item"><span class="stat-number" id="total-news">0</span><span class="stat-label">Notícias</span></div>
+                    <div class="stat-item"><span class="stat-number" id="total-sources">0</span><span class="stat-label">Fontes</span></div>
                 </div>
             </div>
-
             <div class="widget sources-widget">
                 <h3>🏆 Principais Fontes</h3>
-                <ul class="sources-list" id="sources-list">
-                    <li>Carregando fontes...</li>
-                </ul>
+                <ul class="sources-list" id="sources-list"><li>Carregando fontes...</li></ul>
             </div>
         </aside>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <p>&copy; 2024 Manufatura Eletrônica News - Todos os direitos reservados</p>
         <p>Desenvolvido com ❤️ e JavaScript puro</p>
