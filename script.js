@@ -106,40 +106,47 @@ function updateDate() {
     document.getElementById('current-date').textContent = date.toLocaleDateString('pt-BR', options);
 }
 
-// ===== COTAÇÕES =====
+// ===== COTAÇÕES (URL CORRIGIDA) =====
 async function fetchExchangeRates() {
     try {
-        const [usdResponse, eurResponse] = await Promise.all([
-            fetch('https://economia.awesomeapi.com.br/last/USD-BRL'),
-            fetch('https://economia.awesomeapi.com.br/last/EUR-BRL')
-        ]);
-        const usdData = await usdResponse.json();
-        const eurData = await eurResponse.json();
-        const usd = usdData.USDBRL;
-        const eur = eurData.EURBRL;
-
-        const usdFormatted = `R$ ${parseFloat(usd.bid).toFixed(2)}`;
-        const eurFormatted = `R$ ${parseFloat(eur.bid).toFixed(2)}`;
-
-        document.getElementById('usd-value-mobile').textContent = usdFormatted;
-        document.getElementById('eur-value-mobile').textContent = eurFormatted;
-        document.getElementById('usd-value-inline').textContent = usdFormatted;
-        document.getElementById('eur-value-inline').textContent = eurFormatted;
-
-        const usdVariation = parseFloat(usd.pctChange);
-        const eurVariation = parseFloat(eur.pctChange);
-        updateTrendElement('usd-trend-inline', usdVariation);
-        updateTrendElement('eur-trend-inline', eurVariation);
-
-        const updateTime = new Date().toLocaleTimeString('pt-BR');
-        document.getElementById('exchange-update-mobile').textContent = `Atualizado às ${updateTime}`;
-        document.getElementById('exchange-update-inline').textContent = `Atualizado às ${updateTime}`;
+        // URL corrigida: /json/last/USD-BRL,EUR-BRL
+        const response = await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL');
+        
+        if (!response.ok) {
+            throw new Error('Erro na API');
+        }
+        
+        const data = await response.json();
+        
+        if (data.USDBRL && data.EURBRL) {
+            const usd = data.USDBRL;
+            const eur = data.EURBRL;
+            
+            const usdFormatted = `R$ ${parseFloat(usd.bid).toFixed(2)}`;
+            const eurFormatted = `R$ ${parseFloat(eur.bid).toFixed(2)}`;
+            
+            document.getElementById('usd-value-mobile').textContent = usdFormatted;
+            document.getElementById('eur-value-mobile').textContent = eurFormatted;
+            document.getElementById('usd-value-inline').textContent = usdFormatted;
+            document.getElementById('eur-value-inline').textContent = eurFormatted;
+            
+            const usdVariation = parseFloat(usd.pctChange);
+            const eurVariation = parseFloat(eur.pctChange);
+            updateTrendElement('usd-trend-inline', usdVariation);
+            updateTrendElement('eur-trend-inline', eurVariation);
+            
+            const updateTime = new Date().toLocaleTimeString('pt-BR');
+            document.getElementById('exchange-update-mobile').textContent = `Atualizado às ${updateTime}`;
+            document.getElementById('exchange-update-inline').textContent = `Atualizado às ${updateTime}`;
+        }
     } catch (error) {
         console.error('Erro ao buscar cotações:', error);
-        ['usd-value-mobile','eur-value-mobile','usd-value-inline','eur-value-inline'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.textContent = 'Indisponível';
-        });
+        document.getElementById('usd-value-mobile').textContent = 'R$ --';
+        document.getElementById('eur-value-mobile').textContent = 'R$ --';
+        document.getElementById('usd-value-inline').textContent = 'R$ --';
+        document.getElementById('eur-value-inline').textContent = 'R$ --';
+        document.getElementById('exchange-update-mobile').textContent = 'Indisponível';
+        document.getElementById('exchange-update-inline').textContent = 'Indisponível';
     }
 }
 
@@ -255,13 +262,12 @@ function getWeatherEmoji(code) {
     return '🌡️';
 }
 
-// ===== AÇÕES (Brapi API - gratuita para cotações brasileiras) =====
+// ===== AÇÕES (Brapi API) =====
 async function fetchStocks() {
     try {
         const stocksList = document.getElementById('stocks-list');
         stocksList.innerHTML = '<div class="forecast-loading">Carregando ações...</div>';
         
-        // Usando Brapi API (gratuita, sem necessidade de token para uso básico)
         const response = await fetch('https://brapi.dev/api/quote/PETR4,VALE3,ITUB4,BBDC4,ABEV3,MGLU3');
         
         if (!response.ok) {
@@ -299,75 +305,11 @@ async function fetchStocks() {
             
             stocksList.innerHTML = stocksHtml;
         } else {
-            throw new Error('Sem dados disponíveis');
+            throw new Error('Sem dados');
         }
     } catch (error) {
         console.error('Erro ao buscar ações:', error);
-        // Fallback: tenta Yahoo Finance
-        await fetchStocksFallback();
-    }
-}
-
-// Fallback usando Yahoo Finance
-async function fetchStocksFallback() {
-    try {
-        const symbols = ['PETR4.SA', 'VALE3.SA', 'ITUB4.SA', 'BBDC4.SA', 'ABEV3.SA', 'MGLU3.SA'];
-        const stocksList = document.getElementById('stocks-list');
-        stocksList.innerHTML = '<div class="forecast-loading">Carregando ações (fallback)...</div>';
-        
-        const stockNames = {
-            'PETR4.SA': 'Petrobras',
-            'VALE3.SA': 'Vale',
-            'ITUB4.SA': 'Itaú Unibanco',
-            'BBDC4.SA': 'Bradesco',
-            'ABEV3.SA': 'Ambev',
-            'MGLU3.SA': 'Magazine Luiza'
-        };
-        
-        let stocksHtml = '';
-        
-        for (const symbol of symbols) {
-            try {
-                const response = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1d`);
-                const data = await response.json();
-                
-                if (data.chart && data.chart.result) {
-                    const result = data.chart.result[0];
-                    const meta = result.meta;
-                    const price = meta.regularMarketPrice;
-                    const previousClose = meta.previousClose;
-                    const change = price - previousClose;
-                    const changePercent = (change / previousClose) * 100;
-                    
-                    const changeClass = change >= 0 ? 'positive' : 'negative';
-                    const changeSign = change >= 0 ? '+' : '';
-                    
-                    stocksHtml += `
-                        <div class="stock-item">
-                            <div>
-                                <span class="stock-symbol">${symbol}</span>
-                                <span class="stock-name">${stockNames[symbol] || symbol}</span>
-                            </div>
-                            <div style="text-align: right;">
-                                <span class="stock-price">R$ ${price.toFixed(2)}</span>
-                                <span class="stock-change ${changeClass}">${changeSign}${changePercent.toFixed(2)}%</span>
-                            </div>
-                        </div>
-                    `;
-                }
-            } catch (e) {
-                console.error(`Erro ao buscar ${symbol}:`, e);
-            }
-        }
-        
-        if (stocksHtml) {
-            stocksList.innerHTML = stocksHtml;
-        } else {
-            stocksList.innerHTML = '<div class="forecast-loading">Não foi possível carregar ações.</div>';
-        }
-    } catch (error) {
-        console.error('Erro no fallback de ações:', error);
-        document.getElementById('stocks-list').innerHTML = '<div class="forecast-loading">Erro ao carregar ações.</div>';
+        document.getElementById('stocks-list').innerHTML = '<div class="forecast-loading">Ações indisponíveis no momento.</div>';
     }
 }
 
