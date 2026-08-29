@@ -189,6 +189,14 @@
                 <button class="ver-mais-btn" id="ver-mais-destaques" onclick="loadMoreNews('destaques')" style="display:none;">Ver Mais Notícias</button>
             </section>
 
+            <!-- Recomendados (Mobile) - Aparece aqui -->
+            <section class="recomendados-mobile-section" id="recomendados-mobile">
+                <h2 class="section-title">⭐ Recomendados</h2>
+                <div class="recomendados-list" id="recomendados-list-mobile">
+                    <div class="loading-mini">Carregando recomendados...</div>
+                </div>
+            </section>
+
             <!-- Painel de Informações -->
             <section class="info-panel" id="info-panel">
                 <h2 class="section-title">📊 Painel do Dia</h2>
@@ -237,10 +245,10 @@
 
         <!-- Sidebar Desktop -->
         <aside class="sidebar-desktop">
-            <!-- Card Recomendados -->
+            <!-- Card Recomendados (Desktop) -->
             <div class="widget recomendados-widget">
                 <h3>⭐ Recomendados</h3>
-                <div class="recomendados-list" id="recomendados-list">
+                <div class="recomendados-list" id="recomendados-list-desktop">
                     <div class="loading-mini">Carregando recomendados...</div>
                 </div>
             </div>
@@ -289,53 +297,6 @@
                 </div>
             </div>
 
-            <!-- Card Blogs de Tecnologia -->
-            <div class="widget blogs-widget">
-                <h3>🔗 Blogs de Tecnologia</h3>
-                <div class="blogs-list">
-                    <a href="https://silvio.meira.com/" target="_blank" class="blog-item">
-                        <span class="blog-icon">🧠</span>
-                        <div class="blog-info">
-                            <span class="blog-nome">Silvio Meira</span>
-                            <span class="blog-desc">Estratégia, inovação e tecnologia</span>
-                        </div>
-                        <span class="blog-seta">→</span>
-                    </a>
-                    <a href="https://braziljournal.com/tecnologia/" target="_blank" class="blog-item">
-                        <span class="blog-icon">📰</span>
-                        <div class="blog-info">
-                            <span class="blog-nome">Brazil Journal</span>
-                            <span class="blog-desc">Tecnologia e negócios</span>
-                        </div>
-                        <span class="blog-seta">→</span>
-                    </a>
-                    <a href="https://startups.com.br/" target="_blank" class="blog-item">
-                        <span class="blog-icon">🚀</span>
-                        <div class="blog-info">
-                            <span class="blog-nome">Startups.com.br</span>
-                            <span class="blog-desc">Ecossistema de startups</span>
-                        </div>
-                        <span class="blog-seta">→</span>
-                    </a>
-                    <a href="https://itforum.com.br/" target="_blank" class="blog-item">
-                        <span class="blog-icon">💡</span>
-                        <div class="blog-info">
-                            <span class="blog-nome">IT Forum</span>
-                            <span class="blog-desc">Tecnologia corporativa</span>
-                        </div>
-                        <span class="blog-seta">→</span>
-                    </a>
-                    <a href="https://mittechreview.com.br/" target="_blank" class="blog-item">
-                        <span class="blog-icon">🔬</span>
-                        <div class="blog-info">
-                            <span class="blog-nome">MIT Tech Review Brasil</span>
-                            <span class="blog-desc">Inovação e pesquisa</span>
-                        </div>
-                        <span class="blog-seta">→</span>
-                    </a>
-                </div>
-            </div>
-
             <div class="widget about-widget">
                 <h3>📡 Sobre o Portal</h3>
                 <p>Agregador de notícias sobre manufatura eletrônica, aeronáutica, automotiva e bens de consumo.</p>
@@ -364,7 +325,7 @@
 
     <footer class="footer">
         <p>&copy; 2026 Manufatura Eletrônica News - Todos os direitos reservados</p>
-            </footer>
+        </footer>
 
     <script src="script.js"></script>
 </body>
