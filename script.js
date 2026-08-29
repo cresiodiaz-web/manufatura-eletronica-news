@@ -1,6 +1,6 @@
 // ============================================
 // PORTAL MANUFATURA ELETRÔNICA NEWS
-// 73 feeds + Recomendados + Enquete + Blogs
+// 73 feeds + Recomendados + Enquete
 // ============================================
 
 const feeds = [
@@ -103,7 +103,7 @@ const INCREMENTO = 9;
 let destaquesAtuais = [];
 let indiceRotacaoDestaques = 0;
 
-// ===== ENQUETE (CORRIGIDA - não trava mais) =====
+// ===== ENQUETE =====
 const perguntaEnquete = 'Qual seu nível de experiência com manufatura eletrônica?';
 let votosEnquete = { muita: 0, media: 0, nenhuma: 0 };
 let jaVotou = false;
@@ -119,27 +119,20 @@ function carregarVotos() {
             document.getElementById('btn-votar').style.opacity = '0.5';
             verResultados();
         }
-    } catch(e) { console.error('Erro ao carregar votos:', e); }
+    } catch(e) {}
 }
 
 function salvarVotos() {
     try {
         localStorage.setItem('votosEnquete', JSON.stringify(votosEnquete));
         localStorage.setItem('jaVotouEnquete', 'true');
-    } catch(e) { console.error('Erro ao salvar votos:', e); }
+    } catch(e) {}
 }
 
 function votar() {
     const selecionada = document.querySelector('input[name="enquete"]:checked');
-    if (!selecionada) {
-        alert('Por favor, selecione uma opção.');
-        return;
-    }
-    if (jaVotou) {
-        alert('Você já votou nesta enquete!');
-        verResultados();
-        return;
-    }
+    if (!selecionada) { alert('Por favor, selecione uma opção.'); return; }
+    if (jaVotou) { alert('Você já votou nesta enquete!'); verResultados(); return; }
     const voto = selecionada.value;
     if (votosEnquete[voto] !== undefined) {
         votosEnquete[voto]++;
@@ -156,10 +149,7 @@ function verResultados() {
     if (!resultadosDiv) return;
     resultadosDiv.style.display = 'block';
     const total = votosEnquete.muita + votosEnquete.media + votosEnquete.nenhuma;
-    if (total === 0) {
-        document.getElementById('total-votos').textContent = 'Nenhum voto registrado ainda.';
-        return;
-    }
+    if (total === 0) { document.getElementById('total-votos').textContent = 'Nenhum voto registrado ainda.'; return; }
     const pctMuita = ((votosEnquete.muita / total) * 100).toFixed(1);
     const pctMedia = ((votosEnquete.media / total) * 100).toFixed(1);
     const pctNenhuma = ((votosEnquete.nenhuma / total) * 100).toFixed(1);
@@ -171,22 +161,37 @@ function verResultados() {
     document.getElementById('pct-nenhuma').textContent = `${pctNenhuma}%`;
     document.getElementById('total-votos').textContent = `Total de votos: ${total}`;
 }
-
 window.votar = votar;
 window.verResultados = verResultados;
 
 // ===== RECOMENDADOS =====
 function renderizarRecomendados() {
-    const container = document.getElementById('recomendados-list');
     const recomendados = allNews.filter(n => n.category === 'Indústria' || n.category === 'Semicondutores').slice(0, 6);
-    if (recomendados.length === 0) {
-        container.innerHTML = '<div class="loading-mini">Carregando recomendados...</div>';
-        return;
+    
+    // Desktop
+    const containerDesktop = document.getElementById('recomendados-list-desktop');
+    if (containerDesktop) {
+        if (recomendados.length === 0) {
+            containerDesktop.innerHTML = '<div class="loading-mini">Carregando recomendados...</div>';
+        } else {
+            containerDesktop.innerHTML = recomendados.map(n => createRecomendadoHTML(n)).join('');
+        }
     }
-    container.innerHTML = recomendados.map(n => {
-        const img = n.image ? `<div class="recomendado-imagem" style="background-image:url('${n.image}')"></div>` : `<div class="recomendado-imagem" style="background-image:linear-gradient(135deg,#667eea,#764ba2)"></div>`;
-        return `<div class="recomendado-item" onclick="window.open('${n.link}','_blank')">${img}<div class="recomendado-info"><div class="recomendado-titulo">${n.title}</div><div class="recomendado-fonte">${n.source} • ${n.category}</div><div class="recomendado-descricao">${n.description}</div></div></div>`;
-    }).join('');
+    
+    // Mobile
+    const containerMobile = document.getElementById('recomendados-list-mobile');
+    if (containerMobile) {
+        if (recomendados.length === 0) {
+            containerMobile.innerHTML = '<div class="loading-mini">Carregando recomendados...</div>';
+        } else {
+            containerMobile.innerHTML = recomendados.map(n => createRecomendadoHTML(n)).join('');
+        }
+    }
+}
+
+function createRecomendadoHTML(n) {
+    const img = n.image ? `<div class="recomendado-imagem" style="background-image:url('${n.image}')"></div>` : `<div class="recomendado-imagem" style="background-image:linear-gradient(135deg,#667eea,#764ba2)"></div>`;
+    return `<div class="recomendado-item" onclick="window.open('${n.link}','_blank')">${img}<div class="recomendado-info"><div class="recomendado-titulo">${n.title}</div><div class="recomendado-fonte">${n.source} • ${n.category}</div><div class="recomendado-descricao">${n.description}</div></div></div>`;
 }
 
 // ===== DATA =====
