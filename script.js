@@ -1,6 +1,6 @@
 // ============================================
 // PORTAL MANUFATURA ELETRÔNICA NEWS
-// 73 feeds + Recomendados + Enquete
+// 73 feeds + Recomendados + Enquete + Blogs
 // ============================================
 
 const feeds = [
@@ -103,22 +103,30 @@ const INCREMENTO = 9;
 let destaquesAtuais = [];
 let indiceRotacaoDestaques = 0;
 
-// ===== ENQUETE =====
-// EDITE AQUI SUA PERGUNTA
+// ===== ENQUETE (CORRIGIDA - não trava mais) =====
 const perguntaEnquete = 'Qual seu nível de experiência com manufatura eletrônica?';
-
-// Votos armazenados em localStorage
 let votosEnquete = { muita: 0, media: 0, nenhuma: 0 };
+let jaVotou = false;
 
 function carregarVotos() {
-    const salvos = localStorage.getItem('votosEnquete');
-    if (salvos) {
-        votosEnquete = JSON.parse(salvos);
-    }
+    try {
+        const salvos = localStorage.getItem('votosEnquete');
+        if (salvos) votosEnquete = JSON.parse(salvos);
+        const votado = localStorage.getItem('jaVotouEnquete');
+        if (votado === 'true') {
+            jaVotou = true;
+            document.getElementById('btn-votar').disabled = true;
+            document.getElementById('btn-votar').style.opacity = '0.5';
+            verResultados();
+        }
+    } catch(e) { console.error('Erro ao carregar votos:', e); }
 }
 
 function salvarVotos() {
-    localStorage.setItem('votosEnquete', JSON.stringify(votosEnquete));
+    try {
+        localStorage.setItem('votosEnquete', JSON.stringify(votosEnquete));
+        localStorage.setItem('jaVotouEnquete', 'true');
+    } catch(e) { console.error('Erro ao salvar votos:', e); }
 }
 
 function votar() {
@@ -127,44 +135,40 @@ function votar() {
         alert('Por favor, selecione uma opção.');
         return;
     }
-    
+    if (jaVotou) {
+        alert('Você já votou nesta enquete!');
+        verResultados();
+        return;
+    }
     const voto = selecionada.value;
     if (votosEnquete[voto] !== undefined) {
         votosEnquete[voto]++;
+        jaVotou = true;
         salvarVotos();
         verResultados();
-        
-        // Desabilita votação após votar (opcional - remova se quiser múltiplos votos)
         document.getElementById('btn-votar').disabled = true;
         document.getElementById('btn-votar').style.opacity = '0.5';
-        
-        alert('Voto registrado com sucesso!');
     }
 }
 
 function verResultados() {
     const resultadosDiv = document.getElementById('enquete-resultados');
+    if (!resultadosDiv) return;
     resultadosDiv.style.display = 'block';
-    
     const total = votosEnquete.muita + votosEnquete.media + votosEnquete.nenhuma;
-    
     if (total === 0) {
         document.getElementById('total-votos').textContent = 'Nenhum voto registrado ainda.';
         return;
     }
-    
     const pctMuita = ((votosEnquete.muita / total) * 100).toFixed(1);
     const pctMedia = ((votosEnquete.media / total) * 100).toFixed(1);
     const pctNenhuma = ((votosEnquete.nenhuma / total) * 100).toFixed(1);
-    
     document.getElementById('barra-muita').style.width = `${pctMuita}%`;
     document.getElementById('barra-media').style.width = `${pctMedia}%`;
     document.getElementById('barra-nenhuma').style.width = `${pctNenhuma}%`;
-    
     document.getElementById('pct-muita').textContent = `${pctMuita}%`;
     document.getElementById('pct-media').textContent = `${pctMedia}%`;
     document.getElementById('pct-nenhuma').textContent = `${pctNenhuma}%`;
-    
     document.getElementById('total-votos').textContent = `Total de votos: ${total}`;
 }
 
@@ -174,29 +178,14 @@ window.verResultados = verResultados;
 // ===== RECOMENDADOS =====
 function renderizarRecomendados() {
     const container = document.getElementById('recomendados-list');
-    
-    // Prioriza Indústria e Semicondutores
-    const recomendados = allNews
-        .filter(n => n.category === 'Indústria' || n.category === 'Semicondutores')
-        .slice(0, 6);
-    
+    const recomendados = allNews.filter(n => n.category === 'Indústria' || n.category === 'Semicondutores').slice(0, 6);
     if (recomendados.length === 0) {
         container.innerHTML = '<div class="loading-mini">Carregando recomendados...</div>';
         return;
     }
-    
     container.innerHTML = recomendados.map(n => {
         const img = n.image ? `<div class="recomendado-imagem" style="background-image:url('${n.image}')"></div>` : `<div class="recomendado-imagem" style="background-image:linear-gradient(135deg,#667eea,#764ba2)"></div>`;
-        return `
-            <div class="recomendado-item" onclick="window.open('${n.link}','_blank')">
-                ${img}
-                <div class="recomendado-info">
-                    <div class="recomendado-titulo">${n.title}</div>
-                    <div class="recomendado-fonte">${n.source} • ${n.category}</div>
-                    <div class="recomendado-descricao">${n.description}</div>
-                </div>
-            </div>
-        `;
+        return `<div class="recomendado-item" onclick="window.open('${n.link}','_blank')">${img}<div class="recomendado-info"><div class="recomendado-titulo">${n.title}</div><div class="recomendado-fonte">${n.source} • ${n.category}</div><div class="recomendado-descricao">${n.description}</div></div></div>`;
     }).join('');
 }
 
