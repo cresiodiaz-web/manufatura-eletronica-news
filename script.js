@@ -1,8 +1,10 @@
 // ============================================
 // PORTAL MANUFATURA ELETRÔNICA NEWS
+// 73 Fontes + Todas as Funcionalidades
 // ============================================
 
 const feeds = [
+    // GERAL - Brasileiras (9)
     { source: 'Inovação Tecnológica', url: 'https://www.inovacaotecnologica.com.br/rss.xml', color: '#c4170c', category: 'Geral', region: 'nacional' },
     { source: 'Canaltech', url: 'https://canaltech.com.br/rss/', color: '#e53935', category: 'Geral', region: 'nacional' },
     { source: 'Olhar Digital', url: 'https://olhardigital.com.br/feed/', color: '#d32f2f', category: 'Geral', region: 'nacional' },
@@ -12,6 +14,7 @@ const feeds = [
     { source: 'UNICAMP FEM', url: 'https://www.fem.unicamp.br/index.php/feed/', color: '#d32f2f', category: 'Geral', region: 'nacional' },
     { source: 'UFMG Engenharia', url: 'https://www.eng.ufmg.br/feed/', color: '#b71c1c', category: 'Geral', region: 'nacional' },
     { source: 'UFRJ COPPE', url: 'https://www.coppe.ufrj.br/rss', color: '#c4170c', category: 'Geral', region: 'nacional' },
+    // GERAL - Internacionais (10)
     { source: 'MIT Technology Review', url: 'https://www.technologyreview.com/feed/', color: '#c4170c', category: 'Geral', region: 'internacional' },
     { source: 'Wired', url: 'https://www.wired.com/feed/rss', color: '#e53935', category: 'Geral', region: 'internacional' },
     { source: 'Ars Technica', url: 'https://feeds.arstechnica.com/arstechnica/index', color: '#d32f2f', category: 'Geral', region: 'internacional' },
@@ -22,12 +25,14 @@ const feeds = [
     { source: 'ETH Zurich MechE', url: 'https://mavt.ethz.ch/rss.xml', color: '#b71c1c', category: 'Geral', region: 'internacional' },
     { source: 'Cambridge Engineering', url: 'https://www.eng.cam.ac.uk/rss.xml', color: '#c4170c', category: 'Geral', region: 'internacional' },
     { source: 'Carnegie Mellon Eng', url: 'https://engineering.cmu.edu/rss.xml', color: '#e53935', category: 'Geral', region: 'internacional' },
+    // EMBARCADOS (6)
     { source: 'Embarcados', url: 'https://www.embarcados.com.br/feed/', color: '#c4170c', category: 'Embarcados', region: 'nacional' },
     { source: 'Portal Vida de Silício', url: 'https://portal.vidadesilicio.com.br/feed/', color: '#d32f2f', category: 'Embarcados', region: 'nacional' },
     { source: 'FilipeFlop', url: 'https://www.filipeflop.com/blog/feed/', color: '#e53935', category: 'Embarcados', region: 'nacional' },
     { source: 'Hackaday', url: 'https://hackaday.com/blog/feed/', color: '#b71c1c', category: 'Embarcados', region: 'internacional' },
     { source: 'Embedded.com', url: 'https://www.embedded.com/feed/', color: '#c4170c', category: 'Embarcados', region: 'internacional' },
     { source: 'Adafruit Blog', url: 'https://blog.adafruit.com/feed/', color: '#d32f2f', category: 'Embarcados', region: 'internacional' },
+    // INDÚSTRIA (10)
     { source: 'ABINEE', url: 'https://www.abinee.org.br/feed/', color: '#c4170c', category: 'Indústria', region: 'nacional' },
     { source: 'ABIMAQ', url: 'https://www.abimaq.org.br/rss', color: '#e53935', category: 'Indústria', region: 'nacional' },
     { source: 'ABDI', url: 'https://www.abdi.com.br/rss', color: '#d32f2f', category: 'Indústria', region: 'nacional' },
@@ -38,16 +43,19 @@ const feeds = [
     { source: 'Electronics Weekly', url: 'https://www.electronicsweekly.com/feed/', color: '#b71c1c', category: 'Indústria', region: 'internacional' },
     { source: 'Electronics For You', url: 'https://www.electronicsforu.com/feed', color: '#c4170c', category: 'Indústria', region: 'internacional' },
     { source: 'SMTnet', url: 'https://www.smtnet.com/rss/news.xml', color: '#e53935', category: 'Indústria', region: 'internacional' },
+    // PROJETOS (5)
     { source: 'Instituto NCB', url: 'https://www.institutoncb.com.br/feed/', color: '#c4170c', category: 'Projetos', region: 'nacional' },
     { source: 'Eletrônica Geral', url: 'https://www.eletronicageral.com/feed/', color: '#d32f2f', category: 'Projetos', region: 'nacional' },
     { source: 'All About Circuits', url: 'https://www.allaboutcircuits.com/rss/', color: '#e53935', category: 'Projetos', region: 'internacional' },
     { source: 'Electronic Design', url: 'https://www.electronicdesign.com/rss', color: '#b71c1c', category: 'Projetos', region: 'internacional' },
     { source: 'EEWeb', url: 'https://www.eeweb.com/feed/', color: '#c4170c', category: 'Projetos', region: 'internacional' },
+    // SEMICONDUTORES (5)
     { source: 'Chip Brasil', url: 'https://chipbrasil.com.br/feed/', color: '#c4170c', category: 'Semicondutores', region: 'nacional' },
     { source: 'EETimes', url: 'https://www.eetimes.com/feed/', color: '#d32f2f', category: 'Semicondutores', region: 'internacional' },
     { source: 'IEEE Spectrum', url: 'https://spectrum.ieee.org/feeds/topic/semiconductors.rss', color: '#e53935', category: 'Semicondutores', region: 'internacional' },
     { source: 'Semiconductor Engineering', url: 'https://semiengineering.com/feed/', color: '#b71c1c', category: 'Semicondutores', region: 'internacional' },
     { source: 'AnandTech', url: 'https://www.anandtech.com/rss/', color: '#c4170c', category: 'Semicondutores', region: 'internacional' },
+    // AERONÁUTICA (10)
     { source: 'Aero Magazine', url: 'https://aeromagazine.uol.com.br/feed/', color: '#c4170c', category: 'Aeronáutica', region: 'nacional' },
     { source: 'Cavok Brasil', url: 'https://www.cavok.com.br/feed/', color: '#e53935', category: 'Aeronáutica', region: 'nacional' },
     { source: 'Poder Aéreo', url: 'https://www.poderaereo.com.br/feed/', color: '#d32f2f', category: 'Aeronáutica', region: 'nacional' },
@@ -58,6 +66,7 @@ const feeds = [
     { source: 'Aviation Week', url: 'https://aviationweek.com/rss.xml', color: '#b71c1c', category: 'Aeronáutica', region: 'internacional' },
     { source: 'FlightGlobal', url: 'https://www.flightglobal.com/rss', color: '#c4170c', category: 'Aeronáutica', region: 'internacional' },
     { source: 'AINonline', url: 'https://www.ainonline.com/rss.xml', color: '#e53935', category: 'Aeronáutica', region: 'internacional' },
+    // AUTOMOTIVA (11)
     { source: 'Automotive Business', url: 'https://www.automotivebusiness.com.br/feed/', color: '#c4170c', category: 'Automotiva', region: 'nacional' },
     { source: 'AutoEsporte', url: 'https://autoesporte.globo.com/rss/feed.xml', color: '#d32f2f', category: 'Automotiva', region: 'nacional' },
     { source: 'Jornal do Carro', url: 'https://jornaldocarro.estadao.com.br/feed/', color: '#e53935', category: 'Automotiva', region: 'nacional' },
@@ -69,6 +78,7 @@ const feeds = [
     { source: 'Car and Driver', url: 'https://www.caranddriver.com/rss/all.xml', color: '#c4170c', category: 'Automotiva', region: 'internacional' },
     { source: 'Motor1', url: 'https://www.motor1.com/rss/news/all/', color: '#e53935', category: 'Automotiva', region: 'internacional' },
     { source: 'Automotive News', url: 'https://www.autonews.com/rss/feed.xml', color: '#d32f2f', category: 'Automotiva', region: 'internacional' },
+    // BENS DE CONSUMO (13)
     { source: 'Techtudo', url: 'https://www.techtudo.com.br/rss/', color: '#c4170c', category: 'Bens de Consumo', region: 'nacional' },
     { source: 'Tudocelular', url: 'https://www.tudocelular.com/rss/', color: '#e53935', category: 'Bens de Consumo', region: 'nacional' },
     { source: 'Gizmodo Brasil', url: 'https://gizmodo.uol.com.br/feed/', color: '#d32f2f', category: 'Bens de Consumo', region: 'nacional' },
@@ -348,7 +358,6 @@ function renderAllSections() {
             grid.innerHTML = limited.map(n => createCard(n)).join('');
             section.appendChild(grid);
             
-            // Botão Ver Mais se houver mais notícias
             if (catNews.length > visiblePorCategoria) {
                 const btn = document.createElement('button');
                 btn.className = 'ver-mais-btn';
