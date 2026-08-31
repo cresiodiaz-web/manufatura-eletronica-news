@@ -1,10 +1,10 @@
 // ============================================
 // PORTAL MANUFATURA ELETRÔNICA NEWS
-// 73 feeds + Recomendados + Enquete + Ícone Clima
+// 73 Fontes + Todas as Funcionalidades
 // ============================================
 
 const feeds = [
-    // GERAL - Brasileiras
+    // GERAL - Brasileiras (9)
     { source: 'Inovação Tecnológica', url: 'https://www.inovacaotecnologica.com.br/rss.xml', color: '#c4170c', category: 'Geral', region: 'nacional' },
     { source: 'Canaltech', url: 'https://canaltech.com.br/rss/', color: '#e53935', category: 'Geral', region: 'nacional' },
     { source: 'Olhar Digital', url: 'https://olhardigital.com.br/feed/', color: '#d32f2f', category: 'Geral', region: 'nacional' },
@@ -14,7 +14,7 @@ const feeds = [
     { source: 'UNICAMP FEM', url: 'https://www.fem.unicamp.br/index.php/feed/', color: '#d32f2f', category: 'Geral', region: 'nacional' },
     { source: 'UFMG Engenharia', url: 'https://www.eng.ufmg.br/feed/', color: '#b71c1c', category: 'Geral', region: 'nacional' },
     { source: 'UFRJ COPPE', url: 'https://www.coppe.ufrj.br/rss', color: '#c4170c', category: 'Geral', region: 'nacional' },
-    // GERAL - Internacionais
+    // GERAL - Internacionais (10)
     { source: 'MIT Technology Review', url: 'https://www.technologyreview.com/feed/', color: '#c4170c', category: 'Geral', region: 'internacional' },
     { source: 'Wired', url: 'https://www.wired.com/feed/rss', color: '#e53935', category: 'Geral', region: 'internacional' },
     { source: 'Ars Technica', url: 'https://feeds.arstechnica.com/arstechnica/index', color: '#d32f2f', category: 'Geral', region: 'internacional' },
@@ -25,14 +25,14 @@ const feeds = [
     { source: 'ETH Zurich MechE', url: 'https://mavt.ethz.ch/rss.xml', color: '#b71c1c', category: 'Geral', region: 'internacional' },
     { source: 'Cambridge Engineering', url: 'https://www.eng.cam.ac.uk/rss.xml', color: '#c4170c', category: 'Geral', region: 'internacional' },
     { source: 'Carnegie Mellon Eng', url: 'https://engineering.cmu.edu/rss.xml', color: '#e53935', category: 'Geral', region: 'internacional' },
-    // EMBARCADOS
+    // EMBARCADOS (6)
     { source: 'Embarcados', url: 'https://www.embarcados.com.br/feed/', color: '#c4170c', category: 'Embarcados', region: 'nacional' },
     { source: 'Portal Vida de Silício', url: 'https://portal.vidadesilicio.com.br/feed/', color: '#d32f2f', category: 'Embarcados', region: 'nacional' },
     { source: 'FilipeFlop', url: 'https://www.filipeflop.com/blog/feed/', color: '#e53935', category: 'Embarcados', region: 'nacional' },
     { source: 'Hackaday', url: 'https://hackaday.com/blog/feed/', color: '#b71c1c', category: 'Embarcados', region: 'internacional' },
     { source: 'Embedded.com', url: 'https://www.embedded.com/feed/', color: '#c4170c', category: 'Embarcados', region: 'internacional' },
     { source: 'Adafruit Blog', url: 'https://blog.adafruit.com/feed/', color: '#d32f2f', category: 'Embarcados', region: 'internacional' },
-    // INDÚSTRIA
+    // INDÚSTRIA (10)
     { source: 'ABINEE', url: 'https://www.abinee.org.br/feed/', color: '#c4170c', category: 'Indústria', region: 'nacional' },
     { source: 'ABIMAQ', url: 'https://www.abimaq.org.br/rss', color: '#e53935', category: 'Indústria', region: 'nacional' },
     { source: 'ABDI', url: 'https://www.abdi.com.br/rss', color: '#d32f2f', category: 'Indústria', region: 'nacional' },
@@ -43,19 +43,19 @@ const feeds = [
     { source: 'Electronics Weekly', url: 'https://www.electronicsweekly.com/feed/', color: '#b71c1c', category: 'Indústria', region: 'internacional' },
     { source: 'Electronics For You', url: 'https://www.electronicsforu.com/feed', color: '#c4170c', category: 'Indústria', region: 'internacional' },
     { source: 'SMTnet', url: 'https://www.smtnet.com/rss/news.xml', color: '#e53935', category: 'Indústria', region: 'internacional' },
-    // PROJETOS
+    // PROJETOS (5)
     { source: 'Instituto NCB', url: 'https://www.institutoncb.com.br/feed/', color: '#c4170c', category: 'Projetos', region: 'nacional' },
     { source: 'Eletrônica Geral', url: 'https://www.eletronicageral.com/feed/', color: '#d32f2f', category: 'Projetos', region: 'nacional' },
     { source: 'All About Circuits', url: 'https://www.allaboutcircuits.com/rss/', color: '#e53935', category: 'Projetos', region: 'internacional' },
     { source: 'Electronic Design', url: 'https://www.electronicdesign.com/rss', color: '#b71c1c', category: 'Projetos', region: 'internacional' },
     { source: 'EEWeb', url: 'https://www.eeweb.com/feed/', color: '#c4170c', category: 'Projetos', region: 'internacional' },
-    // SEMICONDUTORES
+    // SEMICONDUTORES (5)
     { source: 'Chip Brasil', url: 'https://chipbrasil.com.br/feed/', color: '#c4170c', category: 'Semicondutores', region: 'nacional' },
     { source: 'EETimes', url: 'https://www.eetimes.com/feed/', color: '#d32f2f', category: 'Semicondutores', region: 'internacional' },
     { source: 'IEEE Spectrum', url: 'https://spectrum.ieee.org/feeds/topic/semiconductors.rss', color: '#e53935', category: 'Semicondutores', region: 'internacional' },
     { source: 'Semiconductor Engineering', url: 'https://semiengineering.com/feed/', color: '#b71c1c', category: 'Semicondutores', region: 'internacional' },
     { source: 'AnandTech', url: 'https://www.anandtech.com/rss/', color: '#c4170c', category: 'Semicondutores', region: 'internacional' },
-    // AERONÁUTICA
+    // AERONÁUTICA (10)
     { source: 'Aero Magazine', url: 'https://aeromagazine.uol.com.br/feed/', color: '#c4170c', category: 'Aeronáutica', region: 'nacional' },
     { source: 'Cavok Brasil', url: 'https://www.cavok.com.br/feed/', color: '#e53935', category: 'Aeronáutica', region: 'nacional' },
     { source: 'Poder Aéreo', url: 'https://www.poderaereo.com.br/feed/', color: '#d32f2f', category: 'Aeronáutica', region: 'nacional' },
@@ -66,7 +66,7 @@ const feeds = [
     { source: 'Aviation Week', url: 'https://aviationweek.com/rss.xml', color: '#b71c1c', category: 'Aeronáutica', region: 'internacional' },
     { source: 'FlightGlobal', url: 'https://www.flightglobal.com/rss', color: '#c4170c', category: 'Aeronáutica', region: 'internacional' },
     { source: 'AINonline', url: 'https://www.ainonline.com/rss.xml', color: '#e53935', category: 'Aeronáutica', region: 'internacional' },
-    // AUTOMOTIVA
+    // AUTOMOTIVA (11)
     { source: 'Automotive Business', url: 'https://www.automotivebusiness.com.br/feed/', color: '#c4170c', category: 'Automotiva', region: 'nacional' },
     { source: 'AutoEsporte', url: 'https://autoesporte.globo.com/rss/feed.xml', color: '#d32f2f', category: 'Automotiva', region: 'nacional' },
     { source: 'Jornal do Carro', url: 'https://jornaldocarro.estadao.com.br/feed/', color: '#e53935', category: 'Automotiva', region: 'nacional' },
@@ -78,7 +78,7 @@ const feeds = [
     { source: 'Car and Driver', url: 'https://www.caranddriver.com/rss/all.xml', color: '#c4170c', category: 'Automotiva', region: 'internacional' },
     { source: 'Motor1', url: 'https://www.motor1.com/rss/news/all/', color: '#e53935', category: 'Automotiva', region: 'internacional' },
     { source: 'Automotive News', url: 'https://www.autonews.com/rss/feed.xml', color: '#d32f2f', category: 'Automotiva', region: 'internacional' },
-    // BENS DE CONSUMO
+    // BENS DE CONSUMO (13)
     { source: 'Techtudo', url: 'https://www.techtudo.com.br/rss/', color: '#c4170c', category: 'Bens de Consumo', region: 'nacional' },
     { source: 'Tudocelular', url: 'https://www.tudocelular.com/rss/', color: '#e53935', category: 'Bens de Consumo', region: 'nacional' },
     { source: 'Gizmodo Brasil', url: 'https://gizmodo.uol.com.br/feed/', color: '#d32f2f', category: 'Bens de Consumo', region: 'nacional' },
@@ -157,16 +157,12 @@ window.verResultados = verResultados;
 function renderizarRecomendados() {
     const recomendados = allNews.filter(n => n.category === 'Indústria' || n.category === 'Semicondutores').slice(0, 6);
     const containerDesktop = document.getElementById('recomendados-list-desktop');
-    if (containerDesktop) {
-        containerDesktop.innerHTML = recomendados.length ? recomendados.map(n => createRecomendadoHTML(n)).join('') : '<div class="loading-mini">Carregando...</div>';
-    }
+    if (containerDesktop) containerDesktop.innerHTML = recomendados.length ? recomendados.map(n => createRecomendadoHTML(n)).join('') : '<div class="loading-mini">Carregando...</div>';
     const containerMobile = document.getElementById('recomendados-list-mobile');
-    if (containerMobile) {
-        containerMobile.innerHTML = recomendados.length ? recomendados.map(n => createRecomendadoHTML(n)).join('') : '<div class="loading-mini">Carregando...</div>';
-    }
+    if (containerMobile) containerMobile.innerHTML = recomendados.length ? recomendados.map(n => createRecomendadoHTML(n)).join('') : '<div class="loading-mini">Carregando...</div>';
 }
 function createRecomendadoHTML(n) {
-    const img = n.image ? `<div class="recomendado-imagem" style="background-image:url('${n.image}')"></div>` : `<div class="recomendado-imagem" style="background-image:linear-gradient(135deg,#c4170c,#e53935)"></div>`;
+    const img = n.image ? `<div class="recomendado-imagem" style="background-image:url('${n.image}')"></div>` : `<div class="recomendado-imagem">🔲</div>`;
     return `<div class="recomendado-item" onclick="window.open('${n.link}','_blank')">${img}<div class="recomendado-info"><div class="recomendado-titulo">${n.title}</div><div class="recomendado-fonte">${n.source} • ${n.category}</div><div class="recomendado-descricao">${n.description}</div></div></div>`;
 }
 
@@ -196,7 +192,7 @@ async function fetchExchangeRates() {
 }
 function updateTrend(id, v) { const el = document.getElementById(id); if (!el) return; el.textContent = v >= 0 ? `▲ ${Math.abs(v).toFixed(2)}%` : `▼ ${Math.abs(v).toFixed(2)}%`; el.className = `exchange-trend ${v >= 0 ? 'positive' : 'negative'}`; }
 
-// ===== CLIMA (com ícone dinâmico no header) =====
+// ===== CLIMA =====
 async function fetchWeather() {
     try {
         if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(pos => fetchWeatherByCoords(pos.coords.latitude, pos.coords.longitude), () => fetchWeatherByCoords(-23.5505, -46.6333)); }
@@ -210,7 +206,6 @@ async function fetchWeatherByCoords(lat, lon) {
         const temp = Math.round(data.current.temperature_2m);
         const code = data.current.weather_code;
         const emoji = getWEmoji(code);
-        
         document.getElementById('header-weather-icon').textContent = emoji;
         document.getElementById('header-temp').textContent = `${temp}°C`;
         document.getElementById('weather-temp').textContent = `${temp}°C`;
@@ -218,7 +213,6 @@ async function fetchWeatherByCoords(lat, lon) {
         document.getElementById('weather-icon').textContent = emoji;
         document.getElementById('sidebar-weather-temp').textContent = `${temp}°C`;
         document.getElementById('sidebar-weather-icon').textContent = emoji;
-        
         try {
             const g = await fetch(`https://geocoding-api.open-meteo.com/v1/search?latitude=${lat}&longitude=${lon}&count=1&language=pt&format=json`);
             const gd = await g.json();
@@ -233,7 +227,19 @@ async function fetchWeatherByCoords(lat, lon) {
 function getWDesc(c) { const d={0:'Céu limpo',1:'Parcialmente nublado',2:'Parcialmente nublado',3:'Nublado',45:'Nevoeiro',48:'Nevoeiro',51:'Garoa',53:'Garoa',55:'Garoa',61:'Chuva fraca',63:'Chuva',65:'Chuva forte',80:'Pancadas',95:'Trovoada'}; return d[c]||'Variável'; }
 function getWEmoji(c) { if(c===0)return'☀️';if(c<=2)return'🌤️';if(c===3)return'☁️';if(c<=48)return'🌫️';if(c<=55)return'🌧️';if(c<=65)return'🌧️';if(c<=82)return'⛈️';return'🌡️'; }
 
-// ===== MENU =====
+// ===== MENU HAMBURGUER DESKTOP =====
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.getElementById('menu-toggle-desktop');
+    const filtersDesktop = document.getElementById('filters-desktop');
+    if (menuToggle && filtersDesktop) {
+        menuToggle.addEventListener('click', () => {
+            filtersDesktop.classList.toggle('active');
+            menuToggle.textContent = filtersDesktop.classList.contains('active') ? '✕ Fechar Categorias' : '☰ Categorias';
+        });
+    }
+});
+
+// ===== MENU MOBILE =====
 document.getElementById('hamburger-btn').addEventListener('click', () => { document.getElementById('sidebar-mobile').classList.add('active'); document.getElementById('sidebar-overlay').classList.add('active'); });
 document.getElementById('close-sidebar').addEventListener('click', () => { document.getElementById('sidebar-mobile').classList.remove('active'); document.getElementById('sidebar-overlay').classList.remove('active'); });
 document.getElementById('sidebar-overlay').addEventListener('click', () => { document.getElementById('sidebar-mobile').classList.remove('active'); document.getElementById('sidebar-overlay').classList.remove('active'); });
@@ -367,8 +373,13 @@ function renderDestaques() {
 }
 function createCard(news) {
     const badge = news.region === 'nacional' ? '<span class="card-region region-nacional">🇧🇷</span>' : '<span class="card-region region-internacional">🌍</span>';
-    const img = news.image ? `<div class="card-image" style="background-image:url('${news.image}')"><span class="card-category">${news.category}</span></div>` : `<div class="card-image" style="background-image:linear-gradient(135deg,#c4170c,#e53935)"><span class="card-category">${news.category}</span></div>`;
-    return `<article class="card" onclick="window.open('${news.link}','_blank')">${img}<div class="card-content"><div class="card-source-row"><span class="card-source" style="color:${news.color}">${news.source}</span>${badge}</div><h2>${news.title}</h2><p>${news.description}</p><div class="card-footer"><span>📅 ${news.pubDateFormatted}</span><span>🔗</span></div></div></article>`;
+    let imgHtml;
+    if (news.image) {
+        imgHtml = `<div class="card-image" style="background-image:url('${news.image}')"><span class="card-category">${news.category}</span></div>`;
+    } else {
+        imgHtml = `<div class="card-image" style="background:#ffebee;position:relative;"><div class="card-image-placeholder"><svg viewBox="0 0 50 50" fill="none" style="width:60px;height:60px;"><rect x="5" y="5" width="40" height="40" rx="5" fill="#ffcdd2"/><rect x="12.5" y="12.5" width="25" height="25" rx="3" fill="none" stroke="#e57373" stroke-width="2"/><line x1="12.5" y1="25" x2="37.5" y2="25" stroke="#e57373" stroke-width="1.5"/><line x1="25" y1="12.5" x2="25" y2="37.5" stroke="#e57373" stroke-width="1.5"/><circle cx="12.5" cy="12.5" r="2" fill="#ffd700"/><circle cx="37.5" cy="12.5" r="2" fill="#ffd700"/><circle cx="12.5" cy="37.5" r="2" fill="#ffd700"/><circle cx="37.5" cy="37.5" r="2" fill="#ffd700"/></svg></div><span class="card-category">${news.category}</span></div>`;
+    }
+    return `<article class="card" onclick="window.open('${news.link}','_blank')">${imgHtml}<div class="card-content"><div class="card-source-row"><span class="card-source" style="color:${news.color}">${news.source}</span>${badge}</div><h2>${news.title}</h2><p>${news.description}</p><div class="card-footer"><span>📅 ${news.pubDateFormatted}</span><span>🔗</span></div></div></article>`;
 }
 
 // ===== ESTATÍSTICAS =====
