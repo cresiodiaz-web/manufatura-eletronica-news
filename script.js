@@ -1,6 +1,6 @@
 // ============================================
 // PORTAL MANUFATURA ELETRÔNICA NEWS
-// 73 Fontes + Todas as Funcionalidades
+// 73 Fontes + Layout 9 Cards
 // ============================================
 
 const feeds = [
@@ -97,8 +97,8 @@ const feeds = [
 let allNews = [];
 let activeRegion = 'all';
 let isLoading = false;
-let visibleDestaques = 7;
-let visiblePorCategoria = 7;
+let visibleDestaques = 9;
+let visiblePorCategoria = 9;
 const MAX_POR_CATEGORIA = 20;
 
 function $(id) { return document.getElementById(id); }
@@ -125,15 +125,28 @@ async function fetchExchangeRates() {
         if (!res.ok) return;
         const data = await res.json();
         if (data.USDBRL && data.EURBRL) {
-            const usd = `R$ ${parseFloat(data.USDBRL.bid).toFixed(2)}`;
-            const eur = `R$ ${parseFloat(data.EURBRL.bid).toFixed(2)}`;
+            const usdFormatted = `R$ ${parseFloat(data.USDBRL.bid).toFixed(2)}`;
+            const eurFormatted = `R$ ${parseFloat(data.EURBRL.bid).toFixed(2)}`;
             const t = new Date().toLocaleTimeString('pt-BR');
-            if ($('usd-value-mobile')) $('usd-value-mobile').textContent = `🇺🇸 Dólar: ${usd}`;
-            if ($('eur-value-mobile')) $('eur-value-mobile').textContent = `🇪🇺 Euro: ${eur}`;
-            if ($('usd-value-inline')) $('usd-value-inline').textContent = `🇺🇸 Dólar: ${usd}`;
-            if ($('eur-value-inline')) $('eur-value-inline').textContent = `🇪🇺 Euro: ${eur}`;
+            const usdVar = parseFloat(data.USDBRL.pctChange);
+            const eurVar = parseFloat(data.EURBRL.pctChange);
+            
+            if ($('usd-value-mobile')) $('usd-value-mobile').textContent = `🇺🇸 Dólar: ${usdFormatted}`;
+            if ($('eur-value-mobile')) $('eur-value-mobile').textContent = `🇪🇺 Euro: ${eurFormatted}`;
+            if ($('usd-value-inline')) $('usd-value-inline').textContent = usdFormatted;
+            if ($('eur-value-inline')) $('eur-value-inline').textContent = eurFormatted;
             if ($('exchange-update-mobile')) $('exchange-update-mobile').textContent = `Atualizado às ${t}`;
             if ($('exchange-update-inline')) $('exchange-update-inline').textContent = `Atualizado às ${t}`;
+            
+            // Trends
+            if ($('usd-trend-inline')) {
+                $('usd-trend-inline').textContent = usdVar >= 0 ? `▲ ${Math.abs(usdVar).toFixed(2)}%` : `▼ ${Math.abs(usdVar).toFixed(2)}%`;
+                $('usd-trend-inline').className = `exchange-trend ${usdVar >= 0 ? 'positive' : 'negative'}`;
+            }
+            if ($('eur-trend-inline')) {
+                $('eur-trend-inline').textContent = eurVar >= 0 ? `▲ ${Math.abs(eurVar).toFixed(2)}%` : `▼ ${Math.abs(eurVar).toFixed(2)}%`;
+                $('eur-trend-inline').className = `exchange-trend ${eurVar >= 0 ? 'positive' : 'negative'}`;
+            }
         }
     } catch(e) {}
 }
@@ -283,6 +296,7 @@ async function loadAllFeeds() {
         renderAllSections();
         renderizarRecomendados();
         updateSourcesList();
+        updateStats();
     } catch(e) {
         if (grid) grid.innerHTML = '<div class="loading">Erro ao carregar.</div>';
     } finally {
@@ -397,6 +411,11 @@ function updateSourcesList() {
     list.innerHTML = active.slice(0, 12).map(f => `<div style="font-size:0.8rem;padding:0.2rem 0;">• ${f.source} ${f.region === 'nacional' ? '🇧🇷' : '🌍'}</div>`).join('') || 'Nenhuma fonte ativa';
 }
 
+function updateStats() {
+    if ($('total-news-mobile')) $('total-news-mobile').textContent = `${allNews.length} notícias`;
+    if ($('total-sources-mobile')) $('total-sources-mobile').textContent = `${new Set(allNews.map(n => n.source)).size} fontes`;
+}
+
 function loadMoreNews() {
     visibleDestaques = MAX_POR_CATEGORIA;
     renderDestaques();
@@ -492,8 +511,8 @@ document.addEventListener('DOMContentLoaded', () => {
             activeRegion = btn.dataset.region;
             document.querySelectorAll('.region-btn, .region-btn-mobile').forEach(b => b.classList.remove('active'));
             document.querySelectorAll(`[data-region="${btn.dataset.region}"]`).forEach(b => b.classList.add('active'));
-            visibleDestaques = 7;
-            visiblePorCategoria = 7;
+            visibleDestaques = 9;
+            visiblePorCategoria = 9;
             renderAllSections();
             if (dropdown) dropdown.classList.remove('active');
             if (sidebar) sidebar.classList.remove('active');
