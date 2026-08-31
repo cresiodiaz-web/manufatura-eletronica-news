@@ -1,97 +1,97 @@
 // ============================================
 // PORTAL MANUFATURA ELETRÔNICA NEWS
-// 73 feeds + Recomendados + Enquete
+// 73 feeds + Recomendados + Enquete + Ícone Clima
 // ============================================
 
 const feeds = [
     // GERAL - Brasileiras
-    { source: 'Inovação Tecnológica', url: 'https://www.inovacaotecnologica.com.br/rss.xml', color: '#2a5298', category: 'Geral', region: 'nacional' },
-    { source: 'Canaltech', url: 'https://canaltech.com.br/rss/', color: '#1e88e5', category: 'Geral', region: 'nacional' },
-    { source: 'Olhar Digital', url: 'https://olhardigital.com.br/feed/', color: '#00bfa5', category: 'Geral', region: 'nacional' },
-    { source: 'Tecmundo', url: 'https://www.tecmundo.com.br/rss', color: '#ff6f00', category: 'Geral', region: 'nacional' },
-    { source: 'ABStartups', url: 'https://abstartups.com.br/feed/', color: '#2e7d32', category: 'Geral', region: 'nacional' },
-    { source: 'USP Poli', url: 'https://www.poli.usp.br/feed/', color: '#1e3c72', category: 'Geral', region: 'nacional' },
-    { source: 'UNICAMP FEM', url: 'https://www.fem.unicamp.br/index.php/feed/', color: '#00695c', category: 'Geral', region: 'nacional' },
-    { source: 'UFMG Engenharia', url: 'https://www.eng.ufmg.br/feed/', color: '#2e7d32', category: 'Geral', region: 'nacional' },
-    { source: 'UFRJ COPPE', url: 'https://www.coppe.ufrj.br/rss', color: '#c62828', category: 'Geral', region: 'nacional' },
+    { source: 'Inovação Tecnológica', url: 'https://www.inovacaotecnologica.com.br/rss.xml', color: '#c4170c', category: 'Geral', region: 'nacional' },
+    { source: 'Canaltech', url: 'https://canaltech.com.br/rss/', color: '#e53935', category: 'Geral', region: 'nacional' },
+    { source: 'Olhar Digital', url: 'https://olhardigital.com.br/feed/', color: '#d32f2f', category: 'Geral', region: 'nacional' },
+    { source: 'Tecmundo', url: 'https://www.tecmundo.com.br/rss', color: '#b71c1c', category: 'Geral', region: 'nacional' },
+    { source: 'ABStartups', url: 'https://abstartups.com.br/feed/', color: '#c4170c', category: 'Geral', region: 'nacional' },
+    { source: 'USP Poli', url: 'https://www.poli.usp.br/feed/', color: '#e53935', category: 'Geral', region: 'nacional' },
+    { source: 'UNICAMP FEM', url: 'https://www.fem.unicamp.br/index.php/feed/', color: '#d32f2f', category: 'Geral', region: 'nacional' },
+    { source: 'UFMG Engenharia', url: 'https://www.eng.ufmg.br/feed/', color: '#b71c1c', category: 'Geral', region: 'nacional' },
+    { source: 'UFRJ COPPE', url: 'https://www.coppe.ufrj.br/rss', color: '#c4170c', category: 'Geral', region: 'nacional' },
     // GERAL - Internacionais
-    { source: 'MIT Technology Review', url: 'https://www.technologyreview.com/feed/', color: '#d32f2f', category: 'Geral', region: 'internacional' },
-    { source: 'Wired', url: 'https://www.wired.com/feed/rss', color: '#000000', category: 'Geral', region: 'internacional' },
-    { source: 'Ars Technica', url: 'https://feeds.arstechnica.com/arstechnica/index', color: '#ff4e00', category: 'Geral', region: 'internacional' },
-    { source: 'MIT MechE', url: 'https://meche.mit.edu/rss.xml', color: '#d32f2f', category: 'Geral', region: 'internacional' },
-    { source: 'Stanford Engineering', url: 'https://engineering.stanford.edu/rss.xml', color: '#1565c0', category: 'Geral', region: 'internacional' },
-    { source: 'UC Berkeley Eng', url: 'https://engineering.berkeley.edu/rss.xml', color: '#f57c00', category: 'Geral', region: 'internacional' },
-    { source: 'Purdue Engineering', url: 'https://engineering.purdue.edu/rss.xml', color: '#4527a0', category: 'Geral', region: 'internacional' },
-    { source: 'ETH Zurich MechE', url: 'https://mavt.ethz.ch/rss.xml', color: '#00695c', category: 'Geral', region: 'internacional' },
-    { source: 'Cambridge Engineering', url: 'https://www.eng.cam.ac.uk/rss.xml', color: '#00838f', category: 'Geral', region: 'internacional' },
-    { source: 'Carnegie Mellon Eng', url: 'https://engineering.cmu.edu/rss.xml', color: '#c62828', category: 'Geral', region: 'internacional' },
+    { source: 'MIT Technology Review', url: 'https://www.technologyreview.com/feed/', color: '#c4170c', category: 'Geral', region: 'internacional' },
+    { source: 'Wired', url: 'https://www.wired.com/feed/rss', color: '#e53935', category: 'Geral', region: 'internacional' },
+    { source: 'Ars Technica', url: 'https://feeds.arstechnica.com/arstechnica/index', color: '#d32f2f', category: 'Geral', region: 'internacional' },
+    { source: 'MIT MechE', url: 'https://meche.mit.edu/rss.xml', color: '#b71c1c', category: 'Geral', region: 'internacional' },
+    { source: 'Stanford Engineering', url: 'https://engineering.stanford.edu/rss.xml', color: '#c4170c', category: 'Geral', region: 'internacional' },
+    { source: 'UC Berkeley Eng', url: 'https://engineering.berkeley.edu/rss.xml', color: '#e53935', category: 'Geral', region: 'internacional' },
+    { source: 'Purdue Engineering', url: 'https://engineering.purdue.edu/rss.xml', color: '#d32f2f', category: 'Geral', region: 'internacional' },
+    { source: 'ETH Zurich MechE', url: 'https://mavt.ethz.ch/rss.xml', color: '#b71c1c', category: 'Geral', region: 'internacional' },
+    { source: 'Cambridge Engineering', url: 'https://www.eng.cam.ac.uk/rss.xml', color: '#c4170c', category: 'Geral', region: 'internacional' },
+    { source: 'Carnegie Mellon Eng', url: 'https://engineering.cmu.edu/rss.xml', color: '#e53935', category: 'Geral', region: 'internacional' },
     // EMBARCADOS
-    { source: 'Embarcados', url: 'https://www.embarcados.com.br/feed/', color: '#e67e22', category: 'Embarcados', region: 'nacional' },
-    { source: 'Portal Vida de Silício', url: 'https://portal.vidadesilicio.com.br/feed/', color: '#16a085', category: 'Embarcados', region: 'nacional' },
-    { source: 'FilipeFlop', url: 'https://www.filipeflop.com/blog/feed/', color: '#e74c3c', category: 'Embarcados', region: 'nacional' },
-    { source: 'Hackaday', url: 'https://hackaday.com/blog/feed/', color: '#f4b400', category: 'Embarcados', region: 'internacional' },
-    { source: 'Embedded.com', url: 'https://www.embedded.com/feed/', color: '#005596', category: 'Embarcados', region: 'internacional' },
-    { source: 'Adafruit Blog', url: 'https://blog.adafruit.com/feed/', color: '#00a651', category: 'Embarcados', region: 'internacional' },
+    { source: 'Embarcados', url: 'https://www.embarcados.com.br/feed/', color: '#c4170c', category: 'Embarcados', region: 'nacional' },
+    { source: 'Portal Vida de Silício', url: 'https://portal.vidadesilicio.com.br/feed/', color: '#d32f2f', category: 'Embarcados', region: 'nacional' },
+    { source: 'FilipeFlop', url: 'https://www.filipeflop.com/blog/feed/', color: '#e53935', category: 'Embarcados', region: 'nacional' },
+    { source: 'Hackaday', url: 'https://hackaday.com/blog/feed/', color: '#b71c1c', category: 'Embarcados', region: 'internacional' },
+    { source: 'Embedded.com', url: 'https://www.embedded.com/feed/', color: '#c4170c', category: 'Embarcados', region: 'internacional' },
+    { source: 'Adafruit Blog', url: 'https://blog.adafruit.com/feed/', color: '#d32f2f', category: 'Embarcados', region: 'internacional' },
     // INDÚSTRIA
-    { source: 'ABINEE', url: 'https://www.abinee.org.br/feed/', color: '#1e3c72', category: 'Indústria', region: 'nacional' },
-    { source: 'ABIMAQ', url: 'https://www.abimaq.org.br/rss', color: '#00695c', category: 'Indústria', region: 'nacional' },
-    { source: 'ABDI', url: 'https://www.abdi.com.br/rss', color: '#4527a0', category: 'Indústria', region: 'nacional' },
-    { source: 'BNDES', url: 'https://www.bndes.gov.br/wps/portal/site/home/noticias/rss', color: '#1565c0', category: 'Indústria', region: 'nacional' },
-    { source: 'CNI', url: 'https://noticias.portaldaindustria.com.br/rss/', color: '#c62828', category: 'Indústria', region: 'nacional' },
-    { source: 'Revista Eletrônica', url: 'https://www.revistaeletronica.com.br/feed/', color: '#c0392b', category: 'Indústria', region: 'nacional' },
-    { source: 'CIMM', url: 'https://www.cimm.com.br/rss/', color: '#2c3e50', category: 'Indústria', region: 'nacional' },
-    { source: 'Electronics Weekly', url: 'https://www.electronicsweekly.com/feed/', color: '#27ae60', category: 'Indústria', region: 'internacional' },
-    { source: 'Electronics For You', url: 'https://www.electronicsforu.com/feed', color: '#d35400', category: 'Indústria', region: 'internacional' },
-    { source: 'SMTnet', url: 'https://www.smtnet.com/rss/news.xml', color: '#8e44ad', category: 'Indústria', region: 'internacional' },
+    { source: 'ABINEE', url: 'https://www.abinee.org.br/feed/', color: '#c4170c', category: 'Indústria', region: 'nacional' },
+    { source: 'ABIMAQ', url: 'https://www.abimaq.org.br/rss', color: '#e53935', category: 'Indústria', region: 'nacional' },
+    { source: 'ABDI', url: 'https://www.abdi.com.br/rss', color: '#d32f2f', category: 'Indústria', region: 'nacional' },
+    { source: 'BNDES', url: 'https://www.bndes.gov.br/wps/portal/site/home/noticias/rss', color: '#b71c1c', category: 'Indústria', region: 'nacional' },
+    { source: 'CNI', url: 'https://noticias.portaldaindustria.com.br/rss/', color: '#c4170c', category: 'Indústria', region: 'nacional' },
+    { source: 'Revista Eletrônica', url: 'https://www.revistaeletronica.com.br/feed/', color: '#e53935', category: 'Indústria', region: 'nacional' },
+    { source: 'CIMM', url: 'https://www.cimm.com.br/rss/', color: '#d32f2f', category: 'Indústria', region: 'nacional' },
+    { source: 'Electronics Weekly', url: 'https://www.electronicsweekly.com/feed/', color: '#b71c1c', category: 'Indústria', region: 'internacional' },
+    { source: 'Electronics For You', url: 'https://www.electronicsforu.com/feed', color: '#c4170c', category: 'Indústria', region: 'internacional' },
+    { source: 'SMTnet', url: 'https://www.smtnet.com/rss/news.xml', color: '#e53935', category: 'Indústria', region: 'internacional' },
     // PROJETOS
-    { source: 'Instituto NCB', url: 'https://www.institutoncb.com.br/feed/', color: '#d32f2f', category: 'Projetos', region: 'nacional' },
-    { source: 'Eletrônica Geral', url: 'https://www.eletronicageral.com/feed/', color: '#1976d2', category: 'Projetos', region: 'nacional' },
-    { source: 'All About Circuits', url: 'https://www.allaboutcircuits.com/rss/', color: '#8e44ad', category: 'Projetos', region: 'internacional' },
-    { source: 'Electronic Design', url: 'https://www.electronicdesign.com/rss', color: '#2980b9', category: 'Projetos', region: 'internacional' },
-    { source: 'EEWeb', url: 'https://www.eeweb.com/feed/', color: '#00796b', category: 'Projetos', region: 'internacional' },
+    { source: 'Instituto NCB', url: 'https://www.institutoncb.com.br/feed/', color: '#c4170c', category: 'Projetos', region: 'nacional' },
+    { source: 'Eletrônica Geral', url: 'https://www.eletronicageral.com/feed/', color: '#d32f2f', category: 'Projetos', region: 'nacional' },
+    { source: 'All About Circuits', url: 'https://www.allaboutcircuits.com/rss/', color: '#e53935', category: 'Projetos', region: 'internacional' },
+    { source: 'Electronic Design', url: 'https://www.electronicdesign.com/rss', color: '#b71c1c', category: 'Projetos', region: 'internacional' },
+    { source: 'EEWeb', url: 'https://www.eeweb.com/feed/', color: '#c4170c', category: 'Projetos', region: 'internacional' },
     // SEMICONDUTORES
-    { source: 'Chip Brasil', url: 'https://chipbrasil.com.br/feed/', color: '#5e35b1', category: 'Semicondutores', region: 'nacional' },
-    { source: 'EETimes', url: 'https://www.eetimes.com/feed/', color: '#c0392b', category: 'Semicondutores', region: 'internacional' },
-    { source: 'IEEE Spectrum', url: 'https://spectrum.ieee.org/feeds/topic/semiconductors.rss', color: '#006699', category: 'Semicondutores', region: 'internacional' },
-    { source: 'Semiconductor Engineering', url: 'https://semiengineering.com/feed/', color: '#16a085', category: 'Semicondutores', region: 'internacional' },
-    { source: 'AnandTech', url: 'https://www.anandtech.com/rss/', color: '#1a237e', category: 'Semicondutores', region: 'internacional' },
+    { source: 'Chip Brasil', url: 'https://chipbrasil.com.br/feed/', color: '#c4170c', category: 'Semicondutores', region: 'nacional' },
+    { source: 'EETimes', url: 'https://www.eetimes.com/feed/', color: '#d32f2f', category: 'Semicondutores', region: 'internacional' },
+    { source: 'IEEE Spectrum', url: 'https://spectrum.ieee.org/feeds/topic/semiconductors.rss', color: '#e53935', category: 'Semicondutores', region: 'internacional' },
+    { source: 'Semiconductor Engineering', url: 'https://semiengineering.com/feed/', color: '#b71c1c', category: 'Semicondutores', region: 'internacional' },
+    { source: 'AnandTech', url: 'https://www.anandtech.com/rss/', color: '#c4170c', category: 'Semicondutores', region: 'internacional' },
     // AERONÁUTICA
-    { source: 'Aero Magazine', url: 'https://aeromagazine.uol.com.br/feed/', color: '#e74c3c', category: 'Aeronáutica', region: 'nacional' },
-    { source: 'Cavok Brasil', url: 'https://www.cavok.com.br/feed/', color: '#00695c', category: 'Aeronáutica', region: 'nacional' },
-    { source: 'Poder Aéreo', url: 'https://www.poderaereo.com.br/feed/', color: '#1a237e', category: 'Aeronáutica', region: 'nacional' },
+    { source: 'Aero Magazine', url: 'https://aeromagazine.uol.com.br/feed/', color: '#c4170c', category: 'Aeronáutica', region: 'nacional' },
+    { source: 'Cavok Brasil', url: 'https://www.cavok.com.br/feed/', color: '#e53935', category: 'Aeronáutica', region: 'nacional' },
+    { source: 'Poder Aéreo', url: 'https://www.poderaereo.com.br/feed/', color: '#d32f2f', category: 'Aeronáutica', region: 'nacional' },
     { source: 'Defesa Aérea & Naval', url: 'https://www.defesaaereanaval.com.br/feed/', color: '#b71c1c', category: 'Aeronáutica', region: 'nacional' },
-    { source: 'Aeroin', url: 'https://aeroin.net/feed/', color: '#ff6f00', category: 'Aeronáutica', region: 'nacional' },
-    { source: 'Aeroflap', url: 'https://www.aeroflap.com.br/feed/', color: '#0277bd', category: 'Aeronáutica', region: 'nacional' },
-    { source: 'ITA', url: 'https://www.ita.br/rss', color: '#1a237e', category: 'Aeronáutica', region: 'nacional' },
-    { source: 'Aviation Week', url: 'https://aviationweek.com/rss.xml', color: '#2c3e50', category: 'Aeronáutica', region: 'internacional' },
-    { source: 'FlightGlobal', url: 'https://www.flightglobal.com/rss', color: '#34495e', category: 'Aeronáutica', region: 'internacional' },
-    { source: 'AINonline', url: 'https://www.ainonline.com/rss.xml', color: '#5d6d7e', category: 'Aeronáutica', region: 'internacional' },
+    { source: 'Aeroin', url: 'https://aeroin.net/feed/', color: '#c4170c', category: 'Aeronáutica', region: 'nacional' },
+    { source: 'Aeroflap', url: 'https://www.aeroflap.com.br/feed/', color: '#e53935', category: 'Aeronáutica', region: 'nacional' },
+    { source: 'ITA', url: 'https://www.ita.br/rss', color: '#d32f2f', category: 'Aeronáutica', region: 'nacional' },
+    { source: 'Aviation Week', url: 'https://aviationweek.com/rss.xml', color: '#b71c1c', category: 'Aeronáutica', region: 'internacional' },
+    { source: 'FlightGlobal', url: 'https://www.flightglobal.com/rss', color: '#c4170c', category: 'Aeronáutica', region: 'internacional' },
+    { source: 'AINonline', url: 'https://www.ainonline.com/rss.xml', color: '#e53935', category: 'Aeronáutica', region: 'internacional' },
     // AUTOMOTIVA
-    { source: 'Automotive Business', url: 'https://www.automotivebusiness.com.br/feed/', color: '#c62828', category: 'Automotiva', region: 'nacional' },
-    { source: 'AutoEsporte', url: 'https://autoesporte.globo.com/rss/feed.xml', color: '#1e88e5', category: 'Automotiva', region: 'nacional' },
-    { source: 'Jornal do Carro', url: 'https://jornaldocarro.estadao.com.br/feed/', color: '#f57c00', category: 'Automotiva', region: 'nacional' },
-    { source: 'Quatro Rodas', url: 'https://quatrorodas.abril.com.br/feed/', color: '#d32f2f', category: 'Automotiva', region: 'nacional' },
-    { source: 'Motor Show', url: 'https://motorshow.com.br/feed/', color: '#1976d2', category: 'Automotiva', region: 'nacional' },
-    { source: 'CarBlog', url: 'https://www.car.blog.br/feed/', color: '#f57c00', category: 'Automotiva', region: 'nacional' },
-    { source: 'Auto Papo', url: 'https://autopapo.uol.com.br/feed/', color: '#7b1fa2', category: 'Automotiva', region: 'nacional' },
-    { source: 'Autoblog', url: 'https://www.autoblog.com/rss.xml', color: '#d32f2f', category: 'Automotiva', region: 'internacional' },
-    { source: 'Car and Driver', url: 'https://www.caranddriver.com/rss/all.xml', color: '#1565c0', category: 'Automotiva', region: 'internacional' },
-    { source: 'Motor1', url: 'https://www.motor1.com/rss/news/all/', color: '#2e7d32', category: 'Automotiva', region: 'internacional' },
-    { source: 'Automotive News', url: 'https://www.autonews.com/rss/feed.xml', color: '#4527a0', category: 'Automotiva', region: 'internacional' },
+    { source: 'Automotive Business', url: 'https://www.automotivebusiness.com.br/feed/', color: '#c4170c', category: 'Automotiva', region: 'nacional' },
+    { source: 'AutoEsporte', url: 'https://autoesporte.globo.com/rss/feed.xml', color: '#d32f2f', category: 'Automotiva', region: 'nacional' },
+    { source: 'Jornal do Carro', url: 'https://jornaldocarro.estadao.com.br/feed/', color: '#e53935', category: 'Automotiva', region: 'nacional' },
+    { source: 'Quatro Rodas', url: 'https://quatrorodas.abril.com.br/feed/', color: '#b71c1c', category: 'Automotiva', region: 'nacional' },
+    { source: 'Motor Show', url: 'https://motorshow.com.br/feed/', color: '#c4170c', category: 'Automotiva', region: 'nacional' },
+    { source: 'CarBlog', url: 'https://www.car.blog.br/feed/', color: '#e53935', category: 'Automotiva', region: 'nacional' },
+    { source: 'Auto Papo', url: 'https://autopapo.uol.com.br/feed/', color: '#d32f2f', category: 'Automotiva', region: 'nacional' },
+    { source: 'Autoblog', url: 'https://www.autoblog.com/rss.xml', color: '#b71c1c', category: 'Automotiva', region: 'internacional' },
+    { source: 'Car and Driver', url: 'https://www.caranddriver.com/rss/all.xml', color: '#c4170c', category: 'Automotiva', region: 'internacional' },
+    { source: 'Motor1', url: 'https://www.motor1.com/rss/news/all/', color: '#e53935', category: 'Automotiva', region: 'internacional' },
+    { source: 'Automotive News', url: 'https://www.autonews.com/rss/feed.xml', color: '#d32f2f', category: 'Automotiva', region: 'internacional' },
     // BENS DE CONSUMO
     { source: 'Techtudo', url: 'https://www.techtudo.com.br/rss/', color: '#c4170c', category: 'Bens de Consumo', region: 'nacional' },
-    { source: 'Tudocelular', url: 'https://www.tudocelular.com/rss/', color: '#00a651', category: 'Bens de Consumo', region: 'nacional' },
-    { source: 'Gizmodo Brasil', url: 'https://gizmodo.uol.com.br/feed/', color: '#00b0f0', category: 'Bens de Consumo', region: 'nacional' },
-    { source: 'Tecnoblog', url: 'https://tecnoblog.net/feed/', color: '#e91e63', category: 'Bens de Consumo', region: 'nacional' },
-    { source: 'TechCrunch', url: 'https://techcrunch.com/feed/', color: '#00d26a', category: 'Bens de Consumo', region: 'internacional' },
-    { source: 'The Verge', url: 'https://www.theverge.com/rss/index.xml', color: '#fa4b2a', category: 'Bens de Consumo', region: 'internacional' },
-    { source: 'CNET', url: 'https://www.cnet.com/rss/news/', color: '#e50914', category: 'Bens de Consumo', region: 'internacional' },
-    { source: 'Engadget', url: 'https://www.engadget.com/rss.xml', color: '#7b0099', category: 'Bens de Consumo', region: 'internacional' },
-    { source: 'Tom\'s Hardware', url: 'https://www.tomshardware.com/feeds/all', color: '#c7254e', category: 'Bens de Consumo', region: 'internacional' },
-    { source: 'Android Central', url: 'https://www.androidcentral.com/feed', color: '#00c853', category: 'Bens de Consumo', region: 'internacional' },
-    { source: '9to5Mac', url: 'https://9to5mac.com/feed/', color: '#555555', category: 'Bens de Consumo', region: 'internacional' },
-    { source: 'GSM Arena', url: 'https://www.gsmarena.com/rss-news-reviews.php3', color: '#d32f2f', category: 'Bens de Consumo', region: 'internacional' },
-    { source: 'TechRadar', url: 'https://www.techradar.com/rss', color: '#ff6600', category: 'Bens de Consumo', region: 'internacional' }
+    { source: 'Tudocelular', url: 'https://www.tudocelular.com/rss/', color: '#e53935', category: 'Bens de Consumo', region: 'nacional' },
+    { source: 'Gizmodo Brasil', url: 'https://gizmodo.uol.com.br/feed/', color: '#d32f2f', category: 'Bens de Consumo', region: 'nacional' },
+    { source: 'Tecnoblog', url: 'https://tecnoblog.net/feed/', color: '#b71c1c', category: 'Bens de Consumo', region: 'nacional' },
+    { source: 'TechCrunch', url: 'https://techcrunch.com/feed/', color: '#c4170c', category: 'Bens de Consumo', region: 'internacional' },
+    { source: 'The Verge', url: 'https://www.theverge.com/rss/index.xml', color: '#e53935', category: 'Bens de Consumo', region: 'internacional' },
+    { source: 'CNET', url: 'https://www.cnet.com/rss/news/', color: '#d32f2f', category: 'Bens de Consumo', region: 'internacional' },
+    { source: 'Engadget', url: 'https://www.engadget.com/rss.xml', color: '#b71c1c', category: 'Bens de Consumo', region: 'internacional' },
+    { source: 'Tom\'s Hardware', url: 'https://www.tomshardware.com/feeds/all', color: '#c4170c', category: 'Bens de Consumo', region: 'internacional' },
+    { source: 'Android Central', url: 'https://www.androidcentral.com/feed', color: '#e53935', category: 'Bens de Consumo', region: 'internacional' },
+    { source: '9to5Mac', url: 'https://9to5mac.com/feed/', color: '#d32f2f', category: 'Bens de Consumo', region: 'internacional' },
+    { source: 'GSM Arena', url: 'https://www.gsmarena.com/rss-news-reviews.php3', color: '#b71c1c', category: 'Bens de Consumo', region: 'internacional' },
+    { source: 'TechRadar', url: 'https://www.techradar.com/rss', color: '#c4170c', category: 'Bens de Consumo', region: 'internacional' }
 ];
 
 let allNews = [];
@@ -121,29 +121,18 @@ function carregarVotos() {
         }
     } catch(e) {}
 }
-
-function salvarVotos() {
-    try {
-        localStorage.setItem('votosEnquete', JSON.stringify(votosEnquete));
-        localStorage.setItem('jaVotouEnquete', 'true');
-    } catch(e) {}
-}
-
+function salvarVotos() { try { localStorage.setItem('votosEnquete', JSON.stringify(votosEnquete)); localStorage.setItem('jaVotouEnquete', 'true'); } catch(e) {} }
 function votar() {
     const selecionada = document.querySelector('input[name="enquete"]:checked');
     if (!selecionada) { alert('Por favor, selecione uma opção.'); return; }
     if (jaVotou) { alert('Você já votou nesta enquete!'); verResultados(); return; }
     const voto = selecionada.value;
     if (votosEnquete[voto] !== undefined) {
-        votosEnquete[voto]++;
-        jaVotou = true;
-        salvarVotos();
-        verResultados();
+        votosEnquete[voto]++; jaVotou = true; salvarVotos(); verResultados();
         document.getElementById('btn-votar').disabled = true;
         document.getElementById('btn-votar').style.opacity = '0.5';
     }
 }
-
 function verResultados() {
     const resultadosDiv = document.getElementById('enquete-resultados');
     if (!resultadosDiv) return;
@@ -167,30 +156,17 @@ window.verResultados = verResultados;
 // ===== RECOMENDADOS =====
 function renderizarRecomendados() {
     const recomendados = allNews.filter(n => n.category === 'Indústria' || n.category === 'Semicondutores').slice(0, 6);
-    
-    // Desktop
     const containerDesktop = document.getElementById('recomendados-list-desktop');
     if (containerDesktop) {
-        if (recomendados.length === 0) {
-            containerDesktop.innerHTML = '<div class="loading-mini">Carregando recomendados...</div>';
-        } else {
-            containerDesktop.innerHTML = recomendados.map(n => createRecomendadoHTML(n)).join('');
-        }
+        containerDesktop.innerHTML = recomendados.length ? recomendados.map(n => createRecomendadoHTML(n)).join('') : '<div class="loading-mini">Carregando...</div>';
     }
-    
-    // Mobile
     const containerMobile = document.getElementById('recomendados-list-mobile');
     if (containerMobile) {
-        if (recomendados.length === 0) {
-            containerMobile.innerHTML = '<div class="loading-mini">Carregando recomendados...</div>';
-        } else {
-            containerMobile.innerHTML = recomendados.map(n => createRecomendadoHTML(n)).join('');
-        }
+        containerMobile.innerHTML = recomendados.length ? recomendados.map(n => createRecomendadoHTML(n)).join('') : '<div class="loading-mini">Carregando...</div>';
     }
 }
-
 function createRecomendadoHTML(n) {
-    const img = n.image ? `<div class="recomendado-imagem" style="background-image:url('${n.image}')"></div>` : `<div class="recomendado-imagem" style="background-image:linear-gradient(135deg,#667eea,#764ba2)"></div>`;
+    const img = n.image ? `<div class="recomendado-imagem" style="background-image:url('${n.image}')"></div>` : `<div class="recomendado-imagem" style="background-image:linear-gradient(135deg,#c4170c,#e53935)"></div>`;
     return `<div class="recomendado-item" onclick="window.open('${n.link}','_blank')">${img}<div class="recomendado-info"><div class="recomendado-titulo">${n.title}</div><div class="recomendado-fonte">${n.source} • ${n.category}</div><div class="recomendado-descricao">${n.description}</div></div></div>`;
 }
 
@@ -220,7 +196,7 @@ async function fetchExchangeRates() {
 }
 function updateTrend(id, v) { const el = document.getElementById(id); if (!el) return; el.textContent = v >= 0 ? `▲ ${Math.abs(v).toFixed(2)}%` : `▼ ${Math.abs(v).toFixed(2)}%`; el.className = `exchange-trend ${v >= 0 ? 'positive' : 'negative'}`; }
 
-// ===== CLIMA =====
+// ===== CLIMA (com ícone dinâmico no header) =====
 async function fetchWeather() {
     try {
         if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(pos => fetchWeatherByCoords(pos.coords.latitude, pos.coords.longitude), () => fetchWeatherByCoords(-23.5505, -46.6333)); }
@@ -233,12 +209,16 @@ async function fetchWeatherByCoords(lat, lon) {
         const data = await res.json();
         const temp = Math.round(data.current.temperature_2m);
         const code = data.current.weather_code;
+        const emoji = getWEmoji(code);
+        
+        document.getElementById('header-weather-icon').textContent = emoji;
         document.getElementById('header-temp').textContent = `${temp}°C`;
         document.getElementById('weather-temp').textContent = `${temp}°C`;
         document.getElementById('weather-desc').textContent = getWDesc(code);
-        document.getElementById('weather-icon').textContent = getWEmoji(code);
+        document.getElementById('weather-icon').textContent = emoji;
         document.getElementById('sidebar-weather-temp').textContent = `${temp}°C`;
-        document.getElementById('sidebar-weather-icon').textContent = getWEmoji(code);
+        document.getElementById('sidebar-weather-icon').textContent = emoji;
+        
         try {
             const g = await fetch(`https://geocoding-api.open-meteo.com/v1/search?latitude=${lat}&longitude=${lon}&count=1&language=pt&format=json`);
             const gd = await g.json();
@@ -266,7 +246,7 @@ document.getElementById('search-input').addEventListener('input', debounce(e => 
     const c = document.getElementById('search-results');
     if (q.length < 3) { c.innerHTML=''; return; }
     const r = allNews.filter(n => n.title.toLowerCase().includes(q) || n.description.toLowerCase().includes(q) || n.source.toLowerCase().includes(q)).slice(0,20);
-    c.innerHTML = r.length ? r.map(n => `<div class="search-result-item" onclick="window.open('${n.link}','_blank')"><h3 style="margin:0 0 0.5rem;color:#1e3c72;">${n.title}</h3><p style="margin:0;font-size:0.9rem;color:#666;">${n.source} - ${n.category}</p></div>`).join('') : '<p style="color:white;text-align:center;padding:1rem;">Nenhum resultado.</p>';
+    c.innerHTML = r.length ? r.map(n => `<div class="search-result-item" onclick="window.open('${n.link}','_blank')"><h3 style="margin:0 0 0.5rem;color:#c4170c;">${n.title}</h3><p style="margin:0;font-size:0.9rem;color:#666;">${n.source} - ${n.category}</p></div>`).join('') : '<p style="color:white;text-align:center;padding:1rem;">Nenhum resultado.</p>';
 }, 300));
 
 // ===== FILTROS =====
@@ -274,10 +254,7 @@ document.querySelectorAll('.region-btn, .region-btn-mobile').forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelectorAll('.region-btn, .region-btn-mobile').forEach(b => b.classList.remove('active'));
         document.querySelectorAll(`.region-btn[data-region="${btn.dataset.region}"], .region-btn-mobile[data-region="${btn.dataset.region}"]`).forEach(b => b.classList.add('active'));
-        activeRegion = btn.dataset.region;
-        visibleDestaques = 9;
-        visiblePorCategoria = 9;
-        renderAllSections();
+        activeRegion = btn.dataset.region; visibleDestaques = 9; visiblePorCategoria = 9; renderAllSections();
     });
 });
 document.querySelectorAll('.filter-btn, .filter-btn-mobile').forEach(btn => {
@@ -294,8 +271,7 @@ document.querySelectorAll('.filter-btn, .filter-btn-mobile').forEach(btn => {
 function priorizarBrasileiros(noticias) {
     const br = noticias.filter(n => n.region === 'nacional');
     const int = noticias.filter(n => n.region === 'internacional');
-    const r = [];
-    let i = 0, j = 0;
+    const r = []; let i = 0, j = 0;
     while (i < br.length || j < int.length) {
         for (let k = 0; k < 5 && i < br.length; k++, i++) r.push(br[i]);
         for (let k = 0; k < 1 && j < int.length; k++, j++) r.push(int[j]);
@@ -337,21 +313,14 @@ async function loadAllFeeds() {
     try {
         const results = await Promise.all(feeds.map(f => fetchFeed(f)));
         allNews = results.flat().sort((a, b) => b.pubDate - a.pubDate);
-        updateStats();
-        updateSourcesList();
-        renderAllSections();
-        renderizarRecomendados();
+        updateStats(); updateSourcesList(); renderAllSections(); renderizarRecomendados();
     } catch(e) { document.getElementById('destaques-grid').innerHTML = '<div class="loading">Erro.</div>'; }
     finally { isLoading = false; }
 }
-
-// ===== ATUALIZAR =====
 function atualizarNoticias() {
     const btn = document.getElementById('btn-atualizar');
     btn.classList.add('spinning');
-    loadAllFeeds();
-    fetchExchangeRates();
-    fetchWeather();
+    loadAllFeeds(); fetchExchangeRates(); fetchWeather();
     setTimeout(() => btn.classList.remove('spinning'), 1000);
 }
 window.atualizarNoticias = atualizarNoticias;
@@ -370,17 +339,14 @@ function renderAllSections() {
         const limited = catNews.slice(0, visiblePorCategoria);
         if (limited.length > 0) {
             const s = document.createElement('section');
-            s.className = 'categoria-bloco';
-            s.id = `cat-${cat}`;
+            s.className = 'categoria-bloco'; s.id = `cat-${cat}`;
             s.innerHTML = `<h2 class="section-title">${cat}</h2>`;
-            const g = document.createElement('div');
-            g.className = 'categoria-grid';
+            const g = document.createElement('div'); g.className = 'categoria-grid';
             g.innerHTML = limited.map(n => createCard(n)).join('');
             s.appendChild(g);
             if (catNews.length > visiblePorCategoria) {
                 const btn = document.createElement('button');
-                btn.className = 'ver-mais-btn';
-                btn.textContent = 'Ver Mais';
+                btn.className = 'ver-mais-btn'; btn.textContent = 'Ver Mais';
                 btn.onclick = () => { visiblePorCategoria += INCREMENTO; renderAllSections(); };
                 s.appendChild(btn);
             }
@@ -401,7 +367,7 @@ function renderDestaques() {
 }
 function createCard(news) {
     const badge = news.region === 'nacional' ? '<span class="card-region region-nacional">🇧🇷</span>' : '<span class="card-region region-internacional">🌍</span>';
-    const img = news.image ? `<div class="card-image" style="background-image:url('${news.image}')"><span class="card-category">${news.category}</span></div>` : `<div class="card-image" style="background-image:linear-gradient(135deg,#667eea,#764ba2)"><span class="card-category">${news.category}</span></div>`;
+    const img = news.image ? `<div class="card-image" style="background-image:url('${news.image}')"><span class="card-category">${news.category}</span></div>` : `<div class="card-image" style="background-image:linear-gradient(135deg,#c4170c,#e53935)"><span class="card-category">${news.category}</span></div>`;
     return `<article class="card" onclick="window.open('${news.link}','_blank')">${img}<div class="card-content"><div class="card-source-row"><span class="card-source" style="color:${news.color}">${news.source}</span>${badge}</div><h2>${news.title}</h2><p>${news.description}</p><div class="card-footer"><span>📅 ${news.pubDateFormatted}</span><span>🔗</span></div></div></article>`;
 }
 
