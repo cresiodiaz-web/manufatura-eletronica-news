@@ -161,17 +161,35 @@
                 <div class="info-panel-container">
                     <div class="info-card info-cotacoes">
                         <h3>💱 Cotações</h3>
-                        <div id="usd-value-inline">Carregando...</div>
-                        <div id="eur-value-inline">Carregando...</div>
-                        <div id="exchange-update-inline"></div>
+                        <div class="exchange-inline-item">
+                            <span class="exchange-icon">🇺🇸</span>
+                            <div class="exchange-info">
+                                <span class="currency-name">Dólar Comercial</span>
+                                <span class="currency-value" id="usd-value-inline">Carregando...</span>
+                            </div>
+                            <span class="exchange-trend" id="usd-trend-inline"></span>
+                        </div>
+                        <div class="exchange-inline-item">
+                            <span class="exchange-icon">🇪🇺</span>
+                            <div class="exchange-info">
+                                <span class="currency-name">Euro Comercial</span>
+                                <span class="currency-value" id="eur-value-inline">Carregando...</span>
+                            </div>
+                            <span class="exchange-trend" id="eur-trend-inline"></span>
+                        </div>
+                        <div class="exchange-update-inline" id="exchange-update-inline"></div>
                     </div>
                     <div class="info-card info-clima">
                         <h3>🌤️ Clima</h3>
-                        <div id="weather-icon">🌡️</div>
-                        <div id="weather-temp">--°C</div>
-                        <div id="weather-desc">Carregando...</div>
-                        <div id="weather-location">Localizando...</div>
-                        <div id="weather-forecast"></div>
+                        <div class="weather-current">
+                            <span class="weather-icon" id="weather-icon">🌡️</span>
+                            <div class="weather-temp">
+                                <span class="weather-temp-value" id="weather-temp">--°C</span>
+                                <span class="weather-desc" id="weather-desc">Carregando...</span>
+                            </div>
+                        </div>
+                        <div class="weather-location" id="weather-location">Localizando...</div>
+                        <div class="weather-forecast" id="weather-forecast"></div>
                     </div>
                 </div>
             </section>
@@ -190,8 +208,8 @@
                 <label><input type="radio" name="enquete" value="muita"> Muita experiência</label><br>
                 <label><input type="radio" name="enquete" value="media"> Média experiência</label><br>
                 <label><input type="radio" name="enquete" value="nenhuma"> Nenhuma experiência</label><br>
-                <button onclick="votar()" style="background:#c4170c;color:#fff;border:none;padding:0.5rem 1rem;border-radius:8px;cursor:pointer;margin-right:0.5rem;">Votar</button>
-                <button onclick="verResultados()" style="background:#f5f5f5;color:#c4170c;border:none;padding:0.5rem 1rem;border-radius:8px;cursor:pointer;">Ver Resultados</button>
+                <button onclick="votar()" style="background:#c4170c;color:#fff;border:none;padding:0.5rem 1rem;border-radius:8px;cursor:pointer;margin-right:0.5rem;margin-top:0.5rem;">Votar</button>
+                <button onclick="verResultados()" style="background:#f5f5f5;color:#c4170c;border:none;padding:0.5rem 1rem;border-radius:8px;cursor:pointer;margin-top:0.5rem;">Ver Resultados</button>
                 <div id="enquete-resultados" style="display:none;margin-top:0.8rem;">
                     <div id="resultado-muita"></div>
                     <div id="resultado-media"></div>
