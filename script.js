@@ -1,6 +1,6 @@
 // ============================================
 // PORTAL MANUFATURA ELETRÔNICA NEWS
-// 73 Fontes + Layout 9 Cards + Painel Otimizado
+// 73 Fontes + Layout 9 Cards
 // ============================================
 
 const feeds = [
@@ -138,6 +138,7 @@ async function fetchExchangeRates() {
             if ($('exchange-update-mobile')) $('exchange-update-mobile').textContent = `Atualizado às ${t}`;
             if ($('exchange-update-inline')) $('exchange-update-inline').textContent = `Atualizado às ${t}`;
             
+            // Trends
             if ($('usd-trend-inline')) {
                 $('usd-trend-inline').textContent = usdVar >= 0 ? `▲ ${Math.abs(usdVar).toFixed(2)}%` : `▼ ${Math.abs(usdVar).toFixed(2)}%`;
                 $('usd-trend-inline').className = `exchange-trend ${usdVar >= 0 ? 'positive' : 'negative'}`;
@@ -193,7 +194,7 @@ async function fetchWeather() {
             const dias = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
             for (let i = 0; i < data.daily.time.length && i < 5; i++) {
                 const d = new Date(data.daily.time[i]);
-                fc.innerHTML += `<div class="forecast-item"><span>${dias[d.getDay()]}</span><br><span>${getWeatherEmoji(data.daily.weather_code[i])}</span><br><span>${Math.round(data.daily.temperature_2m_max[i])}°/${Math.round(data.daily.temperature_2m_min[i])}°</span></div>`;
+                fc.innerHTML += `<div style="font-size:0.8rem;color:#333;">${dias[d.getDay()]} ${getWeatherEmoji(data.daily.weather_code[i])} ${Math.round(data.daily.temperature_2m_max[i])}°/${Math.round(data.daily.temperature_2m_min[i])}°</div>`;
             }
         }
     } catch(e) {}
@@ -214,6 +215,7 @@ function getWeatherEmoji(c) {
     return '🌡️';
 }
 
+// Enquete
 const perguntaEnquete = 'Qual seu nível de experiência com manufatura eletrônica?';
 let votosEnquete = { muita: 0, media: 0, nenhuma: 0 };
 let jaVotou = false;
@@ -257,6 +259,7 @@ function verResultados() {
 window.votar = votar;
 window.verResultados = verResultados;
 
+// Feeds
 async function fetchFeed(feed) {
     try {
         const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`);
@@ -276,7 +279,9 @@ async function fetchFeed(feed) {
             }));
         }
         return [];
-    } catch(e) { return []; }
+    } catch(e) {
+        return [];
+    }
 }
 
 async function loadAllFeeds() {
@@ -370,7 +375,7 @@ function renderAllSections() {
             if (catNews.length > visiblePorCategoria) {
                 const btn = document.createElement('button');
                 btn.className = 'ver-mais-btn';
-                btn.textContent = `Ver Mais ${cat}`;
+                btn.textContent = `Ver Mais ${cat} (${catNews.length - visiblePorCategoria} ocultas)`;
                 btn.onclick = () => {
                     visiblePorCategoria = MAX_POR_CATEGORIA;
                     renderAllSections();
@@ -425,6 +430,7 @@ function atualizarNoticias() {
 window.loadMoreNews = loadMoreNews;
 window.atualizarNoticias = atualizarNoticias;
 
+// ===== INICIALIZAÇÃO =====
 document.addEventListener('DOMContentLoaded', () => {
     carregarVotos();
     if ($('enquete-pergunta')) $('enquete-pergunta').textContent = perguntaEnquete;
@@ -433,6 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchWeather();
     loadAllFeeds();
     
+    // Menu hamburguer desktop
     const hambDesktop = $('hamburger-btn-desktop');
     const dropdown = $('desktop-dropdown');
     if (hambDesktop && dropdown) {
@@ -443,6 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', () => dropdown.classList.remove('active'));
     }
     
+    // Menu categorias
     const menuToggle = $('menu-toggle-desktop');
     const filtersDesktop = $('filters-desktop');
     if (menuToggle && filtersDesktop) {
@@ -451,6 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // Menu mobile
     const hambBtn = $('hamburger-btn');
     const sidebar = $('sidebar-mobile');
     const overlay = $('sidebar-overlay');
@@ -471,6 +480,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // Busca
     const searchBtn = $('search-btn');
     const searchOverlay = $('search-overlay');
     const searchInput = $('search-input');
@@ -495,6 +505,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300));
     }
     
+    // Filtros de região
     document.querySelectorAll('.region-btn, .region-btn-mobile').forEach(btn => {
         btn.addEventListener('click', () => {
             activeRegion = btn.dataset.region;
@@ -509,6 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
+    // Filtros de categoria
     document.querySelectorAll('.filter-btn, .filter-btn-mobile').forEach(btn => {
         btn.addEventListener('click', () => {
             const target = btn.dataset.category;
@@ -524,6 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
+    // Intervalos
     setInterval(fetchExchangeRates, 300000);
     setInterval(fetchWeather, 600000);
     setInterval(loadAllFeeds, 1800000);
