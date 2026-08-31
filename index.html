@@ -42,9 +42,19 @@
     <!-- Header Desktop -->
     <header class="header-desktop">
         <div class="header-container">
-            <button class="hamburger-btn-desktop" id="hamburger-btn-desktop" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
+            <!-- Menu Hamburguer Desktop à esquerda -->
+            <div class="header-left">
+                <button class="hamburger-btn-desktop" id="hamburger-btn-desktop" aria-label="Menu Região">
+                    <span></span><span></span><span></span>
+                </button>
+                
+                <!-- Dropdown do Hamburguer Desktop -->
+                <div class="desktop-dropdown" id="desktop-dropdown">
+                    <button class="region-btn active" data-region="all">🌐 Todas</button>
+                    <button class="region-btn" data-region="nacional">🇧🇷 Nacionais</button>
+                    <button class="region-btn" data-region="internacional">🌍 Importadas</button>
+                </div>
+            </div>
             
             <div class="logo">
                 <svg class="logo-icon" viewBox="0 0 50 50" fill="none">
@@ -85,12 +95,6 @@
     <!-- Navigation Desktop -->
     <nav class="nav-bar-desktop">
         <div class="nav-container">
-            <div class="region-filter">
-                <button class="region-btn active" data-region="all">🌐 Todas</button>
-                <button class="region-btn" data-region="nacional">🇧🇷 Nacionais</button>
-                <button class="region-btn" data-region="internacional">🌍 Internacionais</button>
-            </div>
-            
             <button class="menu-toggle-desktop" id="menu-toggle-desktop">☰ Categorias</button>
             
             <div class="filters filters-desktop-collapsible" id="filters-desktop">
@@ -119,7 +123,7 @@
             <div class="region-filter-mobile">
                 <button class="region-btn-mobile active" data-region="all">🌐 Todas</button>
                 <button class="region-btn-mobile" data-region="nacional">🇧🇷 Nacionais</button>
-                <button class="region-btn-mobile" data-region="internacional">🌍 Internacionais</button>
+                <button class="region-btn-mobile" data-region="internacional">🌍 Importadas</button>
             </div>
         </div>
         <div class="sidebar-section">
@@ -332,7 +336,7 @@
 
     <footer class="footer">
         <p>&copy; 2026 Manufatura Eletrônica News - Todos os direitos reservados</p>
-           </footer>
+            </footer>
 
     <script src="script.js"></script>
 </body>
