@@ -1,6 +1,6 @@
 // ============================================
 // PORTAL MANUFATURA ELETRÔNICA NEWS
-// 73 Fontes + Layout Corrigido
+// 73 Fontes + Layout 9 Cards
 // ============================================
 
 const feeds = [
@@ -195,32 +195,25 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchExchangeRates();
     fetchWeather();
     loadAllFeeds();
-    
     const hambDesktop = $('hamburger-btn-desktop');
     const dropdown = $('desktop-dropdown');
     if (hambDesktop && dropdown) { hambDesktop.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); }); document.addEventListener('click', () => dropdown.classList.remove('active')); }
-    
     const menuToggle = $('menu-toggle-desktop');
     const filtersDesktop = $('filters-desktop');
     if (menuToggle && filtersDesktop) { menuToggle.addEventListener('click', () => { filtersDesktop.classList.toggle('active'); }); }
-    
     const hambBtn = $('hamburger-btn');
     const sidebar = $('sidebar-mobile');
     const overlay = $('sidebar-overlay');
     const closeBtn = $('close-sidebar');
     if (hambBtn && sidebar && overlay && closeBtn) { hambBtn.addEventListener('click', () => { sidebar.classList.add('active'); overlay.classList.add('active'); }); closeBtn.addEventListener('click', () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); }); overlay.addEventListener('click', () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); }); }
-    
     const searchBtn = $('search-btn');
     const searchOverlay = $('search-overlay');
     const searchInput = $('search-input');
     const closeSearch = $('close-search');
     const searchResults = $('search-results');
     if (searchBtn && searchOverlay && searchInput && closeSearch && searchResults) { searchBtn.addEventListener('click', () => { searchOverlay.classList.add('active'); searchInput.focus(); }); closeSearch.addEventListener('click', () => { searchOverlay.classList.remove('active'); searchInput.value = ''; searchResults.innerHTML = ''; }); searchInput.addEventListener('input', debounce((e) => { const q = e.target.value.toLowerCase(); if (q.length < 3) { searchResults.innerHTML = ''; return; } const r = allNews.filter(n => n.title.toLowerCase().includes(q)).slice(0, 20); searchResults.innerHTML = r.map(n => `<div class="search-result-item" onclick="window.open('${n.link}','_blank')">${n.title}</div>`).join(''); }, 300)); }
-    
     document.querySelectorAll('.region-btn, .region-btn-mobile').forEach(btn => { btn.addEventListener('click', () => { activeRegion = btn.dataset.region; document.querySelectorAll('.region-btn, .region-btn-mobile').forEach(b => b.classList.remove('active')); document.querySelectorAll(`[data-region="${btn.dataset.region}"]`).forEach(b => b.classList.add('active')); visibleDestaques = 9; visiblePorCategoria = 9; renderAllSections(); if (dropdown) dropdown.classList.remove('active'); if (sidebar) sidebar.classList.remove('active'); if (overlay) overlay.classList.remove('active'); }); });
-    
     document.querySelectorAll('.filter-btn, .filter-btn-mobile').forEach(btn => { btn.addEventListener('click', () => { const target = btn.dataset.category; if (target === 'destaques') { const el = $('destaques'); if (el) el.scrollIntoView({behavior:'smooth'}); } else { const el = $(`cat-${target}`); if (el) el.scrollIntoView({behavior:'smooth'}); } if (sidebar) sidebar.classList.remove('active'); if (overlay) overlay.classList.remove('active'); }); });
-    
     setInterval(fetchExchangeRates, 300000);
     setInterval(fetchWeather, 600000);
     setInterval(loadAllFeeds, 1800000);
