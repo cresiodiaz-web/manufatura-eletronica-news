@@ -62,7 +62,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; color: 
 .main-layout { max-width: 1400px; margin: 2rem auto; padding: 0 1rem; display: grid; grid-template-columns: 1fr 360px; gap: 2rem; }
 .section-title { font-size: 1.3rem; color: #c4170c; margin-bottom: 1rem; border-left: 4px solid #c4170c; padding-left: 0.8rem; font-weight: 700; }
 
-/* ===== GRID DE CARDS - LAYOUT CORRIGIDO ===== */
+/* ===== GRID DE CARDS ===== */
 .destaques-grid, .categoria-grid { 
     display: grid; 
     grid-template-columns: repeat(4, 1fr); 
@@ -95,8 +95,6 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; color: 
 .categoria-grid .card:nth-child(1) .card-image { height: 250px; }
 .destaques-grid .card:nth-child(1) h2,
 .categoria-grid .card:nth-child(1) h2 { font-size: 1.3rem; }
-.destaques-grid .card:nth-child(1) p,
-.categoria-grid .card:nth-child(1) p { font-size: 0.85rem; }
 
 /* Cards 2-4 - Pequenos (1 coluna) */
 .destaques-grid .card:nth-child(2),
@@ -117,24 +115,17 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; color: 
 .destaques-grid .card:nth-child(5) .card-image,
 .categoria-grid .card:nth-child(5) .card-image { height: 150px; }
 
-/* Cards 6-8 - Pequenos (1 coluna) */
+/* Cards 6-9 - Pequenos (1 coluna cada) */
 .destaques-grid .card:nth-child(6),
 .categoria-grid .card:nth-child(6),
 .destaques-grid .card:nth-child(7),
 .categoria-grid .card:nth-child(7),
 .destaques-grid .card:nth-child(8),
-.categoria-grid .card:nth-child(8) {
-    grid-column: span 1;
-}
-
-/* Card 9 - Médio (2 colunas) */
+.categoria-grid .card:nth-child(8),
 .destaques-grid .card:nth-child(9),
 .categoria-grid .card:nth-child(9) {
-    grid-column: span 2;
-    min-height: 250px;
+    grid-column: span 1;
 }
-.destaques-grid .card:nth-child(9) .card-image,
-.categoria-grid .card:nth-child(9) .card-image { height: 150px; }
 
 /* Imagem do card */
 .card-image { 
@@ -222,16 +213,6 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; color: 
     border-top: 1px solid #eee; 
 }
 
-/* Placeholder */
-.card-image-placeholder { 
-    background: #e8f4fd; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    width: 100%; 
-    height: 100%; 
-}
-
 /* ===== INFO PANEL ===== */
 .info-panel { margin-bottom: 2rem; }
 .info-panel-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
@@ -272,14 +253,11 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; color: 
 
 /* ===== BOTÕES ENQUETE ===== */
 .btn-votar-enquete { background: #c4170c; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; margin-right: 0.5rem; margin-top: 0.5rem; font-weight: 600; }
-.btn-votar-enquete:hover { background: #a0150a; }
 .btn-resultados-enquete { background: #f5f5f5; color: #c4170c; border: 1px solid #c4170c; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; margin-top: 0.5rem; font-weight: 600; }
-.btn-resultados-enquete:hover { background: #ffebee; }
 
 /* ===== RECOMENDADOS ===== */
 .recomendados-mobile-section { display: none; }
 .recomendado-item { display: flex; gap: 0.6rem; padding: 0.5rem; background: #f8f9fa; border-radius: 8px; cursor: pointer; margin-bottom: 0.5rem; }
-.recomendado-item:hover { background: #e3f2fd; }
 .recomendado-imagem { width: 60px; height: 50px; background-size: cover; border-radius: 6px; flex-shrink: 0; background: #e8f4fd; display: flex; align-items: center; justify-content: center; }
 .recomendado-titulo { font-size: 0.8rem; font-weight: 600; color: #c4170c; line-height: 1.3; }
 .recomendado-fonte { font-size: 0.6rem; color: #888; }
@@ -301,9 +279,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; color: 
     .destaques-grid .card:nth-child(1) .card-image,
     .categoria-grid .card:nth-child(1) .card-image { height: 150px; }
     .destaques-grid .card:nth-child(5),
-    .categoria-grid .card:nth-child(5),
-    .destaques-grid .card:nth-child(9),
-    .categoria-grid .card:nth-child(9) { grid-column: span 2; min-height: 200px; }
+    .categoria-grid .card:nth-child(5) { grid-column: span 2; min-height: 200px; }
 }
 
 @media (max-width: 768px) {
@@ -319,9 +295,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; color: 
     .destaques-grid .card:nth-child(1) .card-image,
     .categoria-grid .card:nth-child(1) .card-image { height: 120px; }
     .destaques-grid .card:nth-child(5),
-    .categoria-grid .card:nth-child(5),
-    .destaques-grid .card:nth-child(9),
-    .categoria-grid .card:nth-child(9) { grid-column: span 2; }
+    .categoria-grid .card:nth-child(5) { grid-column: span 2; }
     .card { min-height: 160px; }
     .card h2 { font-size: 0.8rem; }
     .card p { font-size: 0.7rem; }
