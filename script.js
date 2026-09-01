@@ -102,22 +102,9 @@ let visiblePorCategoria = 9;
 const MAX_POR_CATEGORIA = 20;
 
 function $(id) { return document.getElementById(id); }
+function debounce(fn, wait) { let t; return function(...args) { clearTimeout(t); t = setTimeout(() => fn(...args), wait); }; }
 
-function debounce(fn, wait) {
-    let t;
-    return function(...args) {
-        clearTimeout(t);
-        t = setTimeout(() => fn(...args), wait);
-    };
-}
-
-function updateDate() {
-    const el = $('current-date');
-    if (el) {
-        const d = new Date();
-        el.textContent = d.toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-    }
-}
+function updateDate() { const el = $('current-date'); if (el) { const d = new Date(); el.textContent = d.toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }); } }
 
 async function fetchExchangeRates() {
     try {
@@ -138,7 +125,6 @@ async function fetchExchangeRates() {
             if ($('exchange-update-mobile')) $('exchange-update-mobile').textContent = `Atualizado às ${t}`;
             if ($('exchange-update-inline')) $('exchange-update-inline').textContent = `Atualizado às ${t}`;
             
-            // Trends
             if ($('usd-trend-inline')) {
                 $('usd-trend-inline').textContent = usdVar >= 0 ? `▲ ${Math.abs(usdVar).toFixed(2)}%` : `▼ ${Math.abs(usdVar).toFixed(2)}%`;
                 $('usd-trend-inline').className = `exchange-trend ${usdVar >= 0 ? 'positive' : 'negative'}`;
@@ -156,11 +142,8 @@ async function fetchWeather() {
         let lat = -23.5505, lon = -46.6333;
         if (navigator.geolocation) {
             try {
-                const pos = await new Promise((resolve, reject) => {
-                    navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 });
-                });
-                lat = pos.coords.latitude;
-                lon = pos.coords.longitude;
+                const pos = await new Promise((resolve, reject) => { navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 }); });
+                lat = pos.coords.latitude; lon = pos.coords.longitude;
             } catch(e) {}
         }
         const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto&forecast_days=5`);
@@ -194,102 +177,32 @@ async function fetchWeather() {
             const dias = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
             for (let i = 0; i < data.daily.time.length && i < 5; i++) {
                 const d = new Date(data.daily.time[i]);
-                fc.innerHTML += `<div style="font-size:0.8rem;color:#333;">${dias[d.getDay()]} ${getWeatherEmoji(data.daily.weather_code[i])} ${Math.round(data.daily.temperature_2m_max[i])}°/${Math.round(data.daily.temperature_2m_min[i])}°</div>`;
+                fc.innerHTML += `<div class="forecast-item"><span>${dias[d.getDay()]}</span><br><span>${getWeatherEmoji(data.daily.weather_code[i])}</span><br><span>${Math.round(data.daily.temperature_2m_max[i])}°/${Math.round(data.daily.temperature_2m_min[i])}°</span></div>`;
             }
         }
     } catch(e) {}
 }
 
-function getWeatherDesc(c) {
-    const d = {0:'Céu limpo',1:'Parcialmente nublado',2:'Parcialmente nublado',3:'Nublado',45:'Nevoeiro',48:'Nevoeiro',51:'Garoa',53:'Garoa',55:'Garoa',61:'Chuva fraca',63:'Chuva',65:'Chuva forte',80:'Pancadas',95:'Trovoada'};
-    return d[c] || 'Variável';
-}
+function getWeatherDesc(c) { const d = {0:'Céu limpo',1:'Parcialmente nublado',2:'Parcialmente nublado',3:'Nublado',45:'Nevoeiro',48:'Nevoeiro',51:'Garoa',53:'Garoa',55:'Garoa',61:'Chuva fraca',63:'Chuva',65:'Chuva forte',80:'Pancadas',95:'Trovoada'}; return d[c] || 'Variável'; }
+function getWeatherEmoji(c) { if (c === 0) return '☀️'; if (c <= 2) return '🌤️'; if (c === 3) return '☁️'; if (c <= 48) return '🌫️'; if (c <= 65) return '🌧️'; if (c <= 82) return '⛈️'; return '🌡️'; }
 
-function getWeatherEmoji(c) {
-    if (c === 0) return '☀️';
-    if (c <= 2) return '🌤️';
-    if (c === 3) return '☁️';
-    if (c <= 48) return '🌫️';
-    if (c <= 65) return '🌧️';
-    if (c <= 82) return '⛈️';
-    return '🌡️';
-}
-
-// Enquete
 const perguntaEnquete = 'Qual seu nível de experiência com manufatura eletrônica?';
 let votosEnquete = { muita: 0, media: 0, nenhuma: 0 };
 let jaVotou = false;
 
-function carregarVotos() {
-    try {
-        const s = localStorage.getItem('votosEnquete');
-        if (s) votosEnquete = JSON.parse(s);
-        if (localStorage.getItem('jaVotouEnquete') === 'true') jaVotou = true;
-    } catch(e) {}
-}
-
-function votar() {
-    const sel = document.querySelector('input[name="enquete"]:checked');
-    if (!sel) { alert('Selecione uma opção!'); return; }
-    if (jaVotou) { alert('Você já votou!'); verResultados(); return; }
-    votosEnquete[sel.value]++;
-    jaVotou = true;
-    try {
-        localStorage.setItem('votosEnquete', JSON.stringify(votosEnquete));
-        localStorage.setItem('jaVotouEnquete', 'true');
-    } catch(e) {}
-    verResultados();
-}
-
-function verResultados() {
-    const div = $('enquete-resultados');
-    if (!div) return;
-    div.style.display = 'block';
-    const total = votosEnquete.muita + votosEnquete.media + votosEnquete.nenhuma;
-    if (total === 0) { 
-        if ($('total-votos')) $('total-votos').textContent = 'Nenhum voto ainda.'; 
-        return; 
-    }
-    if ($('resultado-muita')) $('resultado-muita').textContent = `Muita: ${((votosEnquete.muita/total)*100).toFixed(1)}% (${votosEnquete.muita} votos)`;
-    if ($('resultado-media')) $('resultado-media').textContent = `Média: ${((votosEnquete.media/total)*100).toFixed(1)}% (${votosEnquete.media} votos)`;
-    if ($('resultado-nenhuma')) $('resultado-nenhuma').textContent = `Nenhuma: ${((votosEnquete.nenhuma/total)*100).toFixed(1)}% (${votosEnquete.nenhuma} votos)`;
-    if ($('total-votos')) $('total-votos').textContent = `Total: ${total} votos`;
-}
-
+function carregarVotos() { try { const s = localStorage.getItem('votosEnquete'); if (s) votosEnquete = JSON.parse(s); if (localStorage.getItem('jaVotouEnquete') === 'true') jaVotou = true; } catch(e) {} }
+function votar() { const sel = document.querySelector('input[name="enquete"]:checked'); if (!sel) { alert('Selecione uma opção!'); return; } if (jaVotou) { alert('Você já votou!'); verResultados(); return; } votosEnquete[sel.value]++; jaVotou = true; try { localStorage.setItem('votosEnquete', JSON.stringify(votosEnquete)); localStorage.setItem('jaVotouEnquete', 'true'); } catch(e) {} verResultados(); }
+function verResultados() { const div = $('enquete-resultados'); if (!div) return; div.style.display = 'block'; const total = votosEnquete.muita + votosEnquete.media + votosEnquete.nenhuma; if (total === 0) { if ($('total-votos')) $('total-votos').textContent = 'Nenhum voto ainda.'; return; } if ($('resultado-muita')) $('resultado-muita').textContent = `Muita: ${((votosEnquete.muita/total)*100).toFixed(1)}% (${votosEnquete.muita} votos)`; if ($('resultado-media')) $('resultado-media').textContent = `Média: ${((votosEnquete.media/total)*100).toFixed(1)}% (${votosEnquete.media} votos)`; if ($('resultado-nenhuma')) $('resultado-nenhuma').textContent = `Nenhuma: ${((votosEnquete.nenhuma/total)*100).toFixed(1)}% (${votosEnquete.nenhuma} votos)`; if ($('total-votos')) $('total-votos').textContent = `Total: ${total} votos`; }
 window.votar = votar;
 window.verResultados = verResultados;
 
-// Feeds
-async function fetchFeed(feed) {
-    try {
-        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`);
-        const data = await res.json();
-        if (data.status === 'ok' && data.items) {
-            return data.items.map(item => ({
-                source: feed.source,
-                color: feed.color,
-                category: feed.category,
-                region: feed.region,
-                title: item.title,
-                link: item.link,
-                description: item.description ? item.description.replace(/<[^>]*>/g, '').substring(0, 120) + '...' : '',
-                image: item.enclosure?.link || item.thumbnail || '',
-                pubDate: new Date(item.pubDate),
-                pubDateFormatted: new Date(item.pubDate).toLocaleDateString('pt-BR')
-            }));
-        }
-        return [];
-    } catch(e) {
-        return [];
-    }
-}
+async function fetchFeed(feed) { try { const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`); const data = await res.json(); if (data.status === 'ok' && data.items) { return data.items.map(item => ({ source: feed.source, color: feed.color, category: feed.category, region: feed.region, title: item.title, link: item.link, description: item.description ? item.description.replace(/<[^>]*>/g, '').substring(0, 120) + '...' : '', image: item.enclosure?.link || item.thumbnail || '', pubDate: new Date(item.pubDate), pubDateFormatted: new Date(item.pubDate).toLocaleDateString('pt-BR') })); } return []; } catch(e) { return []; } }
 
 async function loadAllFeeds() {
     if (isLoading) return;
     isLoading = true;
     const grid = $('destaques-grid');
     if (grid) grid.innerHTML = '<div class="loading">Carregando notícias...</div>';
-    
     try {
         const results = await Promise.all(feeds.map(f => fetchFeed(f)));
         allNews = results.flat().sort((a, b) => b.pubDate - a.pubDate);
@@ -297,32 +210,12 @@ async function loadAllFeeds() {
         renderizarRecomendados();
         updateSourcesList();
         updateStats();
-    } catch(e) {
-        if (grid) grid.innerHTML = '<div class="loading">Erro ao carregar.</div>';
-    } finally {
-        isLoading = false;
-    }
+    } catch(e) { if (grid) grid.innerHTML = '<div class="loading">Erro ao carregar.</div>'; } finally { isLoading = false; }
 }
 
-function priorizarBrasileiros(noticias) {
-    const br = noticias.filter(n => n.region === 'nacional');
-    const int = noticias.filter(n => n.region === 'internacional');
-    const r = [];
-    let i = 0, j = 0;
-    while (i < br.length || j < int.length) {
-        for (let k = 0; k < 5 && i < br.length; k++, i++) r.push(br[i]);
-        for (let k = 0; k < 1 && j < int.length; k++, j++) r.push(int[j]);
-    }
-    return r;
-}
+function priorizarBrasileiros(noticias) { const br = noticias.filter(n => n.region === 'nacional'); const int = noticias.filter(n => n.region === 'internacional'); const r = []; let i = 0, j = 0; while (i < br.length || j < int.length) { for (let k = 0; k < 5 && i < br.length; k++, i++) r.push(br[i]); for (let k = 0; k < 1 && j < int.length; k++, j++) r.push(int[j]); } return r; }
 
-function getDestaques() {
-    let filtered = allNews;
-    if (activeRegion !== 'all') filtered = allNews.filter(n => n.region === activeRegion);
-    const prioritarias = filtered.filter(n => n.category === 'Automotiva' || n.category === 'Aeronáutica' || n.category === 'Indústria');
-    const outras = filtered.filter(n => !['Automotiva','Aeronáutica','Indústria'].includes(n.category));
-    return [...priorizarBrasileiros(prioritarias), ...priorizarBrasileiros(outras)];
-}
+function getDestaques() { let filtered = allNews; if (activeRegion !== 'all') filtered = allNews.filter(n => n.region === activeRegion); const prioritarias = filtered.filter(n => n.category === 'Automotiva' || n.category === 'Aeronáutica' || n.category === 'Indústria'); const outras = filtered.filter(n => !['Automotiva','Aeronáutica','Indústria'].includes(n.category)); return [...priorizarBrasileiros(prioritarias), ...priorizarBrasileiros(outras)]; }
 
 function createCard(news) {
     const badge = news.region === 'nacional' ? '🇧🇷' : '🌍';
@@ -335,30 +228,16 @@ function createCard(news) {
     return `<article class="card" onclick="window.open('${news.link}','_blank')">${imgHtml}<div class="card-content"><div class="card-source-row"><span class="card-source" style="color:#000;">${news.source}</span><span class="card-region">${badge}</span></div><h2>${news.title}</h2><p>${news.description}</p><div class="card-footer"><span>📅 ${news.pubDateFormatted}</span><span>🔗</span></div></div></article>`;
 }
 
-function renderDestaques() {
-    const grid = $('destaques-grid');
-    if (!grid) return;
-    const destaques = getDestaques().slice(0, visibleDestaques);
-    if (destaques.length === 0) {
-        grid.innerHTML = '<div class="loading">Nenhuma notícia.</div>';
-        return;
-    }
-    grid.innerHTML = destaques.map(n => createCard(n)).join('');
-    const btn = $('ver-mais-destaques');
-    if (btn) btn.style.display = getDestaques().length > visibleDestaques ? 'block' : 'none';
-}
+function renderDestaques() { const grid = $('destaques-grid'); if (!grid) return; const destaques = getDestaques().slice(0, visibleDestaques); if (destaques.length === 0) { grid.innerHTML = '<div class="loading">Nenhuma notícia.</div>'; return; } grid.innerHTML = destaques.map(n => createCard(n)).join(''); const btn = $('ver-mais-destaques'); if (btn) btn.style.display = getDestaques().length > visibleDestaques ? 'block' : 'none'; }
 
 function renderAllSections() {
     renderDestaques();
-    
     let filtered = allNews;
     if (activeRegion !== 'all') filtered = allNews.filter(n => n.region === activeRegion);
-    
     const categorias = ['Aeronáutica','Automotiva','Semicondutores','Indústria','Embarcados','Projetos','Bens de Consumo','Geral'];
     const container = $('categorias-container');
     if (!container) return;
     container.innerHTML = '';
-    
     categorias.forEach(cat => {
         const catNews = priorizarBrasileiros(filtered.filter(n => n.category === cat));
         const limited = catNews.slice(0, visiblePorCategoria);
@@ -371,66 +250,26 @@ function renderAllSections() {
             grid.className = 'categoria-grid';
             grid.innerHTML = limited.map(n => createCard(n)).join('');
             section.appendChild(grid);
-            
             if (catNews.length > visiblePorCategoria) {
                 const btn = document.createElement('button');
                 btn.className = 'ver-mais-btn';
-                btn.textContent = `Ver Mais ${cat} (${catNews.length - visiblePorCategoria} ocultas)`;
-                btn.onclick = () => {
-                    visiblePorCategoria = MAX_POR_CATEGORIA;
-                    renderAllSections();
-                };
+                btn.textContent = `Ver Mais ${cat}`;
+                btn.onclick = () => { visiblePorCategoria = MAX_POR_CATEGORIA; renderAllSections(); };
                 section.appendChild(btn);
             }
-            
             container.appendChild(section);
         }
     });
 }
 
-function renderizarRecomendados() {
-    const recomendados = allNews.filter(n => n.category === 'Indústria' || n.category === 'Semicondutores').slice(0, 6);
-    const html = recomendados.map(n => `
-        <div class="recomendado-item" onclick="window.open('${n.link}','_blank')">
-            <div class="recomendado-imagem">${n.image ? `<img src="${n.image}" style="width:100%;height:100%;object-fit:cover;">` : '🔲'}</div>
-            <div>
-                <div class="recomendado-titulo">${n.title}</div>
-                <div class="recomendado-fonte">${n.source} • ${n.category}</div>
-            </div>
-        </div>
-    `).join('');
-    
-    if ($('recomendados-list-desktop')) $('recomendados-list-desktop').innerHTML = html || 'Carregando...';
-    if ($('recomendados-list-mobile')) $('recomendados-list-mobile').innerHTML = html || 'Carregando...';
-}
-
-function updateSourcesList() {
-    const list = $('sources-list');
-    if (!list) return;
-    const active = feeds.filter(f => allNews.some(n => n.source === f.source));
-    list.innerHTML = active.slice(0, 12).map(f => `<div style="font-size:0.8rem;padding:0.2rem 0;">• ${f.source} ${f.region === 'nacional' ? '🇧🇷' : '🌍'}</div>`).join('') || 'Nenhuma fonte ativa';
-}
-
-function updateStats() {
-    if ($('total-news-mobile')) $('total-news-mobile').textContent = `${allNews.length} notícias`;
-    if ($('total-sources-mobile')) $('total-sources-mobile').textContent = `${new Set(allNews.map(n => n.source)).size} fontes`;
-}
-
-function loadMoreNews() {
-    visibleDestaques = MAX_POR_CATEGORIA;
-    renderDestaques();
-}
-
-function atualizarNoticias() {
-    loadAllFeeds();
-    fetchExchangeRates();
-    fetchWeather();
-}
-
+function renderizarRecomendados() { const recomendados = allNews.filter(n => n.category === 'Indústria' || n.category === 'Semicondutores').slice(0, 6); const html = recomendados.map(n => `<div class="recomendado-item" onclick="window.open('${n.link}','_blank')"><div class="recomendado-imagem">${n.image ? `<img src="${n.image}" style="width:100%;height:100%;object-fit:cover;">` : '🔲'}</div><div><div class="recomendado-titulo">${n.title}</div><div class="recomendado-fonte">${n.source} • ${n.category}</div></div></div>`).join(''); if ($('recomendados-list-desktop')) $('recomendados-list-desktop').innerHTML = html || 'Carregando...'; if ($('recomendados-list-mobile')) $('recomendados-list-mobile').innerHTML = html || 'Carregando...'; }
+function updateSourcesList() { const list = $('sources-list'); if (!list) return; const active = feeds.filter(f => allNews.some(n => n.source === f.source)); list.innerHTML = active.slice(0, 12).map(f => `<div style="font-size:0.8rem;padding:0.2rem 0;">• ${f.source} ${f.region === 'nacional' ? '🇧🇷' : '🌍'}</div>`).join('') || 'Nenhuma fonte ativa'; }
+function updateStats() { if ($('total-news-mobile')) $('total-news-mobile').textContent = `${allNews.length} notícias`; if ($('total-sources-mobile')) $('total-sources-mobile').textContent = `${new Set(allNews.map(n => n.source)).size} fontes`; }
+function loadMoreNews() { visibleDestaques = MAX_POR_CATEGORIA; renderDestaques(); }
+function atualizarNoticias() { loadAllFeeds(); fetchExchangeRates(); fetchWeather(); }
 window.loadMoreNews = loadMoreNews;
 window.atualizarNoticias = atualizarNoticias;
 
-// ===== INICIALIZAÇÃO =====
 document.addEventListener('DOMContentLoaded', () => {
     carregarVotos();
     if ($('enquete-pergunta')) $('enquete-pergunta').textContent = perguntaEnquete;
@@ -439,104 +278,31 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchWeather();
     loadAllFeeds();
     
-    // Menu hamburguer desktop
     const hambDesktop = $('hamburger-btn-desktop');
     const dropdown = $('desktop-dropdown');
-    if (hambDesktop && dropdown) {
-        hambDesktop.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdown.classList.toggle('active');
-        });
-        document.addEventListener('click', () => dropdown.classList.remove('active'));
-    }
+    if (hambDesktop && dropdown) { hambDesktop.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); }); document.addEventListener('click', () => dropdown.classList.remove('active')); }
     
-    // Menu categorias
     const menuToggle = $('menu-toggle-desktop');
     const filtersDesktop = $('filters-desktop');
-    if (menuToggle && filtersDesktop) {
-        menuToggle.addEventListener('click', () => {
-            filtersDesktop.classList.toggle('active');
-        });
-    }
+    if (menuToggle && filtersDesktop) { menuToggle.addEventListener('click', () => { filtersDesktop.classList.toggle('active'); }); }
     
-    // Menu mobile
     const hambBtn = $('hamburger-btn');
     const sidebar = $('sidebar-mobile');
     const overlay = $('sidebar-overlay');
     const closeBtn = $('close-sidebar');
+    if (hambBtn && sidebar && overlay && closeBtn) { hambBtn.addEventListener('click', () => { sidebar.classList.add('active'); overlay.classList.add('active'); }); closeBtn.addEventListener('click', () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); }); overlay.addEventListener('click', () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); }); }
     
-    if (hambBtn && sidebar && overlay && closeBtn) {
-        hambBtn.addEventListener('click', () => {
-            sidebar.classList.add('active');
-            overlay.classList.add('active');
-        });
-        closeBtn.addEventListener('click', () => {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-        overlay.addEventListener('click', () => {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-    }
-    
-    // Busca
     const searchBtn = $('search-btn');
     const searchOverlay = $('search-overlay');
     const searchInput = $('search-input');
     const closeSearch = $('close-search');
     const searchResults = $('search-results');
+    if (searchBtn && searchOverlay && searchInput && closeSearch && searchResults) { searchBtn.addEventListener('click', () => { searchOverlay.classList.add('active'); searchInput.focus(); }); closeSearch.addEventListener('click', () => { searchOverlay.classList.remove('active'); searchInput.value = ''; searchResults.innerHTML = ''; }); searchInput.addEventListener('input', debounce((e) => { const q = e.target.value.toLowerCase(); if (q.length < 3) { searchResults.innerHTML = ''; return; } const r = allNews.filter(n => n.title.toLowerCase().includes(q)).slice(0, 20); searchResults.innerHTML = r.map(n => `<div class="search-result-item" onclick="window.open('${n.link}','_blank')">${n.title}</div>`).join(''); }, 300)); }
     
-    if (searchBtn && searchOverlay && searchInput && closeSearch && searchResults) {
-        searchBtn.addEventListener('click', () => {
-            searchOverlay.classList.add('active');
-            searchInput.focus();
-        });
-        closeSearch.addEventListener('click', () => {
-            searchOverlay.classList.remove('active');
-            searchInput.value = '';
-            searchResults.innerHTML = '';
-        });
-        searchInput.addEventListener('input', debounce((e) => {
-            const q = e.target.value.toLowerCase();
-            if (q.length < 3) { searchResults.innerHTML = ''; return; }
-            const r = allNews.filter(n => n.title.toLowerCase().includes(q)).slice(0, 20);
-            searchResults.innerHTML = r.map(n => `<div class="search-result-item" onclick="window.open('${n.link}','_blank')">${n.title}</div>`).join('');
-        }, 300));
-    }
+    document.querySelectorAll('.region-btn, .region-btn-mobile').forEach(btn => { btn.addEventListener('click', () => { activeRegion = btn.dataset.region; document.querySelectorAll('.region-btn, .region-btn-mobile').forEach(b => b.classList.remove('active')); document.querySelectorAll(`[data-region="${btn.dataset.region}"]`).forEach(b => b.classList.add('active')); visibleDestaques = 9; visiblePorCategoria = 9; renderAllSections(); if (dropdown) dropdown.classList.remove('active'); if (sidebar) sidebar.classList.remove('active'); if (overlay) overlay.classList.remove('active'); }); });
     
-    // Filtros de região
-    document.querySelectorAll('.region-btn, .region-btn-mobile').forEach(btn => {
-        btn.addEventListener('click', () => {
-            activeRegion = btn.dataset.region;
-            document.querySelectorAll('.region-btn, .region-btn-mobile').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll(`[data-region="${btn.dataset.region}"]`).forEach(b => b.classList.add('active'));
-            visibleDestaques = 9;
-            visiblePorCategoria = 9;
-            renderAllSections();
-            if (dropdown) dropdown.classList.remove('active');
-            if (sidebar) sidebar.classList.remove('active');
-            if (overlay) overlay.classList.remove('active');
-        });
-    });
+    document.querySelectorAll('.filter-btn, .filter-btn-mobile').forEach(btn => { btn.addEventListener('click', () => { const target = btn.dataset.category; if (target === 'destaques') { const el = $('destaques'); if (el) el.scrollIntoView({behavior:'smooth'}); } else { const el = $(`cat-${target}`); if (el) el.scrollIntoView({behavior:'smooth'}); } if (sidebar) sidebar.classList.remove('active'); if (overlay) overlay.classList.remove('active'); }); });
     
-    // Filtros de categoria
-    document.querySelectorAll('.filter-btn, .filter-btn-mobile').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const target = btn.dataset.category;
-            if (target === 'destaques') {
-                const el = $('destaques');
-                if (el) el.scrollIntoView({behavior:'smooth'});
-            } else {
-                const el = $(`cat-${target}`);
-                if (el) el.scrollIntoView({behavior:'smooth'});
-            }
-            if (sidebar) sidebar.classList.remove('active');
-            if (overlay) overlay.classList.remove('active');
-        });
-    });
-    
-    // Intervalos
     setInterval(fetchExchangeRates, 300000);
     setInterval(fetchWeather, 600000);
     setInterval(loadAllFeeds, 1800000);
